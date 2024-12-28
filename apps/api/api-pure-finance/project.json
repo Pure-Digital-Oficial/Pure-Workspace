@@ -1,0 +1,55 @@
+{
+  "name": "api-pure-finance",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/api-pure-finance/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/api/api-pure-finance",
+        "main": "apps/api/api-pure-finance/src/main.ts",
+        "tsConfig": "apps/api/api-pure-finance/tsconfig.app.json",
+        "assets": ["apps/api/api-pure-finance/src/assets"],
+        "webpackConfig": "apps/api/api-pure-finance/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "api-pure-finance:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-pure-finance:build:development"
+        },
+        "production": {
+          "buildTarget": "api-pure-finance:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/api/api-pure-finance/jest.config.ts"
+      }
+    }
+  }
+}

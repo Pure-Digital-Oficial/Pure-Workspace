@@ -1,0 +1,1 @@
+export type PortType = 'EMPRESA DE PEQUENO PORTE' | 'DEMAIS' | 'MICRO EMPRESA';

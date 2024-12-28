@@ -1,0 +1,88 @@
+{
+  "name": "web-pure-the-creator",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web/web-pure-the-creator/src",
+  "projectType": "application",
+  "tags": ["application"],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/web/web-pure-the-creator",
+        "index": "apps/web/web-pure-the-creator/src/index.html",
+        "baseHref": "/",
+        "main": "apps/web/web-pure-the-creator/src/main.tsx",
+        "tsConfig": "apps/web/web-pure-the-creator/tsconfig.app.json",
+        "assets": [
+          "apps/web/web-pure-the-creator/src/favicon.ico",
+          "apps/web/web-pure-the-creator/src/assets"
+        ],
+        "styles": ["apps/web/web-pure-the-creator/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/web/web-pure-the-creator/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/web/web-pure-the-creator/src/environments/environment.ts",
+              "with": "apps/web/web-pure-the-creator/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "web-pure-the-creator:build",
+        "hmr": true,
+        "proxyConfig": "apps/web/web-pure-the-creator/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web-pure-the-creator:build:development"
+        },
+        "production": {
+          "buildTarget": "web-pure-the-creator:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../../coverage/apps/web/web-pure-the-creator",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "web-pure-the-creator:build",
+        "spa": true
+      }
+    }
+  }
+}

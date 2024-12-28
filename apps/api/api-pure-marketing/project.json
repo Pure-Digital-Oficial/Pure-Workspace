@@ -1,0 +1,55 @@
+{
+  "name": "api-pure-marketing",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/api-pure-marketing/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/api/api-pure-marketing",
+        "main": "apps/api/api-pure-marketing/src/main.ts",
+        "tsConfig": "apps/api/api-pure-marketing/tsconfig.app.json",
+        "assets": ["apps/api/api-pure-marketing/src/assets"],
+        "webpackConfig": "apps/api/api-pure-marketing/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "api-pure-marketing:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-pure-marketing:build:development"
+        },
+        "production": {
+          "buildTarget": "api-pure-marketing:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/api/api-pure-marketing/jest.config.ts"
+      }
+    }
+  }
+}

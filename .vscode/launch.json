@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
+  "configurations": [
+    {
+      "name": "web-firefox – Server",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:4200",
+      "pathMappings": [
+        {
+          "url": "http://localhost:4200/libs",
+          "path": "${workspaceFolder}/libs"
+        }
+      ]
+    },
+    {
+      "name": "api-general – Server",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:back-general"],
+      "outputCapture": "std",
+      "internalConsoleOptions": "openOnSessionStart",
+      "console": "internalConsole",
+      "env": {
+        "TS_NODE_IGNORE": "false",
+        "TS_NODE_PROJECT": "${workspaceFolder}/apps/api/api-general/tsconfig.json"
+      },
+      "cwd": "${workspaceFolder}/apps/api/api-general"
+    },
+    {
+      "name": "api-firefox – Server",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:3001",
+      "pathMappings": [
+        {
+          "url": "http://localhost:3001/libs",
+          "path": "${workspaceFolder}/libs"
+        }
+      ]
+    }
+  ]
+}

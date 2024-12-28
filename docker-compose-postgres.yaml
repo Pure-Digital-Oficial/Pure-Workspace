@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  postgres:
+    image: 'postgres'
+    container_name: general
+    environment:
+      - POSTGRES_USER=${POSTGRES_GENERAL_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_GENERAL_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_GENERAL_DB}
+      - PGPORT=${POSTGRES_GENERAL_PORT}
+    ports:
+      - '${POSTGRES_GENERAL_PORT}:${POSTGRES_GENERAL_PORT}'
+    volumes:
+      - general_data:/var/lib/postgresql/data
+    command: postgres -p ${POSTGRES_GENERAL_PORT}
+    networks:
+      - shared_network
+
+  postgresMarketing:
+    image: 'postgres'
+    container_name: marketing
+    environment:
+      - POSTGRES_USER=${POSTGRES_MARKETING_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_MARKETING_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_MARKETING_DB}
+      - PGPORT=${POSTGRES_MARKETING_PORT}
+    ports:
+      - '${POSTGRES_MARKETING_PORT}:${POSTGRES_MARKETING_PORT}'
+    volumes:
+      - marketing_data:/var/lib/postgresql/data
+    command: postgres -p ${POSTGRES_MARKETING_PORT}
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    driver: bridge
+    name: shared_network
+
+volumes:
+  general_data: {}
+  marketing_data: {}

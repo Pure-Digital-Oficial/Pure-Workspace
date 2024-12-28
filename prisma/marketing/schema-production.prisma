@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/marketing"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_MARKETING_URL")
+  schemas  = ["marketing"]
+}
+
+model Enterprise_Meling {
+  enterprise_meling_id String @id @default(uuid())
+  name String?
+  fantasy_name String?
+  whatsapp String?
+  ddd String?
+  email String?
+  coontact_valid Boolean?
+  open_date DateTime?
+  main_activity_code String?
+  main_activity_description String?
+  cnpj String?
+  situation String?
+  created_at DateTime @default(now())
+  country String?
+  state String?
+  region String?
+  share_capital String?
+  @@schema("marketing")
+  Sending Sending[]
+}
+
+model Runner {
+  runner_id String @id @default(uuid())
+  runner String
+  platform String
+  created_at DateTime @default(now())
+  @@schema("marketing")
+  Sending Sending[]
+}
+
+model Sending {
+  sending_id String @id @default(uuid())
+  enterprise_meling_id String
+  runner_id String
+  model_id String
+  sended_email Boolean
+  sended_email_date DateTime @default(now())
+  sended_token String?
+  sended_token_used Boolean @default(false)
+
+  enterprise_meling Enterprise_Meling @relation(fields: [enterprise_meling_id], references: [enterprise_meling_id])
+  runner Runner @relation(fields: [runner_id], references: [runner_id])
+  model Models @relation(fields: [model_id], references: [model_id])
+  @@schema("marketing")
+  email_return_information Email_Return_Information[]
+}
+
+model Email_Return_Information {
+  email_return_information_id String @id @default(uuid())
+  sending_id String
+  email_opned Boolean?
+  email_opned_date DateTime?
+  link_clicked Boolean?
+  link_clicked_date DateTime?
+
+  sending Sending @relation(fields: [sending_id], references: [sending_id])
+  @@schema("marketing")
+}
+
+model Pre_Registration {
+  pre_registration_id String @id @default(uuid())
+  sending_id String
+  step PreRestrationStep  @default(INITIAL)
+  branch_of_the_company String?
+  completed_questionnaire Boolean @default(false)
+  pre_registration_date DateTime @default(now())
+  finished_at DateTime?
+
+  @@schema("marketing")
+}
+
+enum PreRestrationStep {
+  INITIAL
+  FINAL
+
+  @@schema("marketing")
+}
+model Models {
+  model_id String @id @default(uuid())
+  html String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@schema("marketing")
+  Sending Sending[]
+}

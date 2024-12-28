@@ -1,0 +1,31 @@
+INSERT INTO workspace."general"."Country" (country_id , name, uf) VALUES
+('1','BRASIL', 'BR')
+
+INSERT INTO workspace."general"."State" (state_id ,name, uf, coutry_id) VALUES
+(1,'ACRE', 'AC', 1),
+(2,'ALAGOAS', 'AL', 1),
+(3,'AMAPA', 'AP', 1),
+(4,'AMAZONAS', 'AM', 1),
+(5,'BAHIA', 'BA', 1),
+(6,'CEARA', 'CE', 1),
+(7,'DISTRITO FEDERAL', 'DF', 1),
+(8,'ESPIRITO SANTO', 'ES', 1),
+(9,'GOIAS', 'GO', 1),
+(10,'MARANHAO', 'MA', 1),
+(11,'MATO GROSSO', 'MT', 1),
+(12,'MATO GROSSO DO SUL', 'MS', 1),
+(13,'MINAS GERAIS', 'MG', 1),
+(14,'PARA', 'PA', 1),
+(15,'PARAIBA', 'PB', 1),
+(16,'PARANA', 'PR', 1),
+(17,'PERNAMBUCO', 'PE', 1),
+(18,'PIAUI', 'PI', 1),
+(19,'RIO DE JANEIRO', 'RJ', 1),
+(20,'RIO GRANDE DO NORTE', 'RN', 1),
+(21,'RIO GRANDE DO SUL', 'RS', 1),
+(22,'RONDONIA', 'RO', 1),
+(23,'RORAIMA', 'RR', 1),
+(24,'SANTA CATARINA', 'SC', 1),
+(25,'SAO PAULO', 'SP', 1),
+(26,'SERGIPE', 'SE', 1),
+(27,'TOCANTINS', 'TO', 1)

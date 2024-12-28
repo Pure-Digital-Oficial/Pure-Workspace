@@ -1,0 +1,52 @@
+{
+  "name": "api-general",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/api-general/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/api/api-general",
+        "main": "apps/api/api-general/src/main.ts",
+        "tsConfig": "apps/api/api-general/tsconfig.app.json",
+        "assets": ["apps/api/api-general/src/assets"],
+        "webpackConfig": "apps/api/api-general/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "api-general:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-general:build:development"
+        },
+        "production": {
+          "buildTarget": "api-general:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/api/api-general/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

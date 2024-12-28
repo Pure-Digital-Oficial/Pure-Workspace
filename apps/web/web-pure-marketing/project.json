@@ -1,0 +1,88 @@
+{
+  "name": "web-pure-marketing",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web/web-pure-marketing/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/web/web-pure-marketing",
+        "index": "apps/web/web-pure-marketing/src/index.html",
+        "baseHref": "/",
+        "main": "apps/web/web-pure-marketing/src/main.tsx",
+        "tsConfig": "apps/web/web-pure-marketing/tsconfig.app.json",
+        "assets": [
+          "apps/web/web-pure-marketing/src/favicon.ico",
+          "apps/web/web-pure-marketing/src/assets"
+        ],
+        "styles": ["apps/web/web-pure-marketing/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/web/web-pure-marketing/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/web/web-pure-marketing/src/environments/environment.ts",
+              "with": "apps/web/web-pure-marketing/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "web-pure-marketing:build",
+        "hmr": true,
+        "proxyConfig": "apps/web/web-pure-marketing/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web-pure-marketing:build:development"
+        },
+        "production": {
+          "buildTarget": "web-pure-marketing:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../../coverage/apps/web/web-pure-marketing",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "web-pure-marketing:build",
+        "spa": true
+      }
+    }
+  }
+}

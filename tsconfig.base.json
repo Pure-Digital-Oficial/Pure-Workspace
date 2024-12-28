@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pure-workspace/data-access": ["libs/data-access/src/index.ts"],
+      "@pure-workspace/domain": ["libs/domain/src/index.ts"],
+      "@pure-workspace/feature": ["libs/feature/src/index.ts"],
+      "@pure-workspace/prisma/general": ["prisma/generated/general"],
+      "@pure-workspace/prisma/marketing": ["prisma/generated/marketing"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

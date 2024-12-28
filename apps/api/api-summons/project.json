@@ -1,0 +1,52 @@
+{
+  "name": "api-summons",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/api-summons/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/api/api-summons",
+        "main": "apps/api/api-summons/src/main.ts",
+        "tsConfig": "apps/api/api-summons/tsconfig.app.json",
+        "assets": ["apps/api/api-summons/src/assets"],
+        "webpackConfig": "apps/api/api-summons/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "api-summons:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-summons:build:development"
+        },
+        "production": {
+          "buildTarget": "api-summons:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/api/api-summons/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,646 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/general"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_GENERAL_URL")
+  schemas  = ["summons", "general", "pure_tv", "pure_finance"]
+}
+
+model Auth {
+  auth_id String @id @default(uuid())
+  user_id String
+  email String
+  password String?
+  access_token String?
+  status AuthStatus @default(DEFAULT)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+
+  @@schema("general")
+}
+
+enum AuthStatus {
+  GOOGLE
+  DEFAULT
+
+  @@schema("general")
+}
+
+enum UserType {
+  DEFAULT
+  DEFAULT_ADMIN
+  ADMIN
+  @@schema("general")
+}
+
+model Confirm_Delete_User {
+  id String @id @default(uuid())
+  responsibly_user String
+  user_id String
+  description String
+  created_at DateTime @default(now())
+  users User @relation(fields: [user_id], references: [user_id])
+
+  @@schema("general")
+}
+
+model User {
+  user_id String @id @default(uuid())
+  name String
+  nick_name String
+  status Status @default(ACTIVE)
+  type UserType @default(DEFAULT)
+  birth_date DateTime?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user_x_departament User_X_Departament[]
+  user_x_summons User_X_Summons[]
+  auth Auth[]
+  summons_status Summons_Status[]
+  user_x_company User_X_Company[]
+  confirmDeleteUser Confirm_Delete_User[]
+  user_x_application User_X_Application[]
+  directory Directory[]
+  Content_Files Content_Files[]
+  playlist Playlist[]
+  scheduling Scheduling[]
+  playlistCategory Playlist_Category[]
+  device Device[]
+  company Company[]
+  departament Departament[]
+  confirm_Delete_Company Confirm_Delete_Company[]
+  products_created Product[] @relation("ProductCreatedBy")
+  products_updated Product[] @relation("ProductUpdatedBy")
+  salles_created Sale[] @relation("SaleUpdatedBy")
+  salles_updated Sale[] @relation("SaleCreatedBy")
+  sellers Seller[]
+  paymentModel PaymentModel[]
+
+  @@schema("general")
+}
+
+model Application {
+  app_id String @id @default(uuid())
+  name String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+  user_x_application User_X_Application[]
+
+  @@schema("general")
+}
+
+model User_X_Application {
+  app_id String
+  user_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  departament Application @relation(fields: [app_id], references: [app_id])
+
+  @@id([user_id, app_id])
+  @@schema("general")
+}
+
+model User_X_Departament {
+  departament_id String
+  user_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  departament Departament @relation(fields: [departament_id], references: [departament_id])
+
+  @@id([user_id, departament_id])
+  @@schema("general")
+}
+
+model Departament {
+  departament_id String @id @default(uuid())
+  user_id String
+  name String
+  description String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user_x_departament User_X_Departament[]
+  departament_x_company Departament_X_Company[]
+  user User @relation(fields: [user_id], references: [user_id])
+
+  @@schema("general")
+}
+
+model Departament_X_Company {
+  departament_id String
+  company_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  departament Departament @relation(fields: [departament_id], references: [departament_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+
+  @@id([departament_id, company_id])
+  @@schema("general")
+}
+
+model Company {
+  company_id String @id @default(uuid())
+  fantasy_name String
+  social_reason String
+  cnpj String
+  user_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  company_x_address Company_X_Address[]
+  departament_x_company Departament_X_Company[]
+  user_x_company User_X_Company[]
+  company_data Company_Data[]
+  company_responsible Company_Responsible[]
+  device Device[]
+  confirm_Delete_Company Confirm_Delete_Company[]
+  playlist Playlist[]
+  scheduling Scheduling[]
+  playlist_Category Playlist_Category[]
+  content_Files Content_Files[]
+  directory Directory[]
+  sale Sale[]
+  user User @relation(fields: [user_id], references: [user_id])
+
+  @@schema("general")
+}
+
+model Confirm_Delete_Company {
+  id String @id @default(uuid())
+  responsibly_user String
+  company_id String
+  description String
+  created_at DateTime @default(now())
+  company Company @relation(fields: [company_id], references: [company_id])
+  user User @relation(fields: [responsibly_user], references: [user_id])
+
+  @@schema("general")
+}
+
+model Company_Data {
+  company_data_id String @id @default(uuid())
+  responsible_email String
+  company_id String @unique
+  phone String
+  opening String
+  port String
+  situation String
+  legal_nature  String
+
+  company Company @relation(fields: [company_id], references: [company_id])
+
+  @@schema("general")
+}
+
+model Company_Responsible {
+  company_responsible_id String @id @default(uuid())
+  name String
+  company_id String @unique
+  cpf String
+  birth_date DateTime
+  email String
+  phone String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  company Company @relation(fields: [company_id], references: [company_id])
+
+  @@schema("general")
+}
+
+model User_X_Company {
+  user_id String
+  company_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+
+  @@id([user_id, company_id])
+  @@schema("general")
+}
+
+model User_X_Summons {
+  user_id String
+  summons_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  summons Summons @relation(fields: [summons_id], references: [summons_id])
+
+  @@id([user_id, summons_id])
+  @@schema("general")
+}
+
+model Company_X_Address {
+  company_id String
+  address_id String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  address Address @relation(fields: [address_id], references: [address_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+
+  @@id([address_id, company_id])
+  @@schema("general")
+}
+
+model Address {
+  address_id String @id @default(uuid())
+  district String
+  street String
+  number String
+  complement String
+  zipcode String
+  city_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  company_address Company_X_Address[]
+  city City @relation(fields: [city_id],  references: [city_id])
+
+  @@schema("general")
+}
+
+model City {
+  city_id String @id @default(uuid())
+  name String
+  state_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  address Address[]
+  state State @relation(fields: [state_id],  references: [state_id])
+
+  @@schema("general")
+}
+
+model State {
+  state_id String @id @default(uuid())
+  name String
+  coutry_id String
+  uf String
+
+  country Country @relation(fields: [coutry_id], references: [country_id])
+
+  city City[]
+  @@schema("general")
+}
+
+model Country {
+  country_id String @id @default(uuid())
+  name String
+  uf String
+
+  state State[]
+
+  @@schema("general")
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+
+  @@schema("general")
+}
+
+model Directory {
+  directory_id String @id @default(uuid())
+  company_id  String
+  name String
+  user_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  Content_Files Content_Files[]
+  user User @relation(fields: [user_id], references: [user_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+
+  @@schema("pure_tv")
+}
+
+model Content_Files {
+  Content_Files_id String @id @default(uuid())
+  company_id String
+  file_name String
+  original_name String
+  user_id String
+  directory_id String
+  path String
+  size String
+  duration String?
+  resolution String?
+  thumbnail String?
+  format String
+  upload_date DateTime @default(now())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+  playlist_content_files Playlist_X_Content_Files[]
+  user User @relation(fields: [user_id], references: [user_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  directory Directory @relation(fields: [directory_id], references: [directory_id])
+
+  @@schema("pure_tv")
+}
+
+model Playlist_X_Content_Files {
+  Content_Files_id String
+  playlist_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+  playlist Playlist @relation(fields: [playlist_id], references: [playlist_id])
+  Content_Files Content_Files @relation(fields: [Content_Files_id], references: [Content_Files_id])
+  @@id([playlist_id, Content_Files_id])
+  @@schema("pure_tv")
+}
+
+model Playlist {
+  playlist_id String @id @default(uuid())
+  name String
+  user_id String
+  category_id String
+  company_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  category Playlist_Category @relation(fields: [category_id], references: [playlist_category_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  playlist_scheduling Playlist_X_Scheduling[]
+  playlist_content_files Playlist_X_Content_Files[]
+
+  @@schema("pure_tv")
+}
+
+model Playlist_Category {
+  playlist_category_id String @id @default(uuid())
+  user_id String
+  company_id String
+  name String
+  description String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  playlist Playlist[]
+
+  @@schema("pure_tv")
+}
+
+model Playlist_X_Scheduling {
+  scheduling_id String
+  playlist_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  scheduling Scheduling @relation(fields: [scheduling_id], references: [scheduling_id])
+  playlist Playlist @relation(fields: [playlist_id], references: [playlist_id])
+
+  @@id([playlist_id, scheduling_id])
+  @@schema("pure_tv")
+}
+
+model Scheduling {
+  scheduling_id String @id @default(uuid())
+  user_id String
+  company_id String
+  name String
+  start_time DateTime @db.Time
+  end_time DateTime @db.Time
+  looping Boolean
+  priority Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user User @relation(fields: [user_id], references: [user_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  playlist_scheduling Playlist_X_Scheduling[]
+  scheduling_X_Device Scheduling_X_Device[]
+  @@schema("pure_tv")
+}
+
+model Scheduling_X_Device {
+  scheduling_id String
+  device_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  scheduling Scheduling @relation(fields: [scheduling_id], references: [scheduling_id])
+  device Device @relation(fields: [device_id], references: [device_id])
+
+  @@id([device_id, scheduling_id])
+  @@schema("pure_tv")
+}
+
+model Device {
+  device_id String @id @default(uuid())
+  name String
+  user_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+  company_id String
+
+  scheduling_X_Device Scheduling_X_Device[]
+  location_device Location_Device[]
+  device_data Device_Data[]
+  user User @relation(fields: [user_id], references: [user_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  @@schema("pure_tv")
+}
+
+model Device_Data {
+  device_data_id String @id @default(uuid())
+  connection_status String
+  device_id String
+  ip_address String
+  physical_device_id String
+  device_model String
+  so_version String
+  device Device @relation(fields: [device_id], references: [device_id])
+
+  @@schema("pure_tv")
+}
+
+model Location_Device {
+  location_device_id String @id @default(uuid())
+  device_id String
+  latitude String
+  longitude String
+  coutry String
+  state String
+  city String
+  capture_date DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  device Device @relation(fields: [device_id], references: [device_id])
+  @@schema("pure_tv")
+}
+
+model Summons {
+  summons_id String @id @default(uuid())
+  title String
+  description String
+  status_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  user_x_summons User_X_Summons[]
+  summons_status Summons_Status @relation(fields: [status_id], references: [summons_status_id])
+
+  @@schema("summons")
+}
+
+model Summons_Status {
+  summons_status_id String @id @default(uuid())
+  status SummonsStatus @default(PENDING)
+  update_user_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  deleted_at DateTime?
+
+  summons Summons[]
+  summons_status User @relation(fields: [update_user_id], references: [user_id])
+
+  @@schema("summons")
+}
+
+enum SummonsStatus {
+  STARTED
+  PENDING
+  PAUSED
+  FINISHED
+
+  @@schema("summons")
+}
+
+model Product {
+  product_id String @id @default(uuid())
+  name String
+  standard_price String
+  maximum_discount String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  created_by String
+  updated_at DateTime @default(now())
+  updated_by String
+  deleted_at DateTime?
+  user_created User @relation("ProductCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("ProductUpdatedBy",fields: [updated_by], references: [user_id])
+  salles Sale[]
+  @@schema("pure_finance")
+}
+
+model Seller {
+  seller_id String @id @default(uuid())
+  name String
+  phone String
+  email String
+  status Status @default(ACTIVE)
+  models SellerModel @default(DEFAULT)
+  created_at DateTime @default(now())
+  created_by String
+  updated_at DateTime @default(now())
+  user User @relation(fields: [created_by], references: [user_id])
+  salle Sale[]
+  @@schema("pure_finance")
+}
+
+model PaymentModel {
+  payment_model_id String @id @default(uuid())
+  name String
+  description String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  created_by String
+  updated_at DateTime @default(now())
+  user User @relation(fields: [created_by], references: [user_id])
+  salles Sale[]
+  @@schema("pure_finance")
+}
+
+model Sale {
+  salle_id String @id @default(uuid())
+  seller_id String
+  product_id String
+  payment_model_id String
+  company_id String
+  amount String
+  value String
+  status SaleStatus @default(STARTED)
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  product Product @relation(fields: [product_id], references: [product_id])
+  seller Seller @relation(fields: [seller_id], references: [seller_id])
+  payment_model PaymentModel @relation(fields: [payment_model_id], references: [payment_model_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  user_created User @relation("SaleCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("SaleUpdatedBy",fields: [updated_by], references: [user_id])
+  @@schema("pure_finance")
+}
+
+enum SellerModel {
+  DEFAULT
+  PATNER
+  OWNER
+  @@schema("pure_finance")
+}
+
+
+enum SaleStatus {
+  STARTED
+  FINISHED
+  @@schema("pure_finance")
+}

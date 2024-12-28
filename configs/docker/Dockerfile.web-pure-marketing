@@ -1,0 +1,23 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+ARG NX_PUBLIC_BACK_PURE_MARKETING_URL
+ARG NX_PUBLIC_FRONT_PURE_MARKETING
+ENV NX_PUBLIC_BACK_PURE_MARKETING_URL=$NX_PUBLIC_BACK_PURE_MARKETING_URL
+ENV NX_PUBLIC_FRONT_PURE_MARKETING=$NX_PUBLIC_FRONT_PURE_MARKETING
+
+RUN npm run build:front-pure-marketing
+
+FROM nginx:alpine
+
+COPY --from=builder /app/dist/apps/web/web-pure-marketing /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
