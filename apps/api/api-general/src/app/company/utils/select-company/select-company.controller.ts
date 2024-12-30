@@ -1,6 +1,9 @@
 import { Controller, Param, Post, Query, UsePipes } from '@nestjs/common';
 import { SelectCompanyService } from './select-company.service';
-import { ErrorMessageResult, selectCompanySchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  selectCompanySchema,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('select-company')

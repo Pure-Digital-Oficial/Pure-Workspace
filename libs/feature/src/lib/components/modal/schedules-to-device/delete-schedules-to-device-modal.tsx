@@ -1,7 +1,10 @@
 import { FC } from 'react';
 import { SimpleConfimationModal } from '../simple';
 import axios, { AxiosError } from 'axios';
-import { DeleteSchedulesToDeviceDto, ErrorResponse } from '@pure-workspace/domain';
+import {
+  DeleteSchedulesToDeviceDto,
+  ErrorResponse,
+} from '@pure-workspace/domain';
 import { ValidationsError } from '../../../shared';
 import { DeleteSchedulesToDeviceRequest } from '../../../services';
 

@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { EditPlaylistDto, EditPlaylistRepository } from '@pure-workspace/domain';
+import {
+  EditPlaylistDto,
+  EditPlaylistRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../application';
 
 export class EditPlaylistRepositoryImpl implements EditPlaylistRepository {

@@ -1,6 +1,9 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 import { ListSchedulesService } from './list-schedules.service';
-import { ErrorMessageResult, listSchedulesSchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  listSchedulesSchema,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('list-schedules')

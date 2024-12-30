@@ -1,4 +1,7 @@
-import { ListSchedulesDto, ListSchedulesReponseDto } from '@pure-workspace/domain';
+import {
+  ListSchedulesDto,
+  ListSchedulesReponseDto,
+} from '@pure-workspace/domain';
 import { pureTvApi } from '../axios-config';
 
 export async function ListSchedulesRequest(input: ListSchedulesDto) {

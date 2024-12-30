@@ -1,4 +1,8 @@
-import { AccessToken, SignInDto, SignInRepository } from '@pure-workspace/domain';
+import {
+  AccessToken,
+  SignInDto,
+  SignInRepository,
+} from '@pure-workspace/domain';
 import { JwtService } from '@nestjs/jwt';
 import { Inject } from '@nestjs/common';
 

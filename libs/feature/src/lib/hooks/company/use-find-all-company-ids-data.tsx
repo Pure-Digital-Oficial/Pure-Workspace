@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
 import { FindAllCompanyIdsRequest } from '../../services';
-import { ErrorResponse, CompanyAllIdsResponseDto } from '@pure-workspace/domain';
+import {
+  ErrorResponse,
+  CompanyAllIdsResponseDto,
+} from '@pure-workspace/domain';
 import axios, { AxiosError } from 'axios';
 import { ValidationsError } from '../../shared';
 

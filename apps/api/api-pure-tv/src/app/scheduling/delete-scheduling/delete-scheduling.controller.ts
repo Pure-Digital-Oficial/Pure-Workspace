@@ -1,6 +1,9 @@
 import { Controller, Delete, Param, Query, UsePipes } from '@nestjs/common';
 import { DeleteSchedulingService } from './delete-scheduling.service';
-import { deleteSchedulingSchema, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  deleteSchedulingSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('delete-scheduling')

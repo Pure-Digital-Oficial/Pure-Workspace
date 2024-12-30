@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { CreateCompanyDto, CreateCompanyRepository } from '@pure-workspace/domain';
+import {
+  CreateCompanyDto,
+  CreateCompanyRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../../application';
 
 export class CreateCompanyRepositoryImpl implements CreateCompanyRepository {

@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { CityResponseDto, FindCityByIdRepository } from '@pure-workspace/domain';
+import {
+  CityResponseDto,
+  FindCityByIdRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../../application';
 
 export class FindCityByIdRepositoryImpl implements FindCityByIdRepository {

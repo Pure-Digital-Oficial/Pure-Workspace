@@ -2,7 +2,10 @@ import { Box, TextField, useMediaQuery, useTheme } from '@mui/material';
 import { useLoggedUser } from '../../../../contexts';
 import { FC, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EditPlaylistCategoryBodyDto, ErrorResponse } from '@pure-workspace/domain';
+import {
+  EditPlaylistCategoryBodyDto,
+  ErrorResponse,
+} from '@pure-workspace/domain';
 import {
   EditPlaylistCategorySchema,
   ValidationsError,

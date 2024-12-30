@@ -1,5 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { EditUserDto, EditUserRepository, userTypes } from '@pure-workspace/domain';
+import {
+  EditUserDto,
+  EditUserRepository,
+  userTypes,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../application';
 
 export class EditUserRepositoryImpl implements EditUserRepository {

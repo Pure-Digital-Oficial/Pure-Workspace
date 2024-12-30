@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import axios, { AxiosError } from 'axios';
-import { DeleteContentFileByIdDto, ErrorResponse } from '@pure-workspace/domain';
+import {
+  DeleteContentFileByIdDto,
+  ErrorResponse,
+} from '@pure-workspace/domain';
 import { DeleteContentFileByIdRequest } from '../../../services';
 import { ValidationsError } from '../../../shared';
 import { SimpleConfimationModal } from '../simple';

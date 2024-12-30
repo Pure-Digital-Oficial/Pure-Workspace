@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteCompanyById, DeleteCompanyByIdDto } from '@pure-workspace/domain';
+import {
+  DeleteCompanyById,
+  DeleteCompanyByIdDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class DeleteCompanyByIdService {

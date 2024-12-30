@@ -1,7 +1,10 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { FormPreRegistration } from '../../../components';
-import { CreatePreRegistrationDto, ErrorResponse } from '@pure-workspace/domain';
+import {
+  CreatePreRegistrationDto,
+  ErrorResponse,
+} from '@pure-workspace/domain';
 import { CreatePreRegistrationRequest } from '../../../services';
 import axios, { AxiosError } from 'axios';
 import { ValidationsError } from '../../../shared';

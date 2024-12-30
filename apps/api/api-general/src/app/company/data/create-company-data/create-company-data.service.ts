@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCompanyData, CreateCompanyDataDto } from '@pure-workspace/domain';
+import {
+  CreateCompanyData,
+  CreateCompanyDataDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class CreateCompanyDataService {

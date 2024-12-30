@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { DeleteDeviceDto, DeleteDeviceRepository } from '@pure-workspace/domain';
+import {
+  DeleteDeviceDto,
+  DeleteDeviceRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../application';
 
 export class DeleteDeviceRepositoryImpl implements DeleteDeviceRepository {

@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePaymentModel, CreatePaymentModelDto } from '@pure-workspace/domain';
+import {
+  CreatePaymentModel,
+  CreatePaymentModelDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class CreatePaymentModelService {

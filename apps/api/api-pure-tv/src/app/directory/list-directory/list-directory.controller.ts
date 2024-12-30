@@ -1,6 +1,9 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 import { ListDirectoryService } from './list-directory.service';
-import { ErrorMessageResult, listDirectorySchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  listDirectorySchema,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('list-directory')

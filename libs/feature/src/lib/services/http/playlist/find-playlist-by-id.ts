@@ -1,4 +1,7 @@
-import { FindPlaylistByIdDto, PlaylistResponseDto } from '@pure-workspace/domain';
+import {
+  FindPlaylistByIdDto,
+  PlaylistResponseDto,
+} from '@pure-workspace/domain';
 import { pureTvApi } from '../axios-config';
 
 export async function FindPlaylistByIdRequest(input: FindPlaylistByIdDto) {

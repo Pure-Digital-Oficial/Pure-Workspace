@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { FindAllCompanyIds, FindAllCompanyIdsDto } from '@pure-workspace/domain';
+import {
+  FindAllCompanyIds,
+  FindAllCompanyIdsDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class FindAllCompanyIdsService {

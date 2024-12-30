@@ -1,6 +1,9 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
 import { FindDeviceByIdService } from './find-device-by-id.service';
-import { ErrorMessageResult, findDeviceByIdSchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  findDeviceByIdSchema,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('find-device-by-id')

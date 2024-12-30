@@ -1,7 +1,10 @@
 import { Body, Controller, Param, Put, Query, UsePipes } from '@nestjs/common';
 import { EditDirectoryService } from './edit-directory.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
-import { editDirectorySchema, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  editDirectorySchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 
 @Controller('edit-directory')
 export class EditDirectoryController {

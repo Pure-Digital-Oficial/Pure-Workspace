@@ -1,4 +1,7 @@
-import { ListPlaylistDto, ListPlaylistResponseDto } from '@pure-workspace/domain';
+import {
+  ListPlaylistDto,
+  ListPlaylistResponseDto,
+} from '@pure-workspace/domain';
 import { pureTvApi } from '../axios-config';
 
 export async function ListPlaylistRequest(input: ListPlaylistDto) {

@@ -1,7 +1,10 @@
 import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
 import { CreatePlaylistService } from './create-playlist.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
-import { createPlaylistSchema, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  createPlaylistSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 
 @Controller('create-playlist')
 export class CreatePlaylistController {

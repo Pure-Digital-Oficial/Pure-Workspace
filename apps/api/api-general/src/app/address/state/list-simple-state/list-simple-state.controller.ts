@@ -1,6 +1,9 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 import { ListSimpleStateService } from './list-simple-state.service';
-import { ErrorMessageResult, listSimpleStateSchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  listSimpleStateSchema,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('list-simple-state')

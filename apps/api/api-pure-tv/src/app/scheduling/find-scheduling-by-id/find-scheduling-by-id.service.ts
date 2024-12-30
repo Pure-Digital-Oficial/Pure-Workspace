@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { FindSchedulingById, FindSchedulingByIdDto } from '@pure-workspace/domain';
+import {
+  FindSchedulingById,
+  FindSchedulingByIdDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class FindSchedulingByIdService {

@@ -1,7 +1,10 @@
 import { Controller, Delete, Param, Query, UsePipes } from '@nestjs/common';
 import { DeletePlaylistService } from './delete-playlist.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
-import { deletePlaylistSchema, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  deletePlaylistSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 
 @Controller('delete-playlist')
 export class DeletePlaylistController {

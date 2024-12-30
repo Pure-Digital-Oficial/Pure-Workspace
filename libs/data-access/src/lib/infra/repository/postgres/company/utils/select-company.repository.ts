@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { SelectCompanyDto, SelectCompanyRepository } from '@pure-workspace/domain';
+import {
+  SelectCompanyDto,
+  SelectCompanyRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../../application';
 
 export class SelectCompanyRepositoryImpl implements SelectCompanyRepository {

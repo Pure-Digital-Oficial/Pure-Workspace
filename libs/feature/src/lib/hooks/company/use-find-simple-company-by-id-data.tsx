@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
 import { FindSimpleCompanyByIdRequest } from '../../services';
-import { ErrorResponse, CompanySimpleResponseDto } from '@pure-workspace/domain';
+import {
+  ErrorResponse,
+  CompanySimpleResponseDto,
+} from '@pure-workspace/domain';
 import axios, { AxiosError } from 'axios';
 import { ValidationsError } from '../../shared';
 

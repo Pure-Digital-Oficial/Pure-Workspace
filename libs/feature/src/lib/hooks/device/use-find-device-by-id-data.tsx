@@ -1,6 +1,10 @@
 import { useState, useCallback } from 'react';
 import { FindDeviceByIdRequest } from '../../services';
-import { ErrorResponse, Device, FindDeviceByIdDto } from '@pure-workspace/domain';
+import {
+  ErrorResponse,
+  Device,
+  FindDeviceByIdDto,
+} from '@pure-workspace/domain';
 import axios, { AxiosError } from 'axios';
 import { ValidationsError } from '../../shared';
 

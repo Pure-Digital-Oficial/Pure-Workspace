@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { AddFileToPlaylist, AddFileToPlaylistDto } from '@pure-workspace/domain';
+import {
+  AddFileToPlaylist,
+  AddFileToPlaylistDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class AddFileToPlaylistService {

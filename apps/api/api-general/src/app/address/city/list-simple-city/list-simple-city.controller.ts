@@ -1,6 +1,9 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 import { ListSimpleCityService } from './list-simple-city.service';
-import { ErrorMessageResult, listSimpleCitySchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  listSimpleCitySchema,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('list-simple-city')

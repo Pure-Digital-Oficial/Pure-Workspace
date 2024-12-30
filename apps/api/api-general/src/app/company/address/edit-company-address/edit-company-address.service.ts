@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { EditCompanyAddress, EditCompanyAddressDto } from '@pure-workspace/domain';
+import {
+  EditCompanyAddress,
+  EditCompanyAddressDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class EditCompanyAddressService {

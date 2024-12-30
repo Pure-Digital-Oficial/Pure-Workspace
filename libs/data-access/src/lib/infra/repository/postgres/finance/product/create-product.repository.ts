@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { CreateProductDto, CreateProductRepository } from '@pure-workspace/domain';
+import {
+  CreateProductDto,
+  CreateProductRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../../application';
 
 export class CreateProductRepositoryImpl implements CreateProductRepository {

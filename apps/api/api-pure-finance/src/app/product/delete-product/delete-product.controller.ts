@@ -1,5 +1,8 @@
 import { Controller, Delete, Param, Query, UsePipes } from '@nestjs/common';
-import { deleteProductSchema, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  deleteProductSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 import { DeleteProductService } from './delete-product.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 

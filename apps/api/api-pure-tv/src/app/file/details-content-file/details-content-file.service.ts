@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { DetailsContentFile, DetailsContentFileDto } from '@pure-workspace/domain';
+import {
+  DetailsContentFile,
+  DetailsContentFileDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class DetailsContentFileService {

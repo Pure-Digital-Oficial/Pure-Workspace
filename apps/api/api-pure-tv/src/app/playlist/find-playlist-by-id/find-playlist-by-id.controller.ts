@@ -1,7 +1,10 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
 import { FindPlaylistByIdService } from './find-playlist-by-id.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
-import { ErrorMessageResult, findPlaylistByIdSchema } from '@pure-workspace/domain';
+import {
+  ErrorMessageResult,
+  findPlaylistByIdSchema,
+} from '@pure-workspace/domain';
 
 @Controller('find-playlist-by-id')
 export class FindPlaylistByIdController {

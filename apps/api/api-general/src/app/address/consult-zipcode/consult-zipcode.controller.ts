@@ -1,6 +1,9 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
 import { ConsultZipcodeService } from './consult-zipcode.service';
-import { consultZipcodeSchema, ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  consultZipcodeSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('consult-zipcode')

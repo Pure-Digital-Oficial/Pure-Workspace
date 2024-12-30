@@ -1,5 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { EditDirectoryDto, EditDirectoryRepository } from '@pure-workspace/domain';
+import {
+  EditDirectoryDto,
+  EditDirectoryRepository,
+} from '@pure-workspace/domain';
 import { PrismaGeneralService } from '../../../../application';
 
 export class EditDirectoryRepositoryImpl implements EditDirectoryRepository {

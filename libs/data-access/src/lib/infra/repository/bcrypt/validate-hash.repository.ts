@@ -1,4 +1,7 @@
-import { ValidateHashDto, ValidateHashRepository } from '@pure-workspace/domain';
+import {
+  ValidateHashDto,
+  ValidateHashRepository,
+} from '@pure-workspace/domain';
 import * as bcrypt from 'bcrypt';
 
 export class ValidateHashRepositoryImpl implements ValidateHashRepository {

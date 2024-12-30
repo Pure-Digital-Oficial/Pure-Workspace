@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ListSimpleCountry, ListSimpleCountryDto } from '@pure-workspace/domain';
+import {
+  ListSimpleCountry,
+  ListSimpleCountryDto,
+} from '@pure-workspace/domain';
 
 @Injectable()
 export class ListSimpleCountryService {

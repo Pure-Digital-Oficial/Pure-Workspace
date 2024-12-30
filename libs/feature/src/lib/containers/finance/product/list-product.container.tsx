@@ -1,6 +1,10 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import { CrudType, IconMenuItem, ProductResponseDto } from '@pure-workspace/domain';
+import {
+  CrudType,
+  IconMenuItem,
+  ProductResponseDto,
+} from '@pure-workspace/domain';
 import { useRef, useCallback, useState, useEffect } from 'react';
 import {
   EmptyListResponse,
