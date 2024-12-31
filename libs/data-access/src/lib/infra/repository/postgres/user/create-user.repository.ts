@@ -14,7 +14,7 @@ export class CreateUserRepositoryImpl implements CreateUserRepository {
       data: {
         name: name,
         nick_name: nickname,
-        birth_date: birthDate ? new Date(birthDate) : '',
+        birth_date: birthDate,
       },
     });
     const resultUser = await this.prismaService.generalPrisma.user.findFirst({

@@ -5,7 +5,7 @@ import {
   EntityNotEmpty,
   EntityNotExists,
   ExternalAuth,
-  ExternaleAuthDto,
+  ExternalAuthDto,
   FilterByEmailOrNicknameRepository,
   FindAppByIdRepository,
   SignInRepository,
@@ -21,7 +21,7 @@ import {
 
 interface SutTypes {
   sut: ExternalAuth;
-  externalAuthDto: ExternaleAuthDto;
+  externalAuthDto: ExternalAuthDto;
   findAppByIdRepository: FindAppByIdRepository;
   filterEmailRepository: FilterByEmailOrNicknameRepository;
   createUserRepository: CreateUserRepository;
@@ -34,10 +34,12 @@ const makeSut = (): SutTypes => {
   const createUserRepository = new CreateUserRepositoryMock();
   const signInRepository = new SignInRepositoryMock();
 
-  const externalAuthDto: ExternaleAuthDto = {
+  const externalAuthDto: ExternalAuthDto = {
     appId: appMock.id,
-    email: authMock.email,
-    name: userMock.name,
+    body: {
+      email: authMock.email,
+      name: userMock.name,
+    },
   };
 
   const sut = new ExternalAuth(
@@ -80,7 +82,7 @@ describe('ExternalAuth', () => {
 
   it('should return EntityNotEmpty when pass empty email in externalAuthDto', async () => {
     const { externalAuthDto, sut } = makeSut();
-    externalAuthDto.email = '';
+    externalAuthDto.body.email = '';
     const result = await sut.execute(externalAuthDto);
 
     expect(result.isLeft()).toBeTruthy();
@@ -90,7 +92,7 @@ describe('ExternalAuth', () => {
 
   it('should return EntityNotEmpty when pass empty name in externalAuthDto', async () => {
     const { externalAuthDto, sut } = makeSut();
-    externalAuthDto.name = '';
+    externalAuthDto.body.name = '';
     const result = await sut.execute(externalAuthDto);
 
     expect(result.isLeft()).toBeTruthy();

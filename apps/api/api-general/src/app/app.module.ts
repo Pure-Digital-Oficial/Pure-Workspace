@@ -7,6 +7,7 @@ import {
   AuthModule,
   ValidateTokenModule,
   AdmLoginModule,
+  ExternalAuthModule,
 } from './authentication';
 import {
   ListUserModule,
@@ -56,6 +57,7 @@ import {
     CreateAuthModule,
     AuthModule,
     AdmLoginModule,
+    ExternalAuthModule,
     ListUserModule,
     EditUserModule,
     FindUserByIdModule,

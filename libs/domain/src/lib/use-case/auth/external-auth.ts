@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { UseCase } from '../../base/use-case';
-import { ExternaleAuthDto } from '../../dto';
+import { ExternalAuthDto } from '../../dto';
 import { EntityNotCreated, EntityNotEmpty, EntityNotExists } from '../../error';
 import { Either, left, right } from '../../shared/either';
 import {
@@ -14,12 +14,12 @@ import { AccessToken } from '../../entity';
 export class ExternalAuth
   implements
     UseCase<
-      ExternaleAuthDto,
+      ExternalAuthDto,
       Either<EntityNotEmpty | EntityNotExists, AccessToken>
     >
 {
   constructor(
-    @Inject('FindAppByNameRepository')
+    @Inject('FindAppByIdRepository')
     private findAppByIdRepository: FindAppByIdRepository,
     @Inject('FilterByEmailOrNicknameRepository')
     private filterEmailRepository: FilterByEmailOrNicknameRepository,
@@ -29,9 +29,12 @@ export class ExternalAuth
     private signInRepository: SignInRepository
   ) {}
   async execute(
-    input: ExternaleAuthDto
+    input: ExternalAuthDto
   ): Promise<Either<EntityNotEmpty | EntityNotExists, AccessToken>> {
-    const { appId, email, name } = input;
+    const {
+      appId,
+      body: { email, name },
+    } = input;
 
     if (Object.keys(appId).length < 1) {
       return left(new EntityNotEmpty('appId'));
@@ -57,7 +60,7 @@ export class ExternalAuth
 
     let userId: string;
 
-    if (Object.keys(filteredUserEmail).length < 1) {
+    if (Object.keys(filteredUserEmail.userId ?? filteredUserEmail).length < 1) {
       const createdUser = await this.createUserRepository.create({
         appId,
         name,
