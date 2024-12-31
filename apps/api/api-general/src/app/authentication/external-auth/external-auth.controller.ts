@@ -13,10 +13,12 @@ export class ExternalAuthController {
   //@UsePipes(new ZodValidationPipe(createAuthSchema))
   async create(
     @Query('appId') appId: string,
+    @Query('externalId') externalId: string,
     @Body() body: ExternalAuthBodyDto
   ) {
     const result = await this.externalAuthService.auth({
       appId: appId ?? '',
+      externalId: externalId ?? '',
       body: body ?? ({} as ExternalAuthBodyDto),
     });
 

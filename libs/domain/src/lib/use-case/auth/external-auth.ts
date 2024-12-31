@@ -4,9 +4,11 @@ import { ExternalAuthDto } from '../../dto';
 import { EntityNotCreated, EntityNotEmpty, EntityNotExists } from '../../error';
 import { Either, left, right } from '../../shared/either';
 import {
+  CreateAuthRepository,
   CreateUserRepository,
   FilterByEmailOrNicknameRepository,
   FindAppByIdRepository,
+  HashGeneratorRepository,
   SignInRepository,
 } from '../../repository';
 import { AccessToken } from '../../entity';
@@ -25,6 +27,10 @@ export class ExternalAuth
     private filterEmailRepository: FilterByEmailOrNicknameRepository,
     @Inject('CreateUserRepository')
     private createUserRepository: CreateUserRepository,
+    @Inject('HashGeneratorRepository')
+    private hashGeneratorRepository: HashGeneratorRepository,
+    @Inject('CreateAuthRepository')
+    private createAuthRepository: CreateAuthRepository,
     @Inject('SignInRepository')
     private signInRepository: SignInRepository
   ) {}
@@ -33,11 +39,16 @@ export class ExternalAuth
   ): Promise<Either<EntityNotEmpty | EntityNotExists, AccessToken>> {
     const {
       appId,
+      externalId,
       body: { email, name },
     } = input;
 
     if (Object.keys(appId).length < 1) {
-      return left(new EntityNotEmpty('appId'));
+      return left(new EntityNotEmpty('app ID'));
+    }
+
+    if (Object.keys(externalId).length < 1) {
+      return left(new EntityNotEmpty('external ID'));
     }
 
     if (Object.keys(email).length < 1) {
@@ -53,7 +64,7 @@ export class ExternalAuth
       Object.keys(filteredAppId).length < 1 ||
       Object.keys(filteredAppId?.id).length < 1
     ) {
-      return left(new EntityNotExists('app id'));
+      return left(new EntityNotExists('app ID'));
     }
 
     const filteredUserEmail = await this.filterEmailRepository.filter(email);
@@ -70,6 +81,16 @@ export class ExternalAuth
       if (Object.keys(createdUser).length < 1) {
         return left(new EntityNotCreated('User'));
       }
+
+      const hashedPassword = await this.hashGeneratorRepository.hash(
+        externalId
+      );
+
+      await this.createAuthRepository.create({
+        email,
+        userId: createdUser,
+        password: hashedPassword,
+      });
 
       userId = createdUser;
     } else {

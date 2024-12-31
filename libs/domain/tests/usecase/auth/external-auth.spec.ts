@@ -1,5 +1,6 @@
 import {
   App,
+  CreateAuthRepository,
   CreateUserRepository,
   EntityNotCreated,
   EntityNotEmpty,
@@ -8,6 +9,7 @@ import {
   ExternalAuthDto,
   FilterByEmailOrNicknameRepository,
   FindAppByIdRepository,
+  HashGeneratorRepository,
   SignInRepository,
   User,
 } from '../../../src';
@@ -17,6 +19,8 @@ import {
   FilterByEmailOrNicknameRepositoryMock,
   CreateUserRepositoryMock,
   SignInRepositoryMock,
+  HashGeneratorRepositoryMock,
+  CreateAuthRepositoryMock,
 } from '../../repository';
 
 interface SutTypes {
@@ -25,6 +29,8 @@ interface SutTypes {
   findAppByIdRepository: FindAppByIdRepository;
   filterEmailRepository: FilterByEmailOrNicknameRepository;
   createUserRepository: CreateUserRepository;
+  hashGeneratorRepository: HashGeneratorRepository;
+  createAuthRepository: CreateAuthRepository;
   signInRepository: SignInRepository;
 }
 
@@ -32,10 +38,13 @@ const makeSut = (): SutTypes => {
   const findAppByIdRepository = new FindAppByIdRepositoryMock();
   const filterEmailRepository = new FilterByEmailOrNicknameRepositoryMock();
   const createUserRepository = new CreateUserRepositoryMock();
+  const hashGeneratorRepository = new HashGeneratorRepositoryMock();
+  const createAuthRepository = new CreateAuthRepositoryMock();
   const signInRepository = new SignInRepositoryMock();
 
   const externalAuthDto: ExternalAuthDto = {
     appId: appMock.id,
+    externalId: 'any_id',
     body: {
       email: authMock.email,
       name: userMock.name,
@@ -46,6 +55,8 @@ const makeSut = (): SutTypes => {
     findAppByIdRepository,
     filterEmailRepository,
     createUserRepository,
+    hashGeneratorRepository,
+    createAuthRepository,
     signInRepository
   );
 
@@ -53,6 +64,8 @@ const makeSut = (): SutTypes => {
     sut,
     externalAuthDto,
     findAppByIdRepository,
+    hashGeneratorRepository,
+    createAuthRepository,
     filterEmailRepository,
     createUserRepository,
     signInRepository,
@@ -73,6 +86,16 @@ describe('ExternalAuth', () => {
   it('should return EntityNotEmpty when pass empty appId in externalAuthDto', async () => {
     const { externalAuthDto, sut } = makeSut();
     externalAuthDto.appId = '';
+    const result = await sut.execute(externalAuthDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityNotEmpty when pass empty externalId in externalAuthDto', async () => {
+    const { externalAuthDto, sut } = makeSut();
+    externalAuthDto.externalId = '';
     const result = await sut.execute(externalAuthDto);
 
     expect(result.isLeft()).toBeTruthy();

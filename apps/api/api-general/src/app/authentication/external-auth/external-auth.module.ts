@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ExternalAuth, ValidateUser } from '@pure-workspace/domain';
 import {
+  CreateAuthRepositoryImpl,
   CreateUserRepositoryImpl,
   FilterByEmailOrNicknameRepositoryImpl,
   FindAppByIdRepositoryImpl,
+  HashGeneratorImpl,
   JwtStrategy,
   LocalAuthGuard,
   LocalStrategy,
@@ -43,6 +45,14 @@ import { JwtService } from '@nestjs/jwt';
     {
       provide: 'CreateUserRepository',
       useClass: CreateUserRepositoryImpl,
+    },
+    {
+      provide: 'CreateAuthRepository',
+      useClass: CreateAuthRepositoryImpl,
+    },
+    {
+      provide: 'HashGeneratorRepository',
+      useClass: HashGeneratorImpl,
     },
     {
       provide: 'SignInRepository',
