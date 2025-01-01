@@ -1,16 +1,18 @@
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
 import {
   ErrorMessageResult,
   ExternalAuthBodyDto,
+  externalAuthSchema,
 } from '@pure-workspace/domain';
 import { ExternalAuthService } from './external-auth.service';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('external-auth')
 export class ExternalAuthController {
   constructor(private readonly externalAuthService: ExternalAuthService) {}
 
   @Post()
-  //@UsePipes(new ZodValidationPipe(createAuthSchema))
+  @UsePipes(new ZodValidationPipe(externalAuthSchema))
   async create(
     @Query('appId') appId: string,
     @Query('externalId') externalId: string,
