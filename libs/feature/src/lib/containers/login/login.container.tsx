@@ -9,15 +9,15 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { FormAuthCard, FormButton } from '../../components';
-import { useAuth } from '../../hooks';
-import { LoggedUser, ValidateUserDto } from '@pure-workspace/domain';
-import React, { ReactNode, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSnackbarAlert } from '../../hooks';
-import { useForm } from 'react-hook-form';
-import { LoginSchema } from '../../shared';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { LoggedUser, ValidateUserDto } from '@pure-workspace/domain';
+import { FormAuthCard, FormButton, ImageButton } from '../../components';
+import { useAuth } from '../../hooks';
+import { useSnackbarAlert } from '../../hooks';
+import { LoginSchema } from '../../shared';
 import {
   FindUserByEmailRequest,
   LoginRequest,
@@ -35,11 +35,15 @@ interface LoginContainerProps {
   remenberTitle?: string;
   registerTitle?: string;
   registerHref?: string;
-  children?: ReactNode;
+  externalButton?: {
+    imageSrc?: string;
+    imageTitle?: string;
+    imageAltText?: string;
+  };
 }
 
-export const LoginContainer: React.FC<LoginContainerProps> = ({
-  cardImage = '',
+export const LoginContainer: FC<LoginContainerProps> = ({
+  cardImage = '/assets/images/login-image.svg',
   logo = '',
   title = 'Fazer Login',
   passwordLabel = 'Digite sua Senha',
@@ -48,7 +52,11 @@ export const LoginContainer: React.FC<LoginContainerProps> = ({
   remenberTitle = 'Lembrar',
   registerTitle = 'Quer se cadastrar?',
   registerHref = '/register',
-  children,
+  externalButton = {
+    imageSrc: '/assets/images/Google_Logo_Icon.svg',
+    imageTitle: 'Logar com o Google',
+    imageAltText: 'Deseja Logar com o Google?',
+  },
 }) => {
   const auth = useAuth();
   const history = useNavigate();
@@ -182,6 +190,20 @@ export const LoginContainer: React.FC<LoginContainerProps> = ({
                 loading={loading}
                 buttonTitle={buttonTitle}
               />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  mt: theme.spacing(1),
+                }}
+              >
+                <ImageButton
+                  size="large"
+                  title={externalButton.imageTitle ?? ''}
+                  imageSrc={externalButton.imageSrc ?? ''}
+                  altText={externalButton.imageAltText ?? ''}
+                />
+              </Box>
             </Box>
           </Box>
         </Container>

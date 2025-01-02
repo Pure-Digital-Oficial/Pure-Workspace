@@ -18,7 +18,7 @@ export const AuthRouters = () => {
         path="/login"
         element={
           <LoginContainer
-            cardImage="/assets/svg/login-image.svg"
+            cardImage="/assets/images/login-image.svg"
             logo="/assets/png/summons-image.png"
           />
         }
