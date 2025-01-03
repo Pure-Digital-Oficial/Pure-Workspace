@@ -7,6 +7,7 @@ export * from './edit-user.dto';
 export * from './filter-by-email-or-nickname.dto';
 export * from './find-user-by-email.dto';
 export * from './find-user-by-id.dto';
+export * from './google-user-info.dto';
 export * from './list-companies-by-user-id.dto';
 export * from './list-companies-by-user-prisma.dto';
 export * from './list-user.dto';

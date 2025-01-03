@@ -13,15 +13,26 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { LoggedUser, ValidateUserDto } from '@pure-workspace/domain';
+import { useGoogleLogin } from '@react-oauth/google';
+import axios, { AxiosError } from 'axios';
+import {
+  AccessToken,
+  ErrorResponse,
+  ExternalAuthDto,
+  LoggedUser,
+  ValidateUserDto,
+} from '@pure-workspace/domain';
 import { FormAuthCard, FormButton, ImageButton } from '../../components';
 import { useAuth } from '../../hooks';
 import { useSnackbarAlert } from '../../hooks';
-import { LoginSchema } from '../../shared';
+import { LoginSchema, ValidationsError } from '../../shared';
 import {
+  ExternalAuthRequest,
   FindUserByEmailRequest,
+  FindUserInfoRequest,
   LoginRequest,
   setItemLocalStorage,
+  setUserLocalStorage,
 } from '../../services';
 import { useLoggedUser } from '../../contexts';
 
@@ -115,6 +126,62 @@ export const LoginContainer: FC<LoginContainerProps> = ({
     }
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const userInfo = await FindUserInfoRequest(response.access_token);
+        const auth = await externalAuth({
+          appId: process.env['NX_PUBLIC_PURE_TV_ID'] || '',
+          body: {
+            email: userInfo.email,
+            name: userInfo.name,
+            photo: userInfo.picture,
+          },
+          externalId: userInfo.sub,
+        });
+
+        if (auth) {
+          setUserLocalStorage({
+            email: userInfo.email,
+            token: auth.token,
+          });
+          await setLocalUserId(userInfo.email);
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    },
+    scope: 'email profile',
+  });
+
+  const externalAuth = async (
+    input: ExternalAuthDto
+  ): Promise<AccessToken | undefined> => {
+    try {
+      const result = await ExternalAuthRequest(input);
+      return result;
+    } catch (error) {
+      setLoading(false);
+      setSuccess(false);
+      console.error(error);
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<ErrorResponse>;
+        const errors = ValidationsError(axiosError, 'Autenticacao');
+        if (errors) {
+          showSnackbarAlert({
+            message: errors,
+            severity: 'error',
+          });
+        }
+      }
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin();
+  };
+
   return (
     <>
       <FormAuthCard imageUrl={cardImage}>
@@ -202,6 +269,7 @@ export const LoginContainer: FC<LoginContainerProps> = ({
                   title={externalButton.imageTitle ?? ''}
                   imageSrc={externalButton.imageSrc ?? ''}
                   altText={externalButton.imageAltText ?? ''}
+                  onClick={handleGoogleLogin}
                 />
               </Box>
             </Box>

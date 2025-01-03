@@ -4,6 +4,7 @@ import {
   LoggedUserProvider,
   LoadingProvider,
 } from '@pure-workspace/feature';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { ContentApp } from './content-app';
 
@@ -12,7 +13,11 @@ const App = () => {
     <AppThemeProvider>
       <LoggedUserProvider>
         <LoadingProvider>
-          <ContentApp />
+          <GoogleOAuthProvider
+            clientId={process.env['NX_PUBLIC_EXTERNAL_CLIENT_ID'] ?? ''}
+          >
+            <ContentApp />
+          </GoogleOAuthProvider>
         </LoadingProvider>
       </LoggedUserProvider>
     </AppThemeProvider>

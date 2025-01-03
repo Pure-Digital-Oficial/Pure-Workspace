@@ -1,3 +1,4 @@
+export * from './google';
 export * from './adm-login';
 export * from './create-auth';
 export * from './external-auth';
