@@ -45,6 +45,7 @@ model User {
   nick_name String @db.VarChar(100)
   status Status @default(ACTIVE)
   type UserType @default(DEFAULT)
+  picture String?
   birth_date DateTime?
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
