@@ -8,13 +8,14 @@ export class CreateUserRepositoryImpl implements CreateUserRepository {
   ) {}
 
   async create(input: CreateUserDto): Promise<string> {
-    const { name, nickname, birthDate, appId } = input;
+    const { name, nickname, birthDate, appId, picture } = input;
 
     await this.prismaService.generalPrisma.user.create({
       data: {
         name: name,
         nick_name: nickname,
-        birth_date: new Date(birthDate),
+        birth_date: birthDate,
+        picture: picture,
       },
     });
     const resultUser = await this.prismaService.generalPrisma.user.findFirst({

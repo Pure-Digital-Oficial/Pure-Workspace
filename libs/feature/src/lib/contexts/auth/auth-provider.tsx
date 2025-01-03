@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     const storedUser: ILoggedUser = getUserLocalStorage();
     const loggeduser: LoggedUser = JSON.parse(getItemLocalStorage('lu'));
     if (storedUser?.token) {
-      validateToken(storedUser?.token ?? '', loggeduser?.id ?? ''); // Verifica se o token é válido
+      validateToken(storedUser?.token ?? '', loggeduser?.id ?? '');
     }
   }, []);
 

@@ -9,15 +9,15 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { FormAuthCard, FormButton } from '../../components';
-import { useAuth } from '../../hooks';
-import { LoggedUser, ValidateUserDto } from '@pure-workspace/domain';
-import React, { ReactNode, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSnackbarAlert } from '../../hooks';
-import { useForm } from 'react-hook-form';
-import { LoginSchema } from '../../shared';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { LoggedUser, ValidateUserDto } from '@pure-workspace/domain';
+import { ExternalButtons, FormAuthCard, FormButton } from '../../components';
+import { useAuth } from '../../hooks';
+import { useSnackbarAlert } from '../../hooks';
+import { LoginSchema } from '../../shared';
 import {
   FindUserByEmailRequest,
   LoginRequest,
@@ -35,11 +35,15 @@ interface LoginContainerProps {
   remenberTitle?: string;
   registerTitle?: string;
   registerHref?: string;
-  children?: ReactNode;
+  externalButton?: {
+    imageSrc?: string;
+    imageTitle?: string;
+    imageAltText?: string;
+  };
 }
 
-export const LoginContainer: React.FC<LoginContainerProps> = ({
-  cardImage = '',
+export const LoginContainer: FC<LoginContainerProps> = ({
+  cardImage = '/assets/images/login-image.svg',
   logo = '',
   title = 'Fazer Login',
   passwordLabel = 'Digite sua Senha',
@@ -48,7 +52,11 @@ export const LoginContainer: React.FC<LoginContainerProps> = ({
   remenberTitle = 'Lembrar',
   registerTitle = 'Quer se cadastrar?',
   registerHref = '/register',
-  children,
+  externalButton = {
+    imageSrc: '/assets/images/Google_Logo_Icon.svg',
+    imageTitle: 'Logar com o Google',
+    imageAltText: 'Deseja Logar com o Google?',
+  },
 }) => {
   const auth = useAuth();
   const history = useNavigate();
@@ -71,6 +79,16 @@ export const LoginContainer: React.FC<LoginContainerProps> = ({
       password: '',
     },
   });
+
+  const showAlert = useCallback(
+    (message: string, success: boolean) => {
+      showSnackbarAlert({
+        message: message,
+        severity: success ? 'success' : 'error',
+      });
+    },
+    [showSnackbarAlert]
+  );
 
   const setLocalUserId = async (email: string) => {
     const user = await FindUserByEmailRequest({ email });
@@ -100,10 +118,7 @@ export const LoginContainer: React.FC<LoginContainerProps> = ({
     } catch (error) {
       setLoading(false);
       setSuccess(false);
-      showSnackbarAlert({
-        message: 'Erro no E-mail ou no Password',
-        severity: 'error',
-      });
+      showAlert('Erro no E-mail ou no Password', false);
     }
   };
 
@@ -181,6 +196,15 @@ export const LoginContainer: React.FC<LoginContainerProps> = ({
                 success={success}
                 loading={loading}
                 buttonTitle={buttonTitle}
+              />
+              <ExternalButtons
+                setLocalUserId={setLocalUserId}
+                showAlert={showAlert}
+                externalButton={{
+                  imageAltText: externalButton.imageAltText,
+                  imageSrc: externalButton.imageSrc,
+                  imageTitle: externalButton.imageTitle,
+                }}
               />
             </Box>
           </Box>
