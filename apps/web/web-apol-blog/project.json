@@ -52,7 +52,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "web-apol-blog:build",
-        "hmr": true
+        "hmr": true,
+        "proxyConfig": "apps/web/web-apol-blog/proxy.conf.json"
       },
       "configurations": {
         "development": {

@@ -1,0 +1,55 @@
+{
+  "name": "api-pure-blog",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/api-pure-blog/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/api/api-pure-blog",
+        "main": "apps/api/api-pure-blog/src/main.ts",
+        "tsConfig": "apps/api/api-pure-blog/tsconfig.app.json",
+        "assets": ["apps/api/api-pure-blog/src/assets"],
+        "webpackConfig": "apps/api/api-pure-blog/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "api-pure-blog:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-pure-blog:build:development"
+        },
+        "production": {
+          "buildTarget": "api-pure-blog:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/api/api-pure-blog/jest.config.ts"
+      }
+    }
+  }
+}
