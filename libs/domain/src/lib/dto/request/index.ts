@@ -1,6 +1,7 @@
 export * from './address';
 export * from './app';
 export * from './auth';
+export * from './blog';
 export * from './company';
 export * from './device';
 export * from './directory';
