@@ -135,7 +135,7 @@ export const LoginContainer: FC<LoginContainerProps> = ({
           body: {
             email: userInfo.email,
             name: userInfo.name,
-            photo: userInfo.picture,
+            picture: userInfo.picture,
           },
           externalId: userInfo.sub,
         });

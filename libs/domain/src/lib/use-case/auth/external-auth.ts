@@ -40,7 +40,7 @@ export class ExternalAuth
     const {
       appId,
       externalId,
-      body: { email, name },
+      body: { email, name, picture },
     } = input;
 
     if (Object.keys(appId).length < 1) {
@@ -76,6 +76,7 @@ export class ExternalAuth
         appId,
         name,
         nickname: name,
+        picture: picture,
       });
 
       if (Object.keys(createdUser).length < 1) {

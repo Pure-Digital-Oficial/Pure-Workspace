@@ -11,7 +11,7 @@ export async function ExternalAuthRequest(input: ExternalAuthDto) {
     {
       email: input.body.email,
       name: input.body.name,
-      photo: input.body.photo,
+      picture: input.body.picture,
     },
     {
       params: {
