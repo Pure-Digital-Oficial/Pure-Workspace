@@ -9,30 +9,19 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useGoogleLogin } from '@react-oauth/google';
-import axios, { AxiosError } from 'axios';
-import {
-  AccessToken,
-  ErrorResponse,
-  ExternalAuthDto,
-  LoggedUser,
-  ValidateUserDto,
-} from '@pure-workspace/domain';
-import { FormAuthCard, FormButton, ImageButton } from '../../components';
+import { LoggedUser, ValidateUserDto } from '@pure-workspace/domain';
+import { ExternalButtons, FormAuthCard, FormButton } from '../../components';
 import { useAuth } from '../../hooks';
 import { useSnackbarAlert } from '../../hooks';
-import { LoginSchema, ValidationsError } from '../../shared';
+import { LoginSchema } from '../../shared';
 import {
-  ExternalAuthRequest,
   FindUserByEmailRequest,
-  FindUserInfoRequest,
   LoginRequest,
   setItemLocalStorage,
-  setUserLocalStorage,
 } from '../../services';
 import { useLoggedUser } from '../../contexts';
 
@@ -91,6 +80,16 @@ export const LoginContainer: FC<LoginContainerProps> = ({
     },
   });
 
+  const showAlert = useCallback(
+    (message: string, success: boolean) => {
+      showSnackbarAlert({
+        message: message,
+        severity: success ? 'success' : 'error',
+      });
+    },
+    [showSnackbarAlert]
+  );
+
   const setLocalUserId = async (email: string) => {
     const user = await FindUserByEmailRequest({ email });
 
@@ -119,67 +118,8 @@ export const LoginContainer: FC<LoginContainerProps> = ({
     } catch (error) {
       setLoading(false);
       setSuccess(false);
-      showSnackbarAlert({
-        message: 'Erro no E-mail ou no Password',
-        severity: 'error',
-      });
+      showAlert('Erro no E-mail ou no Password', false);
     }
-  };
-
-  const googleLogin = useGoogleLogin({
-    onSuccess: async (response) => {
-      try {
-        const userInfo = await FindUserInfoRequest(response.access_token);
-        const auth = await externalAuth({
-          appId: process.env['NX_PUBLIC_PURE_TV_ID'] || '',
-          body: {
-            email: userInfo.email,
-            name: userInfo.name,
-            picture: userInfo.picture,
-          },
-          externalId: userInfo.sub,
-        });
-
-        if (auth) {
-          setUserLocalStorage({
-            email: userInfo.email,
-            token: auth.token,
-          });
-          await setLocalUserId(userInfo.email);
-          window.location.reload();
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    },
-    scope: 'email profile',
-  });
-
-  const externalAuth = async (
-    input: ExternalAuthDto
-  ): Promise<AccessToken | undefined> => {
-    try {
-      const result = await ExternalAuthRequest(input);
-      return result;
-    } catch (error) {
-      setLoading(false);
-      setSuccess(false);
-      console.error(error);
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<ErrorResponse>;
-        const errors = ValidationsError(axiosError, 'Autenticacao');
-        if (errors) {
-          showSnackbarAlert({
-            message: errors,
-            severity: 'error',
-          });
-        }
-      }
-    }
-  };
-
-  const handleGoogleLogin = () => {
-    googleLogin();
   };
 
   return (
@@ -257,21 +197,15 @@ export const LoginContainer: FC<LoginContainerProps> = ({
                 loading={loading}
                 buttonTitle={buttonTitle}
               />
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  mt: theme.spacing(1),
+              <ExternalButtons
+                setLocalUserId={setLocalUserId}
+                showAlert={showAlert}
+                externalButton={{
+                  imageAltText: externalButton.imageAltText,
+                  imageSrc: externalButton.imageSrc,
+                  imageTitle: externalButton.imageTitle,
                 }}
-              >
-                <ImageButton
-                  size="large"
-                  title={externalButton.imageTitle ?? ''}
-                  imageSrc={externalButton.imageSrc ?? ''}
-                  altText={externalButton.imageAltText ?? ''}
-                  onClick={handleGoogleLogin}
-                />
-              </Box>
+              />
             </Box>
           </Box>
         </Container>
