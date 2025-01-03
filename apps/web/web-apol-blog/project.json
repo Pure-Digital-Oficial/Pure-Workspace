@@ -1,0 +1,87 @@
+{
+  "name": "web-apol-blog",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web/web-apol-blog/src",
+  "projectType": "application",
+  "tags": ["application"],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/web/web-apol-blog",
+        "index": "apps/web/web-apol-blog/src/index.html",
+        "baseHref": "/",
+        "main": "apps/web/web-apol-blog/src/main.tsx",
+        "tsConfig": "apps/web/web-apol-blog/tsconfig.app.json",
+        "assets": [
+          "apps/web/web-apol-blog/src/favicon.ico",
+          "apps/web/web-apol-blog/src/assets"
+        ],
+        "styles": ["apps/web/web-apol-blog/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "apps/web/web-apol-blog/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/web/web-apol-blog/src/environments/environment.ts",
+              "with": "apps/web/web-apol-blog/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "web-apol-blog:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web-apol-blog:build:development"
+        },
+        "production": {
+          "buildTarget": "web-apol-blog:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../../coverage/apps/web/web-apol-blog",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "web-apol-blog:build",
+        "spa": true
+      }
+    }
+  }
+}
