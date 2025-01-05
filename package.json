@@ -19,6 +19,7 @@
     "start:summons": "nx run-many --target=serve --projects=web-summons,api-general,api-summons --parallel",
     "build:back-general": "nx build api-general",
     "build:back-pure-tv": "nx build api-pure-tv",
+    "build:back-pure-blog": "nx build api-pure-blog",
     "build:back-pure-marketing": "nx build api-pure-marketing",
     "build:front-pure-marketing": "nx build web-pure-marketing",
     "build:front-pure-tv": "nx build web-pure-tv",
