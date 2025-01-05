@@ -26,8 +26,6 @@ model Auth {
   @@schema("general")
 }
 
-
-
 model Confirm_Delete_User {
   id String @id @default(uuid())
   responsibly_user String
@@ -94,6 +92,7 @@ model Application {
   updated_at DateTime @default(now())
   deleted_at DateTime?
   user_x_application User_X_Application[]
+  post Post[]
 
   @@schema("general")
 }
@@ -616,6 +615,7 @@ model Summons_Status {
 
 model Post {
   post_id String @id @default(uuid())
+  app_id String
   status Status @default(ACTIVE)
   title String
   sub_title String
@@ -629,6 +629,7 @@ model Post {
   post_x_sub_categories Post_X_Sub_Category[]
   comment Comment[]
   media Media[]
+  app Application @relation(fields: [app_id], references: [app_id])
   user_created User @relation("PostCreatedBy",fields: [created_by], references: [user_id])
   user_updated User @relation("PostUpdatedBy",fields: [updated_by], references: [user_id])
 
