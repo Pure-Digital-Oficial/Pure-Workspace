@@ -42,6 +42,7 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
             title: true,
             created_at: true,
             updated_at: true,
+            status: true,
             user_created: {
               select: {
                 name: true,
@@ -75,6 +76,7 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
         title: post.title,
         updatedAt: post.updated_at,
         updatedBy: post.user_updated.name,
+        status: post.status,
       };
     });
 
