@@ -33,7 +33,10 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
     const [posts, filteredTotal, total] =
       await this.prismaService.generalPrisma.$transaction([
         this.prismaService.generalPrisma.post.findMany({
-          where: whereClause,
+          where: {
+            ...whereClause,
+            status: 'ACTIVE',
+          },
           select: {
             post_id: true,
             content: true,
@@ -58,7 +61,10 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
           take: parseInt(take.toString()),
         }),
         this.prismaService.generalPrisma.post.count({
-          where: whereClause,
+          where: {
+            ...whereClause,
+            status: 'ACTIVE',
+          },
         }),
         this.prismaService.generalPrisma.post.count(),
       ]);
