@@ -4,7 +4,7 @@ import { DeletePostDto } from '../../../dto';
 import { EntityNotDeleted, EntityNotEmpty } from '../../../error';
 import { Either, left, right } from '../../../shared/either';
 import {
-  DeleteProductRepository,
+  DeletePostRepository,
   FindPostByIdRepository,
   FindUserByIdRepository,
 } from '../../../repository';
@@ -18,8 +18,8 @@ export class DeletePost
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindPostByIdRepository')
     private findPostByIdRepository: FindPostByIdRepository,
-    @Inject('DeleteProductRepository')
-    private deletePostByIdRepository: DeleteProductRepository
+    @Inject('DeletePostRepository')
+    private deletePostRepository: DeletePostRepository
   ) {}
   async execute(input: DeletePostDto): Promise<Either<EntityNotEmpty, string>> {
     const { id, loggedUserId } = input;
@@ -42,7 +42,7 @@ export class DeletePost
       return left(postValidation.value);
     }
 
-    const deletedPost = await this.deletePostByIdRepository.delete(input);
+    const deletedPost = await this.deletePostRepository.delete(input);
 
     if (Object.keys(deletedPost).length < 1) {
       return left(new EntityNotDeleted('Post'));
