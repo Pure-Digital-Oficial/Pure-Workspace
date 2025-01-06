@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   ListPostsDto,
   ListPostsRepository,
@@ -6,12 +7,9 @@ import {
   PostPrismaDto,
   PostResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
 
 export class ListPostsRepositoryImpl implements ListPostsRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async list(input: ListPostsDto): Promise<ListPostsResponseDto> {
     const { filter, appId } = input;
 
@@ -30,44 +28,45 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
         : {}),
     };
 
-    const [posts, filteredTotal, total] =
-      await this.prismaService.generalPrisma.$transaction([
-        this.prismaService.generalPrisma.post.findMany({
-          where: {
-            ...whereClause,
-            status: 'ACTIVE',
-          },
-          select: {
-            post_id: true,
-            content: true,
-            description: true,
-            sub_title: true,
-            title: true,
-            created_at: true,
-            updated_at: true,
-            status: true,
-            user_created: {
-              select: {
-                name: true,
-              },
-            },
-            user_updated: {
-              select: {
-                name: true,
-              },
+    const [posts, filteredTotal, total] = await this.prismaService[
+      'generalPrisma'
+    ].$transaction([
+      this.prismaService['generalPrisma'].post.findMany({
+        where: {
+          ...whereClause,
+          status: 'ACTIVE',
+        },
+        select: {
+          post_id: true,
+          content: true,
+          description: true,
+          sub_title: true,
+          title: true,
+          created_at: true,
+          updated_at: true,
+          status: true,
+          user_created: {
+            select: {
+              name: true,
             },
           },
-          skip: parseInt(skip.toString()),
-          take: parseInt(take.toString()),
-        }),
-        this.prismaService.generalPrisma.post.count({
-          where: {
-            ...whereClause,
-            status: 'ACTIVE',
+          user_updated: {
+            select: {
+              name: true,
+            },
           },
-        }),
-        this.prismaService.generalPrisma.post.count(),
-      ]);
+        },
+        skip: parseInt(skip.toString()),
+        take: parseInt(take.toString()),
+      }),
+      this.prismaService['generalPrisma'].post.count({
+        where: {
+          ...whereClause,
+          status: 'ACTIVE',
+        },
+      }),
+      this.prismaService['generalPrisma'].post.count(),
+    ]);
 
     const totalPages = Math.ceil(filteredTotal / take);
 

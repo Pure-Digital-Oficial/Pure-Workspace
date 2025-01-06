@@ -1,40 +1,40 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   FindPostByIdRepository,
   PostResponseDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../application';
 
 export class FindPostByIdRepositoryImpl implements FindPostByIdRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async find(id: string): Promise<PostResponseDto> {
-    const findedPost = await this.prismaService.generalPrisma.post.findFirst({
-      where: {
-        post_id: id,
-      },
-      select: {
-        post_id: true,
-        content: true,
-        description: true,
-        sub_title: true,
-        title: true,
-        created_at: true,
-        updated_at: true,
-        status: true,
-        user_created: {
-          select: {
-            name: true,
+    const findedPost = await this.prismaService['generalPrisma'].post.findFirst(
+      {
+        where: {
+          post_id: id,
+        },
+        select: {
+          post_id: true,
+          content: true,
+          description: true,
+          sub_title: true,
+          title: true,
+          created_at: true,
+          updated_at: true,
+          status: true,
+          user_created: {
+            select: {
+              name: true,
+            },
+          },
+          user_updated: {
+            select: {
+              name: true,
+            },
           },
         },
-        user_updated: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
+      }
+    );
 
     return {
       id: findedPost?.post_id ?? '',
