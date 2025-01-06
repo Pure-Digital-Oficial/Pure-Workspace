@@ -1,6 +1,7 @@
 export * from './address';
 export * from './auth';
 export * from './axios-config';
+export * from './blog';
 export * from './company';
 export * from './device';
 export * from './directory';
