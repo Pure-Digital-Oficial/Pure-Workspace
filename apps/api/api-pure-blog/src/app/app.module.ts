@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CreateCategoryModule } from './category';
 import {
   CreatePostModule,
   ListPostsModule,
@@ -15,6 +16,7 @@ import {
     ListPostsModule,
     DeletePostModule,
     EditPostModule,
+    CreateCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
