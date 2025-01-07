@@ -1,13 +1,18 @@
-import { Body, Controller, Param, Put, Query } from '@nestjs/common';
-import { ErrorMessageResult, PostBodyDto } from '@pure-workspace/domain';
+import { Body, Controller, Param, Put, Query, UsePipes } from '@nestjs/common';
+import {
+  editPostSchema,
+  ErrorMessageResult,
+  PostBodyDto,
+} from '@pure-workspace/domain';
 import { EditPostService } from './edit-post.service';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 
 @Controller('edit-post')
 export class EditPostController {
   constructor(private readonly editPostService: EditPostService) {}
 
   @Put(':postId')
-  //@UsePipes(new ZodValidationPipe(editCompanyDataSchema))
+  @UsePipes(new ZodValidationPipe(editPostSchema))
   async edit(
     @Query('loggedUserId') loggedUserId: string,
     @Param('postId') postId: string,
