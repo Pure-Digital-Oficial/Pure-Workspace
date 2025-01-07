@@ -7,6 +7,7 @@ import {
   EntityNotExists,
   FindPostByIdRepository,
   FindUserByIdRepository,
+  PostBodyDto,
   PostResponseDto,
   UserList,
 } from '../../../../src';
@@ -67,6 +68,16 @@ describe('EditPost', () => {
     expect(result.value).toStrictEqual(PostMock.id);
   });
 
+  it('should return EntityNotEmpty when pass empty body in editPostDto', async () => {
+    const { editPostDto, sut } = makeSut();
+    editPostDto.body = {} as PostBodyDto;
+    const result = await sut.execute(editPostDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
   it('should return EntityNotEmpty when pass empty user ID in editPostDto', async () => {
     const { editPostDto, sut } = makeSut();
     editPostDto.loggedUserId = '';
@@ -87,7 +98,7 @@ describe('EditPost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty content in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty content in editPostDto', async () => {
     const { editPostDto, sut } = makeSut();
     editPostDto.body.content = '';
     const result = await sut.execute(editPostDto);
@@ -97,7 +108,7 @@ describe('EditPost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty description in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty description in editPostDto', async () => {
     const { editPostDto, sut } = makeSut();
     editPostDto.body.description = '';
     const result = await sut.execute(editPostDto);
@@ -107,7 +118,7 @@ describe('EditPost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty subTitle in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty subTitle in editPostDto', async () => {
     const { editPostDto, sut } = makeSut();
     editPostDto.body.subTitle = '';
     const result = await sut.execute(editPostDto);
@@ -117,7 +128,7 @@ describe('EditPost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty title in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty title in editPostDto', async () => {
     const { editPostDto, sut } = makeSut();
     editPostDto.body.title = '';
     const result = await sut.execute(editPostDto);

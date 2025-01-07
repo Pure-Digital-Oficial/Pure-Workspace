@@ -8,6 +8,7 @@ import {
   EntityNotExists,
   FindAppByIdRepository,
   FindUserByIdRepository,
+  PostBodyDto,
   UserList,
 } from '../../../../src';
 import { appMock, PostMock, userMock } from '../../../entity';
@@ -65,6 +66,16 @@ describe('CreatePost', () => {
     expect(result.isLeft()).toBeFalsy();
     expect(result.isRight()).toBeTruthy();
     expect(result.value).toStrictEqual(PostMock.id);
+  });
+
+  it('should return EntityNotEmpty when pass empty body in createPostDto', async () => {
+    const { createPostDto, sut } = makeSut();
+    createPostDto.body = {} as PostBodyDto;
+    const result = await sut.execute(createPostDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
   it('should return EntityNotEmpty when pass empty appId in externalAuthDto', async () => {

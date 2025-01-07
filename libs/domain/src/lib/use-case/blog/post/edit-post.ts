@@ -46,6 +46,10 @@ export class EditPost
       return left(postValidation.value);
     }
 
+    if (Object.keys(input.body).length < 1) {
+      return left(new EntityNotEmpty('Body'));
+    }
+
     if (Object.keys(content).length < 1) {
       return left(new EntityNotEmpty('Content'));
     }
