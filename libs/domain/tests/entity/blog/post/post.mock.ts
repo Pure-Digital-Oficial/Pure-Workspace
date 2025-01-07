@@ -11,4 +11,5 @@ export const PostMock: PostResponseDto = {
   title: faker.string.alpha(3),
   updatedAt: faker.date.anytime(),
   updatedBy: faker.string.uuid(),
+  status: 'ACTIVE',
 };

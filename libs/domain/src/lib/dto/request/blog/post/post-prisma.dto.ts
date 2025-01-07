@@ -4,6 +4,7 @@ export interface PostPrismaDto {
   sub_title: string;
   description: string;
   content: string;
+  status: string;
   created_at: Date;
   updated_at: Date;
   user_created: {
