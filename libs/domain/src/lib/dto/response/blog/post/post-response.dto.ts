@@ -8,4 +8,5 @@ export interface PostResponseDto {
   createdBy: string;
   updatedAt: Date;
   updatedBy: string;
+  status: string;
 }

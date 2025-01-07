@@ -1,9 +1,9 @@
-import { CreatePostDto } from '@pure-workspace/domain';
+import { EditCompanyDto, EditPostDto } from '@pure-workspace/domain';
 import { pureBlogApi } from '../../axios-config';
 
-export async function CreatePostsRequest(input: CreatePostDto) {
-  const result = await pureBlogApi.post<{ postId: string }>(
-    'create-post',
+export async function EditPostRequest(input: EditPostDto) {
+  const result = await pureBlogApi.put<{ postId: string }>(
+    `edit-post/${input.id}`,
     {
       content: input.body.content,
       description: input.body.description,
@@ -13,7 +13,6 @@ export async function CreatePostsRequest(input: CreatePostDto) {
     {
       params: {
         loggedUserId: input.loggedUserId,
-        appId: input.appId,
       },
     }
   );
