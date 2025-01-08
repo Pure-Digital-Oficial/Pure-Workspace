@@ -4,10 +4,15 @@ import {
   Query,
   UploadedFiles,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { ErrorMessageResult } from '@pure-workspace/domain';
+import {
+  createMediaPostSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 import { CreateMediaPostService } from './create-media-post.service';
+import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('create-media-post')
 export class CreateMediaPostController {
@@ -15,7 +20,7 @@ export class CreateMediaPostController {
     private readonly createMediaPostService: CreateMediaPostService
   ) {}
 
-  //@UsePipes(new ZodValidationPipe(createContentFileSchema))
+  @UsePipes(new ZodValidationPipe(createMediaPostSchema))
   @Post()
   @UseInterceptors(FilesInterceptor('files'))
   async create(
