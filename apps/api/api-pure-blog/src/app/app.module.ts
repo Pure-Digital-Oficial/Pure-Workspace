@@ -7,6 +7,7 @@ import {
   ListPostsModule,
   DeletePostModule,
   EditPostModule,
+  ListUserPostsModule,
 } from './post';
 
 @Module({
@@ -15,6 +16,7 @@ import {
     ListPostsModule,
     DeletePostModule,
     EditPostModule,
+    ListUserPostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

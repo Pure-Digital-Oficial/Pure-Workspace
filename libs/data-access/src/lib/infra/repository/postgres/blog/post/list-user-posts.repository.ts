@@ -23,10 +23,13 @@ export class ListUserPostsRepositoryImpl implements ListUserPostsRepository {
               contains: filter,
               mode: 'insensitive' as const,
             },
-            app_id: appId,
             created_by: loggedUserId,
+            app_id: appId,
           }
-        : {}),
+        : {
+            created_by: loggedUserId,
+            app_id: appId,
+          }),
     };
 
     const [posts, filteredTotal, total] = await this.prismaService[
