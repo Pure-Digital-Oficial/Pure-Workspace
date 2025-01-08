@@ -10,7 +10,7 @@ import {
   FileNotAllowed,
 } from '../../../../error';
 import {
-  CreateMediasPostRepository,
+  CreateMediaPostRepository,
   FindPostByIdRepository,
   FindUserByIdRepository,
   GenerateThumbnailRepository,
@@ -35,8 +35,8 @@ export class CreateMediasPost
     private generateThumbnailRepository: GenerateThumbnailRepository,
     @Inject('UploadContentFileRepository')
     private uploadContentFileRepository: UploadContentFileRepository,
-    @Inject('CreateMediasPostRepository')
-    private createMediasPostRepository: CreateMediasPostRepository
+    @Inject('CreateMediaPostRepository')
+    private createMediaPostRepository: CreateMediaPostRepository
   ) {}
   async execute(
     input: CreateMediasPostDto
@@ -120,8 +120,8 @@ export class CreateMediasPost
         return left(new EntityNotLoaded('File'));
       }
 
-      const filteredContentFileId =
-        await this.createMediasPostRepository.create({
+      const filteredContentFileId = await this.createMediaPostRepository.create(
+        {
           file: {
             ...item,
             path: resultUpload,
@@ -130,7 +130,8 @@ export class CreateMediasPost
           loggedUserId,
           postId,
           thumbnail: thumbNailUrl,
-        });
+        }
+      );
       if (Object.keys(filteredContentFileId).length < 1) {
         return left(new EntityNotCreated('Media'));
       }
