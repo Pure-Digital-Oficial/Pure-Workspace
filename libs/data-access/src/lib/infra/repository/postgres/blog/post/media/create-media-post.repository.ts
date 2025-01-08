@@ -17,8 +17,8 @@ export class CreateMediaPostRepositoryImpl
     const mediaPost = await this.prismaService['generalPrisma'].media.create({
       data: {
         thumbnail,
-        content: '',
-        name: file.originalname,
+        content: file.originalname.split('.')[1],
+        name: file.originalname.split('.')[0],
         url: file.path,
         created_by: loggedUserId,
         updated_by: loggedUserId,

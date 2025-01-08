@@ -112,7 +112,7 @@ export class CreateMediasPost
 
       const resultUpload = await this.uploadContentFileRepository.upload({
         file: item,
-        bucket: process.env['AWS_S3_BUCKET_NAME'] ?? '',
+        bucket: process.env['NX_PUBLIC_STORAGE_BUCKET'] ?? '',
         key,
       });
 
