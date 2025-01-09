@@ -10,6 +10,7 @@ import {
   EditPostModule,
   CreateMediaPostModule,
   ListUserPostsModule,
+  ListMediasPostModule,
 } from './post';
 
 @Module({
@@ -21,6 +22,7 @@ import {
     ListUserPostsModule,
     CreateCategoryModule,
     CreateMediaPostModule,
+    ListMediasPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
