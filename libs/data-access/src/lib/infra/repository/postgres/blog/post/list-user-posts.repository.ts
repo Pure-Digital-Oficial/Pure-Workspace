@@ -2,16 +2,16 @@ import { Inject } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import {
   ListPostsDto,
-  ListPostsRepository,
   ListPostsResponseDto,
+  ListUserPostsRepository,
   PostPrismaDto,
   PostResponseDto,
 } from '@pure-workspace/domain';
 
-export class ListPostsRepositoryImpl implements ListPostsRepository {
+export class ListUserPostsRepositoryImpl implements ListUserPostsRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async list(input: ListPostsDto): Promise<ListPostsResponseDto> {
-    const { filter, appId } = input;
+    const { filter, appId, loggedUserId } = input;
 
     const skip = input?.skip || 0;
     const take = input?.take || 6;
@@ -23,9 +23,11 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
               contains: filter,
               mode: 'insensitive' as const,
             },
+            created_by: loggedUserId,
             app_id: appId,
           }
         : {
+            created_by: loggedUserId,
             app_id: appId,
           }),
     };
@@ -34,10 +36,7 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
       'generalPrisma'
     ].$transaction([
       this.prismaService['generalPrisma'].post.findMany({
-        where: {
-          ...whereClause,
-          status: 'ACTIVE',
-        },
+        where: whereClause,
         select: {
           post_id: true,
           content: true,
@@ -62,10 +61,7 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
         take: parseInt(take.toString()),
       }),
       this.prismaService['generalPrisma'].post.count({
-        where: {
-          ...whereClause,
-          status: 'ACTIVE',
-        },
+        where: whereClause,
       }),
       this.prismaService['generalPrisma'].post.count(),
     ]);
