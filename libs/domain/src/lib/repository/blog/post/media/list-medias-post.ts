@@ -1,7 +1,4 @@
-import {
-  ListMediasPostDto,
-  ListMediasPostResponseDto,
-} from 'libs/domain/src/lib/dto';
+import { ListMediasPostDto, ListMediasPostResponseDto } from '../../../../dto';
 
 export interface ListMediasPostRepository {
   list(input: ListMediasPostDto): Promise<ListMediasPostResponseDto>;
