@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import {
   ListMediasPostDto,
   ListMediasPostRepository,
@@ -6,12 +7,9 @@ import {
   MediaPostResponseDto,
   MediaPostPrismaDto,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from 'libs/data-access/src/lib/application';
 
 export class ListMediasPostRepositoryImpl implements ListMediasPostRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async list(input: ListMediasPostDto): Promise<ListMediasPostResponseDto> {
     const { filter, postId } = input;
 
