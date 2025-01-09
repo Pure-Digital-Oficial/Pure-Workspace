@@ -3,14 +3,12 @@ import {
   CreateMediaPostDto,
   CreateMediaPostRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class CreateMediaPostRepositoryImpl
   implements CreateMediaPostRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async create(input: CreateMediaPostDto): Promise<string> {
     const { file, loggedUserId, postId, thumbnail } = input;
 
