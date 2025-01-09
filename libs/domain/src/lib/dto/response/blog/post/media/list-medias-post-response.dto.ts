@@ -4,5 +4,5 @@ export interface ListMediasPostResponseDto {
   total: number;
   filteredTotal: number;
   totalPages: number;
-  posts: MediaPostResponseDto[];
+  medias: MediaPostResponseDto[];
 }
