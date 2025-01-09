@@ -8,6 +8,7 @@ import {
   ListPostsModule,
   DeletePostModule,
   EditPostModule,
+  CreateMediaPostModule,
   ListUserPostsModule,
 } from './post';
 
@@ -19,6 +20,7 @@ import {
     EditPostModule,
     ListUserPostsModule,
     CreateCategoryModule,
+    CreateMediaPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

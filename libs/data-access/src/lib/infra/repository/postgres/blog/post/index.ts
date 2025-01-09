@@ -1,3 +1,4 @@
+export * from './media';
 export * from './create-post.repository';
 export * from './delete-post.repository';
 export * from './edit-post.repository';

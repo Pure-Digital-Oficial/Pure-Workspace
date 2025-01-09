@@ -21,6 +21,7 @@ import {
   CompanySimpleMock,
   ContentFileMock,
   DirectoryMock,
+  FileMock,
   userMock,
 } from '../../entity';
 import {
@@ -50,23 +51,11 @@ const makeSut = (): SutTypes => {
   const findDirectoryByIdRepository = new FindDirectoryByIdRespositoryMock();
   const generateThumbnailRepository = new GenerateThumbnailRepositoryMock();
   const uploadContentFileRepository = new UploadContentFileRepositoryMock();
-  const mockBuffer = {} as Buffer;
   const CreateContentFileDto: CreateContentFileDto = {
     directoryId: DirectoryMock.id,
     loggedUserId: userMock.userId,
     companyId: CompanySimpleMock.id,
-    file: [
-      {
-        fieldname: 'any_fieldname',
-        originalname: 'any_originalname',
-        encoding: 'any_encoding',
-        mimetype: 'image/png',
-        buffer: mockBuffer,
-        size: 1,
-        filename: 'any_filename',
-        path: 'any_path',
-      },
-    ],
+    file: [FileMock],
   };
 
   const sut = new CreateContentFile(
@@ -99,6 +88,18 @@ describe('CreateContentFile', () => {
     expect(result.isLeft()).toBe(false);
     expect(result.isRight()).toBe(true);
     expect(result.value).toStrictEqual(resultResponse);
+  });
+
+  it('should return EntityNotLoaded when not loaded content file in cloud', async () => {
+    const { CreateContentFileDto, sut } = makeSut();
+    jest
+      .spyOn(sut['uploadContentFileRepository'], 'upload')
+      .mockResolvedValueOnce('');
+    const result = await sut.execute(CreateContentFileDto);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toBeInstanceOf(EntityNotLoaded);
   });
 
   it('should return EntityNotEmpty when a pass incorrect file', async () => {
@@ -155,18 +156,6 @@ describe('CreateContentFile', () => {
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toBeInstanceOf(EntityNotExists);
-  });
-
-  it('should return EntityNotLoaded when not loaded content file in cloud', async () => {
-    const { CreateContentFileDto, sut } = makeSut();
-    jest
-      .spyOn(sut['uploadContentFileRepository'], 'upload')
-      .mockResolvedValueOnce('');
-    const result = await sut.execute(CreateContentFileDto);
-
-    expect(result.isLeft()).toBe(true);
-    expect(result.isRight()).toBe(false);
-    expect(result.value).toBeInstanceOf(EntityNotLoaded);
   });
 
   it('should return EntityNotConverted when not converted content file in system', async () => {

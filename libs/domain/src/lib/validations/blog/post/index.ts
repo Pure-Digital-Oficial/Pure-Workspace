@@ -1,3 +1,4 @@
+export * from './media';
 export * from './create-post.schema';
 export * from './delete-post.schema';
 export * from './edit-post.schema';
