@@ -1,4 +1,5 @@
 import {
+  DeleteFileByNameRepository,
   DeleteMediaPost,
   DeleteMediaPostDto,
   DeleteMediaPostRepository,
@@ -12,6 +13,7 @@ import {
 } from '../../../../../src';
 import { MediaPostMock, userMock } from '../../../../entity';
 import {
+  DeleteFileByNameRepositoryMock,
   DeleteMediaPostRepositoryMock,
   FindMediaPostByIdRepositoryMock,
   FindUserByIdRepositoryMock,
@@ -23,12 +25,14 @@ interface SutTypes {
   findUserByIdRepository: FindUserByIdRepository;
   findMediaPostByIdRepository: FindMediaPostByIdRepository;
   deleteMediaPostRepository: DeleteMediaPostRepository;
+  deleteFileByNameRepository: DeleteFileByNameRepository;
 }
 
 const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findMediaPostByIdRepository = new FindMediaPostByIdRepositoryMock();
   const deleteMediaPostRepository = new DeleteMediaPostRepositoryMock();
+  const deleteFileByNameRepository = new DeleteFileByNameRepositoryMock();
 
   const deleteMediaPostDto: DeleteMediaPostDto = {
     loggedUserId: userMock.userId,
@@ -38,7 +42,8 @@ const makeSut = (): SutTypes => {
   const sut = new DeleteMediaPost(
     findUserByIdRepository,
     findMediaPostByIdRepository,
-    deleteMediaPostRepository
+    deleteMediaPostRepository,
+    deleteFileByNameRepository
   );
 
   return {
@@ -47,6 +52,7 @@ const makeSut = (): SutTypes => {
     findUserByIdRepository,
     findMediaPostByIdRepository,
     deleteMediaPostRepository,
+    deleteFileByNameRepository,
   };
 };
 
@@ -115,5 +121,23 @@ describe('DeleteMediaPost', () => {
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toBeInstanceOf(EntityNotDeleted);
+  });
+
+  it('should delte media post when a exit thumbnail in media post', async () => {
+    const { deleteMediaPostDto, sut } = makeSut();
+    jest
+      .spyOn(sut['findMediaPostByIdRepository'], 'find')
+      .mockResolvedValueOnce(MediaPostMock);
+
+    jest
+      .spyOn(sut['findMediaPostByIdRepository'], 'find')
+      .mockResolvedValueOnce({
+        thumbnail: '',
+      } as MediaPostResponseDto);
+    const result = await sut.execute(deleteMediaPostDto);
+
+    expect(result.isLeft()).toBe(false);
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toStrictEqual(MediaPostMock.id);
   });
 });

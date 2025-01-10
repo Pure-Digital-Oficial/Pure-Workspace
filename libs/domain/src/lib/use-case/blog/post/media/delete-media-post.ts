@@ -3,6 +3,7 @@ import { UseCase } from '../../../../base/use-case';
 import { DeleteMediaPostDto } from '../../../../dto';
 import { EntityNotDeleted, EntityNotEmpty } from '../../../../error';
 import {
+  DeleteFileByNameRepository,
   DeleteMediaPostRepository,
   FindMediaPostByIdRepository,
   FindUserByIdRepository,
@@ -19,7 +20,9 @@ export class DeleteMediaPost
     @Inject('FindMediaPostByIdRepository')
     private findMediaPostByIdRepository: FindMediaPostByIdRepository,
     @Inject('DeleteMediaPostRepository')
-    private deleteMediaPostRepository: DeleteMediaPostRepository
+    private deleteMediaPostRepository: DeleteMediaPostRepository,
+    @Inject('DeleteFileByNameRepository')
+    private deleteFileByNameRepository: DeleteFileByNameRepository
   ) {}
   async execute(
     input: DeleteMediaPostDto
@@ -48,6 +51,22 @@ export class DeleteMediaPost
 
     if (Object.keys(deletedMediaPost).length < 1) {
       return left(new EntityNotDeleted('Media Post'));
+    }
+
+    const filteredMediaPost = await this.findMediaPostByIdRepository.find(
+      mediaId
+    );
+
+    if (Object.keys(filteredMediaPost?.thumbnail ?? '').length > 0) {
+      const thumbnail = filteredMediaPost?.thumbnail
+        ? filteredMediaPost?.thumbnail.split('/')
+        : '';
+      await this.deleteFileByNameRepository.delete(
+        thumbnail[thumbnail.length - 1]
+      );
+      await this.deleteFileByNameRepository.delete(filteredMediaPost.name);
+    } else {
+      await this.deleteFileByNameRepository.delete(filteredMediaPost.name);
     }
 
     return right(deletedMediaPost);
