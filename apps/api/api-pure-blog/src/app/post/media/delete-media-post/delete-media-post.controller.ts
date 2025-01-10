@@ -1,6 +1,10 @@
-import { Controller, Delete, Param, Query } from '@nestjs/common';
-import { ErrorMessageResult } from '@pure-workspace/domain';
+import { Controller, Delete, Param, Query, UsePipes } from '@nestjs/common';
+import {
+  deleteMediaPostSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 import { DeleteMediaPostService } from './delete-media-post.service';
+import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('delete-media-post')
 export class DeleteMediaPostController {
@@ -9,7 +13,7 @@ export class DeleteMediaPostController {
   ) {}
 
   @Delete(':mediaId')
-  //@UsePipes(new ZodValidationPipe(deletePostSchema))
+  @UsePipes(new ZodValidationPipe(deleteMediaPostSchema))
   async delete(
     @Param('mediaId') mediaId: string,
     @Query('loggedUserId') loggedUserId: string

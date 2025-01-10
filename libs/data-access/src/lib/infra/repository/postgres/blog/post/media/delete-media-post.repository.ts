@@ -3,14 +3,12 @@ import {
   DeleteMediaPostDto,
   DeleteMediaPostRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class DeleteMediaPostRepositoryImpl
   implements DeleteMediaPostRepository
 {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async delete(input: DeleteMediaPostDto): Promise<string> {
     const { mediaId } = input;
 
