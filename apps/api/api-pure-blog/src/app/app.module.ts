@@ -12,6 +12,7 @@ import {
   ListUserPostsModule,
   ListMediasPostModule,
   EditMediaPostModule,
+  DeleteMediaPostModule,
 } from './post';
 
 @Module({
@@ -25,6 +26,7 @@ import {
     CreateMediaPostModule,
     ListMediasPostModule,
     EditMediaPostModule,
+    DeleteMediaPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

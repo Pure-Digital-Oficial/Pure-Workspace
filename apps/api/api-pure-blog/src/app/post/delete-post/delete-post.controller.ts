@@ -9,7 +9,7 @@ export class DeletePostController {
 
   @Delete(':postId')
   @UsePipes(new ZodValidationPipe(deletePostSchema))
-  async create(
+  async delete(
     @Param('postId') postId: string,
     @Query('loggedUserId') loggedUserId: string
   ) {

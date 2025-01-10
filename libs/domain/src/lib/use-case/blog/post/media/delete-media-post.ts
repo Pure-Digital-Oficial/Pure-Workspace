@@ -47,15 +47,15 @@ export class DeleteMediaPost
       return left(mediaPostValidation.value);
     }
 
+    const filteredMediaPost = await this.findMediaPostByIdRepository.find(
+      mediaId
+    );
+
     const deletedMediaPost = await this.deleteMediaPostRepository.delete(input);
 
     if (Object.keys(deletedMediaPost).length < 1) {
       return left(new EntityNotDeleted('Media Post'));
     }
-
-    const filteredMediaPost = await this.findMediaPostByIdRepository.find(
-      mediaId
-    );
 
     if (Object.keys(filteredMediaPost?.thumbnail ?? '').length > 0) {
       const thumbnail = filteredMediaPost?.thumbnail
@@ -64,9 +64,9 @@ export class DeleteMediaPost
       await this.deleteFileByNameRepository.delete(
         thumbnail[thumbnail.length - 1]
       );
-      await this.deleteFileByNameRepository.delete(filteredMediaPost.name);
+      await this.deleteFileByNameRepository.delete(filteredMediaPost.content);
     } else {
-      await this.deleteFileByNameRepository.delete(filteredMediaPost.name);
+      await this.deleteFileByNameRepository.delete(filteredMediaPost.content);
     }
 
     return right(deletedMediaPost);
