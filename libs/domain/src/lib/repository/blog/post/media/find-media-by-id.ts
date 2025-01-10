@@ -1,5 +1,5 @@
 import { MediaPostResponseDto } from '../../../../dto';
 
-export interface FindMediaByIdRepository {
+export interface FindMediaPostByIdRepository {
   find(id: string): Promise<MediaPostResponseDto>;
 }

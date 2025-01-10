@@ -1,18 +1,14 @@
 import { Inject } from '@nestjs/common';
 import { UseCase } from '../../../../base/use-case';
 import { EditMediaPostDto } from '../../../../dto';
-import {
-  EntityNotEdit,
-  EntityNotEmpty,
-  EntityNotExists,
-} from '../../../../error';
+import { EntityNotEdit, EntityNotEmpty } from '../../../../error';
 import { Either, left, right } from '../../../../shared/either';
 import {
   EditMediaPostRepository,
-  FindMediaByIdRepository,
+  FindMediaPostByIdRepository,
   FindUserByIdRepository,
 } from '../../../../repository';
-import { ValidationUserId } from '../../../../utils';
+import { ValidationMediaPostId, ValidationUserId } from '../../../../utils';
 
 export class EditMediaPost
   implements UseCase<EditMediaPostDto, Either<EntityNotEmpty, string>>
@@ -20,10 +16,10 @@ export class EditMediaPost
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
-    @Inject('FindMediaByIdRepository')
-    private findMediaByIdRepository: FindMediaByIdRepository,
+    @Inject('FindMediaPostByIdRepository')
+    private findMediaPostByIdRepository: FindMediaPostByIdRepository,
     @Inject('EditMediaPostRepository')
-    private editMediaRepository: EditMediaPostRepository
+    private editMediaPostRepository: EditMediaPostRepository
   ) {}
   async execute(
     input: EditMediaPostDto
@@ -39,17 +35,20 @@ export class EditMediaPost
       return left(userValidation.value);
     }
 
-    const findedMedia = await this.findMediaByIdRepository.find(mediaId);
+    const mediaPostValidation = await ValidationMediaPostId(
+      mediaId,
+      this.findMediaPostByIdRepository
+    );
 
-    if (Object.keys(findedMedia?.id ?? findedMedia).length < 1) {
-      return left(new EntityNotExists('Media'));
+    if (mediaPostValidation.isLeft()) {
+      return left(mediaPostValidation.value);
     }
 
     if (Object.keys(name).length < 1) {
       return left(new EntityNotEmpty('Name'));
     }
 
-    const editedMedia = await this.editMediaRepository.edit(input);
+    const editedMedia = await this.editMediaPostRepository.edit(input);
 
     if (Object.keys(editedMedia).length < 1) {
       return left(new EntityNotEdit('Media'));
