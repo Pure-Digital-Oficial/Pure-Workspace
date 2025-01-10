@@ -1,13 +1,17 @@
-import { Body, Controller, Param, Put, Query } from '@nestjs/common';
-import { ErrorMessageResult } from '@pure-workspace/domain';
+import { Body, Controller, Param, Put, Query, UsePipes } from '@nestjs/common';
+import {
+  editMediaPostSchema,
+  ErrorMessageResult,
+} from '@pure-workspace/domain';
 import { EditMediaPostService } from './edit-media-post.service';
+import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('edit-media-post')
 export class EditMediaPostController {
   constructor(private readonly editMediaPostService: EditMediaPostService) {}
 
   @Put(':mediaId')
-  //@UsePipes(new ZodValidationPipe(editPostSchema))
+  @UsePipes(new ZodValidationPipe(editMediaPostSchema))
   async edit(
     @Query('loggedUserId') loggedUserId: string,
     @Param('mediaId') mediaId: string,
