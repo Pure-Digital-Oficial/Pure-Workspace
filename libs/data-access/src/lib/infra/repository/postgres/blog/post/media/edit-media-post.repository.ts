@@ -3,12 +3,10 @@ import {
   EditMediaPostDto,
   EditMediaPostRepository,
 } from '@pure-workspace/domain';
-import { PrismaGeneralService } from '../../../../../../application';
+import { PrismaService } from 'nestjs-prisma';
 
 export class EditMediaPostRepositoryImpl implements EditMediaPostRepository {
-  constructor(
-    @Inject('PrismaService') private prismaService: PrismaGeneralService
-  ) {}
+  constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
   async edit(input: EditMediaPostDto): Promise<string> {
     const { loggedUserId, mediaId, name } = input;
     const editedMediaPost = await this.prismaService[
