@@ -25,7 +25,9 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
             },
             app_id: appId,
           }
-        : {}),
+        : {
+            app_id: appId,
+          }),
     };
 
     const [posts, filteredTotal, total] = await this.prismaService[
