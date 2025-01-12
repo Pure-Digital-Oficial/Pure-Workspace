@@ -14,6 +14,7 @@ import {
   EditMediaPostModule,
   DeleteMediaPostModule,
 } from './post';
+import { DeleteCategoryModule } from './category/delete-category/delete-category.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import {
     EditPostModule,
     ListUserPostsModule,
     CreateCategoryModule,
+    DeleteCategoryModule,
     EditCategoryModule,
     CreateMediaPostModule,
     ListMediasPostModule,
