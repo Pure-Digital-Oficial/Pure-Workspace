@@ -1,18 +1,18 @@
 import { Inject } from '@nestjs/common';
-import { UseCase } from '../../../base/use-case';
-import { CreatePostDto } from '../../../dto';
+import { UseCase } from '../../../../base/use-case';
+import { CreatePostDto } from '../../../../dto';
 import {
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
-} from '../../../error';
+} from '../../../../error';
 import {
   CreateDraftPostRepository,
   FindAppByIdRepository,
   FindUserByIdRepository,
-} from '../../../repository';
-import { Either, left, right } from '../../../shared/either';
-import { ValidationUserId } from '../../../utils';
+} from '../../../../repository';
+import { Either, left, right } from '../../../../shared/either';
+import { ValidationUserId } from '../../../../utils';
 
 export class CreateDraftPost
   implements UseCase<CreatePostDto, Either<EntityNotEmpty, string>>

@@ -10,13 +10,13 @@ import {
   FindUserByIdRepository,
   PostBodyDto,
   UserList,
-} from '../../../../src';
-import { appMock, PostMock, userMock } from '../../../entity';
+} from '../../../../../src';
+import { appMock, PostMock, userMock } from '../../../../entity';
 import {
   CreatePostRepositoryMock,
   FindAppByIdRepositoryMock,
   FindUserByIdRepositoryMock,
-} from '../../../repository';
+} from '../../../../repository';
 
 interface SutTypes {
   sut: CreateDraftPost;

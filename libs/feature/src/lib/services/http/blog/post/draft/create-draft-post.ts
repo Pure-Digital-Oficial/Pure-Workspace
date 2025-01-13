@@ -1,5 +1,5 @@
 import { CreatePostDto } from '@pure-workspace/domain';
-import { pureBlogApi } from '../../axios-config';
+import { pureBlogApi } from '../../../axios-config';
 
 export async function CreateDraftPostRequest(input: CreatePostDto) {
   const result = await pureBlogApi.post<{ postId: string }>(
