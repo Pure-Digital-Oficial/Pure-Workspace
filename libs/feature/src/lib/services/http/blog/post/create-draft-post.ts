@@ -1,9 +1,9 @@
 import { CreatePostDto } from '@pure-workspace/domain';
 import { pureBlogApi } from '../../axios-config';
 
-export async function CreatePostRequest(input: CreatePostDto) {
+export async function CreateDraftPostRequest(input: CreatePostDto) {
   const result = await pureBlogApi.post<{ postId: string }>(
-    'create-post',
+    'create-draft-post',
     {
       content: input.body.content,
       description: input.body.description,
