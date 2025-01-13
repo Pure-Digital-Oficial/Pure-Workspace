@@ -13,6 +13,7 @@ import {
   ListMediasPostModule,
   EditMediaPostModule,
   DeleteMediaPostModule,
+  CreateDraftPostModule,
 } from './post';
 import { ListCategoryModule } from './category/list-category/list-category.module';
 
@@ -30,6 +31,7 @@ import { ListCategoryModule } from './category/list-category/list-category.modul
     ListMediasPostModule,
     EditMediaPostModule,
     DeleteMediaPostModule,
+    CreateDraftPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

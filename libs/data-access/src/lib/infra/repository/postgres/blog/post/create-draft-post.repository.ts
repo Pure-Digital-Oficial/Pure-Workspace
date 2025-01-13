@@ -5,7 +5,7 @@ import {
 import { PrismaService } from 'nestjs-prisma';
 import { Inject } from '@nestjs/common';
 
-export class CreatedDraftPostRepositoryImpl
+export class CreateDraftPostRepositoryImpl
   implements CreateDraftPostRepository
 {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
