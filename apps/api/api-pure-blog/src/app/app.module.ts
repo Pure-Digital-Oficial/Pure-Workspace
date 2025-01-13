@@ -18,6 +18,7 @@ import {
   ListMediasPostModule,
   EditMediaPostModule,
   DeleteMediaPostModule,
+  CreateDraftPostModule,
 } from './post';
 
 @Module({
@@ -35,6 +36,7 @@ import {
     ListMediasPostModule,
     EditMediaPostModule,
     DeleteMediaPostModule,
+    CreateDraftPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
