@@ -5,7 +5,7 @@ import {
   PostBodyDto,
 } from '@pure-workspace/domain';
 import { CreateDraftPostService } from './create-draft-post.service';
-import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../../pipes/zod-validation-pipe';
 
 @Controller('create-draft-post')
 export class CreateDraftPostController {
