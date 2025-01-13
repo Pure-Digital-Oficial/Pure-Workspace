@@ -17,7 +17,7 @@ export class AddDraftToPostRepositoryImpl implements AddDraftToPostRepository {
         post_id: id,
       },
       data: {
-        status: 'BLOCKED',
+        status: 'ACTIVE',
         updated_by: loggedUserId,
         updated_at: new Date(),
       },
