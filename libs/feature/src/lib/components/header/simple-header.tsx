@@ -42,8 +42,8 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
         <Box>
           <img
             onClick={() => scrollTo('home')}
-            width={theme.spacing(10)}
-            height={theme.spacing(10)}
+            width={theme.spacing(8)}
+            height={theme.spacing(8)}
             style={{
               transition: 'transform 0.3s, opacity 0.3s',
               cursor: 'pointer',

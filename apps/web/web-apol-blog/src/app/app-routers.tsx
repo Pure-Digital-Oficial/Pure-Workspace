@@ -43,6 +43,8 @@ export const AppRouters = () => {
         }
       />
 
+      <Route path="/loading" element={<div>tela de login</div>} />
+
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
