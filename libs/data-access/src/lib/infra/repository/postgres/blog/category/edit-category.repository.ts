@@ -24,6 +24,7 @@ export class EditCategoryRepositoryImpl implements EditCategoryRepository {
         name,
         description,
         updated_by: loggedUserId,
+        updated_at: new Date(),
       },
     });
 
