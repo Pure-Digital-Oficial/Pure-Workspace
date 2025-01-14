@@ -7,6 +7,7 @@
     "start:front-summons": "nx run web-summons:serve",
     "start:front-pure-tv": "nx run web-pure-tv:serve",
     "start:front-pure-marketing": "nx run web-pure-marketing:serve",
+    "start:front-apol-blog": "nx run web-apol-blog:serve",
     "start:back-summons": "nx run api-summons:serve",
     "start:back-pure-tv": "nx run api-pure-tv:serve",
     "start:back-general": "nx run api-general:serve",

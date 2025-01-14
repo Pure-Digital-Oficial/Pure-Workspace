@@ -4,6 +4,7 @@ export * from './card';
 export * from './drawer';
 export * from './file';
 export * from './form';
+export * from './header';
 export * from './input';
 export * from './list';
 export * from './loading';
