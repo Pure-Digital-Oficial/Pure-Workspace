@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { SimpleHeader } from '../../components';
+import { SimpleHeader, ToolbarApolBlog } from '../../components';
 import { ButtonNavigation } from '../../shared';
 import { FC } from 'react';
 
@@ -25,6 +25,7 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         logo={companyLogo}
         logoAltTitle={companyLogoAltTitle}
         listButtons={headerListButtons}
+        toolBar={<ToolbarApolBlog />}
       />
     </Box>
   );

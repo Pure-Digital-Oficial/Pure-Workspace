@@ -1,7 +1,9 @@
-import { AppRouters } from './app-routers';
+import { ContentApp } from './content-app';
 
 export function App() {
-  return <AppRouters />;
+  return (
+    <ContentApp clientId={process.env['NX_PUBLIC_EXTERNAL_CLIENT_ID'] ?? ''} />
+  );
 }
 
 export default App;

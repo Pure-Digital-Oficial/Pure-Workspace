@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -18,7 +18,9 @@ interface SimpleHeaderProps {
   title?: string;
   logo: string;
   logoAltTitle?: string;
+  toolBar?: ReactNode;
   listButtons: ButtonNavigation[];
+  color?: string;
 }
 
 export const SimpleHeader: FC<SimpleHeaderProps> = ({
@@ -26,6 +28,8 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
   logoAltTitle = 'Logo da Empresa',
   logo,
   listButtons,
+  toolBar,
+  color = 'white',
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -33,44 +37,48 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
   const { toggleDrawerOpen } = useDrawerContext();
 
   return (
-    <AppBar id="home" position="static">
-      <Toolbar>
-        <IconButton
-          onClick={() => scrollTo('home')}
-          sx={{
-            '&:hover': {
-              opacity: 0.8,
-            },
-          }}
-        >
+    <AppBar sx={{ backgroundColor: color }} id="home" position="static">
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box>
           <img
-            width={theme.spacing(7)}
-            height={theme.spacing(7)}
+            onClick={() => scrollTo('home')}
+            width={theme.spacing(10)}
+            height={theme.spacing(10)}
+            style={{
+              transition: 'transform 0.3s, opacity 0.3s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '0.8';
+              e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
             src={logo}
             alt={logoAltTitle}
           />
-        </IconButton>
-        {title ? (
-          <Typography
-            variant="h6"
-            textOverflow="ellipsis"
-            overflow="hidden"
-            noWrap
-            component="div"
-            fontSize={
-              smDown
-                ? theme.spacing(2)
-                : mdDown
-                ? theme.spacing(1.8)
-                : theme.spacing(3)
-            }
-            sx={{ flexGrow: 1 }}
-          >
-            {title}
-          </Typography>
-        ) : (
-          <Box style={{ flexGrow: 1 }}></Box>
-        )}
+          {title && (
+            <Typography
+              variant="h6"
+              textOverflow="ellipsis"
+              overflow="hidden"
+              noWrap
+              component="div"
+              fontSize={
+                smDown
+                  ? theme.spacing(2)
+                  : mdDown
+                  ? theme.spacing(1.8)
+                  : theme.spacing(3)
+              }
+              sx={{ flexGrow: 1 }}
+            >
+              {title}
+            </Typography>
+          )}
+        </Box>
         {smDown ? (
           <IconButton color="inherit" onClick={toggleDrawerOpen}>
             <MenuIcon />
@@ -78,13 +86,13 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
         ) : (
           <>
             <Box
-              marginRight={
-                smDown
-                  ? theme.spacing(-0.5)
-                  : mdDown
-                  ? theme.spacing(0)
-                  : theme.spacing(3)
-              }
+              // marginRight={
+              //   smDown
+              //     ? theme.spacing(-0.5)
+              //     : mdDown
+              //     ? theme.spacing(0)
+              //     : theme.spacing(3)
+              // }
               sx={{
                 display: 'flex',
                 flexWrap: 'nowrap',
@@ -117,7 +125,9 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
               sx={{
                 marginRight: mdDown ? theme.spacing(2) : '',
               }}
-            ></Box>
+            >
+              {toolBar && <Box>{toolBar}</Box>}
+            </Box>
           </>
         )}
       </Toolbar>
