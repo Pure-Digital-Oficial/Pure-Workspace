@@ -20,14 +20,14 @@ export const ToolbarApolBlog: FC<ToolbarApolBlogProps> = ({
   const navigate = useNavigate();
   const { loggedUser } = useLoggedUser();
   const navigateTo = () => {
-    navigate('login');
+    navigate('/login');
   };
 
   return (
     <Stack spacing={1} direction="row" sx={{ color: 'action.active' }}>
       <ToolbarButtom
         handleOpen={navigateTo}
-        icon={<Person2OutlinedIcon fontSize="large" sx={{ color: 'black' }} />}
+        icon={<Person2OutlinedIcon fontSize="medium" sx={{ color: 'black' }} />}
         title={loginTitle}
         fill={fill}
       />
@@ -36,7 +36,7 @@ export const ToolbarApolBlog: FC<ToolbarApolBlogProps> = ({
           handleOpen={navigateTo}
           icon={
             <NotificationsNoneOutlinedIcon
-              fontSize="large"
+              fontSize="medium"
               sx={{ color: 'black' }}
             />
           }

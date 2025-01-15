@@ -1,7 +1,9 @@
 import {
   AppThemeProvider,
+  DrawerProvider,
   FileModalProvider,
   LoggedUserProvider,
+  SimpleDrawer,
   greenDarkTheme,
   greenLightTheme,
 } from '@pure-workspace/feature';
@@ -21,9 +23,13 @@ export const ContentApp: FC<ContentAppProps> = ({ clientId }) => {
     >
       <LoggedUserProvider>
         <GoogleOAuthProvider clientId={clientId}>
-          <FileModalProvider>
-            <AppRouters />
-          </FileModalProvider>
+          <DrawerProvider>
+            <SimpleDrawer>
+              <FileModalProvider>
+                <AppRouters />
+              </FileModalProvider>
+            </SimpleDrawer>
+          </DrawerProvider>
         </GoogleOAuthProvider>
       </LoggedUserProvider>
     </AppThemeProvider>

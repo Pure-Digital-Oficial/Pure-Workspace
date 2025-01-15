@@ -13,6 +13,7 @@ export * from './modal';
 export * from './notification-card';
 export * from './popper';
 export * from './popup';
+export * from './protect';
 export * from './scroll';
 export * from './search';
 export * from './stepper';

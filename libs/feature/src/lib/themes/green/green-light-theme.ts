@@ -14,4 +14,7 @@ export const greenLightTheme = createTheme({
       paper: '#ffffff',
     },
   },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
 });

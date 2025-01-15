@@ -18,6 +18,7 @@ export const greenDarkTheme = createTheme({
   typography: {
     allVariants: {
       color: 'white',
+      fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
     },
   },
 });

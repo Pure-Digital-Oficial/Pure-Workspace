@@ -86,13 +86,6 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
         ) : (
           <>
             <Box
-              // marginRight={
-              //   smDown
-              //     ? theme.spacing(-0.5)
-              //     : mdDown
-              //     ? theme.spacing(0)
-              //     : theme.spacing(3)
-              // }
               sx={{
                 display: 'flex',
                 flexWrap: 'nowrap',
@@ -105,7 +98,9 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
                     onClick={button.to}
                     key={button.title}
                     sx={{
+                      marginRight: theme.spacing(2),
                       textTransform: 'none',
+                      fontWeight: 400,
                       fontSize: smDown
                         ? theme.spacing(1.5)
                         : mdDown
@@ -121,13 +116,7 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
                   </Button>
                 ))}
             </Box>
-            <Box
-              sx={{
-                marginRight: mdDown ? theme.spacing(2) : '',
-              }}
-            >
-              {toolBar && <Box>{toolBar}</Box>}
-            </Box>
+            {toolBar && <Box>{toolBar}</Box>}
           </>
         )}
       </Toolbar>

@@ -1,7 +1,26 @@
-import { ApolHomeContainer, scrollTo } from '@pure-workspace/feature';
+import {
+  ApolHomeContainer,
+  ProtectedRoute,
+  scrollTo,
+  useDrawerContext,
+} from '@pure-workspace/feature';
+import { useEffect, useRef } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const AppRouters = () => {
+  const { setDrawerOptions } = useDrawerContext();
+  const hasLoadedUserData = useRef(false);
+
+  useEffect(() => {
+    if (!hasLoadedUserData.current) {
+      setDrawerOptions({
+        Inicio: [{ label: 'Inicio', icon: 'home', path: 'home' }],
+        About: [{ label: 'Sobre nós', icon: 'badge', path: 'about-section' }],
+      });
+      hasLoadedUserData.current = true;
+    }
+  }, [setDrawerOptions]);
+
   return (
     <Routes>
       <Route
@@ -43,7 +62,16 @@ export const AppRouters = () => {
         }
       />
 
-      <Route path="/loading" element={<div>tela de login</div>} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <div>A Criar</div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="/login" element={<div>tela de login</div>} />
 
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
