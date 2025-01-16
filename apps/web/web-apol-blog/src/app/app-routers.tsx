@@ -58,6 +58,13 @@ export const AppRouters = () => {
             company={{
               companyLogo: '/assets/images/Apol_Logo.svg',
             }}
+            hero={{
+              image: '/assets/images/Hero_Image.svg',
+              title: 'Bem-vindo ao Futuro do Agronegócio em Londrina!',
+              backgroundImage: '/assets/images/Hero_Background.svg',
+              subTitle:
+                'Unimos produtores, inovação e sustentabilidade para transformar o campoem um verdadeiro motor de progresso.',
+            }}
           />
         }
       />
