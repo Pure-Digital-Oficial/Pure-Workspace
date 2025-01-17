@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import {
   ApolHomeContainer,
   ProtectedRoute,
@@ -64,6 +65,14 @@ export const AppRouters = () => {
               backgroundImage: '/assets/images/Hero_Background.svg',
               subTitle:
                 'Unimos produtores, inovação e sustentabilidade para transformar o campoem um verdadeiro motor de progresso.',
+            }}
+            about={{
+              aboutCtaButton: () => scrollTo('contact'),
+              aboutTitle: 'Quem Somos',
+              aboutDescription:
+                'A Associação dos Produtores de Londrina é uma iniciativa que une esforços para fortalecer o agronegócio da região. Trabalhamos para oferecer suporte aos produtores, compartilhar conhecimento e promover iniciativas que transformam o campo em um lugar de oportunidades.',
+              aboutImage: '/assets/images/About_Image.svg',
+              aboutCtaButtonTitle: 'Entre em Contato',
             }}
           />
         }

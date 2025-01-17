@@ -1,3 +1,4 @@
+export * from './about';
 export * from './alert';
 export * from './buttom';
 export * from './card';
