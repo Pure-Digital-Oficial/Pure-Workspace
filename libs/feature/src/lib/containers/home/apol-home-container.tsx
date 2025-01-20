@@ -17,6 +17,7 @@ interface ApolHomeContainerProps {
   company: {
     companyLogo: string;
     companyLogoAltTitle?: string;
+    companyName?: string;
   };
   hero: {
     image: string;
@@ -41,13 +42,12 @@ interface ApolHomeContainerProps {
     footerMobileColor?: string;
     footerTabletColor?: string;
     footerDefaultColor?: string;
-    footerCompanyName?: string;
   };
 }
 
 export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
   header: { headerTitle, headerListButtons },
-  company: { companyLogo, companyLogoAltTitle },
+  company: { companyLogo, companyLogoAltTitle, companyName },
   hero: {
     title,
     image,
@@ -71,7 +71,6 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
     footerMobileColor,
     footerTabletColor,
     footerDefaultColor,
-    footerCompanyName,
   },
 }) => {
   return (
@@ -103,7 +102,10 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
       <SimpleFooter
         icons={footerIcons}
         colorDefault={footerDefaultColor}
-        companyName={footerCompanyName}
+        company={{
+          companyLogo,
+          companyName,
+        }}
         copyrightText={footerCopyrightText}
         colorMobile={footerMobileColor}
         colorTablet={footerTabletColor}

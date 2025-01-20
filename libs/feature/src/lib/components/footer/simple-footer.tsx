@@ -10,7 +10,10 @@ import { FC } from 'react';
 
 interface SimpleFooterProps {
   copyrightText?: string;
-  companyName?: string;
+  company?: {
+    companyName?: string;
+    companyLogo: string;
+  };
   icons: IconNavigation[];
   colorDefault?: string;
   colorMobile?: string;
@@ -21,7 +24,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
   icons,
   colorMobile,
   colorTablet,
-  companyName,
+  company = { companyLogo: '', companyName: '' },
   copyrightText = 'Todos os direitos reservados por',
   colorDefault = '#D2EACF',
 }) => {
@@ -48,6 +51,16 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
       }}
     >
       <Box
+        component="img"
+        src={company.companyLogo}
+        alt={company.companyName}
+        height={smDown ? theme.spacing(10) : theme.spacing(20)}
+        sx={{
+          maxWidth: smDown ? '80%' : '100%',
+          objectFit: 'contain',
+        }}
+      />
+      <Box
         sx={{
           flexGrow: 1,
           display: 'flex',
@@ -59,7 +72,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
           sx={{ color: smDown && colorMobile ? 'white' : '' }}
           variant="body2"
         >
-          © {new Date().getFullYear()} {copyrightText} {companyName}
+          © {new Date().getFullYear()} {copyrightText} {company.companyName}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex' }}>

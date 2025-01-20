@@ -59,6 +59,7 @@ export const AppRouters = () => {
             }}
             company={{
               companyLogo: '/assets/images/Apol_Logo.svg',
+              companyName: 'Apol',
             }}
             hero={{
               image: '/assets/images/Hero_Image.svg',
@@ -86,7 +87,6 @@ export const AppRouters = () => {
                   to: 'https://www.instagram.com/_puredigital/',
                 },
               ],
-              footerCompanyName: 'apol',
             }}
           />
         }
