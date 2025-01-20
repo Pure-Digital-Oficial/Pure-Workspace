@@ -5,8 +5,9 @@ import {
   SimpleHeroSection,
   ToolbarApolBlog,
   SimpleAbout,
+  SimpleFooter,
 } from '../../components';
-import { ButtonNavigation } from '../../shared';
+import { ButtonNavigation, IconNavigation, LinkText } from '../../shared';
 
 interface ApolHomeContainerProps {
   header: {
@@ -34,6 +35,14 @@ interface ApolHomeContainerProps {
     aboutCtaButton: () => void;
     aboutCtaButtonTitle?: string;
   };
+  footer: {
+    footerCopyrightText?: string;
+    footerIcons: IconNavigation[];
+    footerMobileColor?: string;
+    footerTabletColor?: string;
+    footerDefaultColor?: string;
+    footerCompanyName?: string;
+  };
 }
 
 export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
@@ -55,6 +64,14 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
     aboutImage,
     aboutCtaButton,
     aboutCtaButtonTitle,
+  },
+  footer: {
+    footerIcons,
+    footerCopyrightText,
+    footerMobileColor,
+    footerTabletColor,
+    footerDefaultColor,
+    footerCompanyName,
   },
 }) => {
   return (
@@ -82,6 +99,14 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         backgroundColor={aboutBackgroundColor}
         aboutImage={aboutImage}
         aboutImageAltTitle={aboutImageAltTitle}
+      />
+      <SimpleFooter
+        icons={footerIcons}
+        colorDefault={footerDefaultColor}
+        companyName={footerCompanyName}
+        copyrightText={footerCopyrightText}
+        colorMobile={footerMobileColor}
+        colorTablet={footerTabletColor}
       />
     </Box>
   );

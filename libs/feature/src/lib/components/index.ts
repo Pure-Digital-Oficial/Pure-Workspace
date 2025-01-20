@@ -4,6 +4,7 @@ export * from './buttom';
 export * from './card';
 export * from './drawer';
 export * from './file';
+export * from './footer';
 export * from './form';
 export * from './header';
 export * from './hero-section';

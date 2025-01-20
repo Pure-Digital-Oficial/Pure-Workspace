@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import {
   ApolHomeContainer,
   ProtectedRoute,
@@ -7,6 +6,8 @@ import {
 } from '@pure-workspace/feature';
 import { useEffect, useRef } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { ReactComponent as IntagramIcon } from '../assets/images/social-media/Instagram.svg';
+import { ReactComponent as FacebookIcon } from '../assets/images/social-media/Facebook.svg';
 
 export const AppRouters = () => {
   const { setDrawerOptions } = useDrawerContext();
@@ -73,6 +74,19 @@ export const AppRouters = () => {
                 'A Associação dos Produtores de Londrina é uma iniciativa que une esforços para fortalecer o agronegócio da região. Trabalhamos para oferecer suporte aos produtores, compartilhar conhecimento e promover iniciativas que transformam o campo em um lugar de oportunidades.',
               aboutImage: '/assets/images/About_Image.svg',
               aboutCtaButtonTitle: 'Entre em Contato',
+            }}
+            footer={{
+              footerIcons: [
+                {
+                  icon: <FacebookIcon />,
+                  to: 'https://www.facebook.com/profile.php?id=61568266243629',
+                },
+                {
+                  icon: <IntagramIcon />,
+                  to: 'https://www.instagram.com/_puredigital/',
+                },
+              ],
+              footerCompanyName: 'apol',
             }}
           />
         }
