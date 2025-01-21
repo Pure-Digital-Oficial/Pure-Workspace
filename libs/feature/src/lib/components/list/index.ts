@@ -1,5 +1,6 @@
 export * from './directory';
 export * from './item';
+export * from './post';
 export * from './simple';
 export * from './text';
 export * from './list-playlist-category';

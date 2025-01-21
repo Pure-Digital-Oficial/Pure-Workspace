@@ -6,6 +6,7 @@ import {
   ToolbarApolBlog,
   SimpleAbout,
   SimpleFooter,
+  ListPosts,
 } from '../../components';
 import { ButtonNavigation, IconNavigation, LinkText } from '../../shared';
 
@@ -99,6 +100,7 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         aboutImage={aboutImage}
         aboutImageAltTitle={aboutImageAltTitle}
       />
+      <ListPosts />
       <SimpleFooter
         icons={footerIcons}
         colorDefault={footerDefaultColor}
