@@ -30,9 +30,11 @@ export const PostCard: FC<PostCardProps> = ({
   return (
     <Card
       sx={{
-        width: smDown ? theme.spacing(45) : theme.spacing(40),
-        height: theme.spacing(28),
+        width: smDown ? theme.spacing(45) : theme.spacing(50),
+        height: theme.spacing(80),
         margin: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <CardMedia
@@ -40,45 +42,59 @@ export const PostCard: FC<PostCardProps> = ({
         image={image}
         title={title}
         sx={{
-          height: theme.spacing(15),
+          height: theme.spacing(40),
         }}
       />
-      <Box
+      <CardContent
         sx={{
+          flexGrow: 1,
           display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          flexDirection: 'column',
         }}
       >
-        <CardContent>
-          <Typography
-            component="div"
-            variant="body2"
-            overflow="hidden"
-            noWrap
-            width={theme.spacing(20)}
-            textOverflow="ellipsis"
-            fontSize={14}
-          >
-            {title}
-          </Typography>
+        <Typography
+          component="div"
+          variant="h6"
+          gutterBottom
+          overflow="hidden"
+          noWrap
+          textOverflow="ellipsis"
+          fontSize={20}
+          fontWeight={500}
+        >
+          {title}
+        </Typography>
 
-          <Typography
-            component="div"
-            variant="body2"
-            overflow="hidden"
-            noWrap
-            width={theme.spacing(20)}
-            textOverflow="ellipsis"
-            fontSize={14}
-          >
-            {description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button>{buttonTitle}</Button>
-        </CardActions>
-      </Box>
+        <Typography
+          component="div"
+          variant="body2"
+          overflow="hidden"
+          noWrap
+          textOverflow="ellipsis"
+          fontSize={16}
+          fontWeight={400}
+        >
+          {description}
+        </Typography>
+      </CardContent>
+
+      <CardActions
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{
+            color: 'white',
+            width: '100%',
+            marginBottom: theme.spacing(2),
+          }}
+        >
+          {buttonTitle}
+        </Button>
+      </CardActions>
     </Card>
   );
 };

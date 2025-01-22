@@ -54,7 +54,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
         component="img"
         src={company.companyLogo}
         alt={company.companyName}
-        height={smDown ? theme.spacing(10) : theme.spacing(20)}
+        height={theme.spacing(10)}
         sx={{
           maxWidth: smDown ? '80%' : '100%',
           objectFit: 'contain',

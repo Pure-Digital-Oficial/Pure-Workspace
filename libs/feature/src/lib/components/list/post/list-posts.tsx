@@ -19,13 +19,31 @@ export const ListPosts = () => {
         updatedAt: new Date(),
         updatedBy: 'test updatedBy',
       },
+      {
+        content: 'test content',
+        createdAt: new Date(),
+        createdBy: 'teste createdBy',
+        description: 'test description',
+        id: 'test id',
+        status: 'ACTIVE',
+        subTitle: 'test subTitle',
+        title: 'test title',
+        updatedAt: new Date(),
+        updatedBy: 'test updatedBy',
+      },
     ]);
   }, []);
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       {posts &&
         posts.map((post) => (
           <PostCard
+            key={post.id}
             title={post.title}
             description={post.description}
             image={'/assets/images/Apol_Logo.svg'}
