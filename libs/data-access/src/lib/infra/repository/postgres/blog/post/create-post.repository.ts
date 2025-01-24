@@ -8,7 +8,7 @@ export class CreatePostRepositoryImpl implements CreatePostRepository {
     const {
       appId,
       loggedUserId,
-      body: { content, description, subTitle, title },
+      body: { content, description, subTitle, title, coverImage },
     } = input;
 
     const createdPost = await this.prismaService['generalPrisma'].post.create({
@@ -21,6 +21,7 @@ export class CreatePostRepositoryImpl implements CreatePostRepository {
         updated_by: loggedUserId,
         status: 'ACTIVE',
         app_id: appId,
+        cover_image: coverImage,
       },
     });
 
