@@ -3,4 +3,5 @@ export interface PostBodyDto {
   subTitle: string;
   description: string;
   content: string;
+  coverImage: string;
 }

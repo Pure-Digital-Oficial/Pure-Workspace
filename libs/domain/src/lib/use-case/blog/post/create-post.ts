@@ -29,7 +29,7 @@ export class CreatePost
     const {
       appId,
       loggedUserId,
-      body: { content, description, subTitle, title },
+      body: { content, description, subTitle, title, coverImage },
     } = input;
 
     if (Object.keys(appId).length < 1) {
@@ -54,6 +54,10 @@ export class CreatePost
 
     if (Object.keys(title).length < 1) {
       return left(new EntityNotEmpty('Title'));
+    }
+
+    if (Object.keys(coverImage).length < 1) {
+      return left(new EntityNotEmpty('Cover Image'));
     }
 
     const userValidation = await ValidationUserId(
