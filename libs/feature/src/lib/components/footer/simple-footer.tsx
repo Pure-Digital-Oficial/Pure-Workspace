@@ -30,7 +30,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
   return (
     <Box
       component="footer"
@@ -45,7 +45,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
         background:
           smDown && colorMobile
             ? colorMobile
-            : mdDown && colorTablet
+            : lgDown && colorTablet
             ? colorTablet
             : colorDefault,
       }}

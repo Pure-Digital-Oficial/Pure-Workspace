@@ -24,7 +24,6 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
@@ -43,7 +42,7 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
             height: '100%',
             width: '100%',
             zIndex: 0,
-            ml: mdDown ? theme.spacing(3) : '',
+            ml: lgDown ? theme.spacing(3) : '',
           }}
         >
           <Box
@@ -64,8 +63,8 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
           justifyContent: smDown ? 'start' : 'center',
           alignItems: 'center',
           flexDirection: 'column',
-          maxWidth: smDown ? '100%' : mdDown ? '75%' : '60%',
-          ml: !smDown && mdDown ? theme.spacing(3) : '',
+          maxWidth: smDown ? '100%' : lgDown ? '75%' : '60%',
+          ml: !smDown && lgDown ? theme.spacing(3) : '',
         }}
       >
         <Box
@@ -79,10 +78,10 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
             sx={{
               whiteSpace: 'pre-line',
               textAlign: smDown ? 'center' : 'start',
-              maxWidth: smDown ? '100%' : mdDown ? '90%' : '80%',
+              maxWidth: smDown ? '100%' : lgDown ? '90%' : '80%',
               fontSize: smDown
                 ? theme.spacing(4)
-                : mdDown
+                : lgDown
                 ? theme.spacing(4.5)
                 : theme.spacing(5),
               fontWeight: 600,
@@ -96,10 +95,10 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
             sx={{
               whiteSpace: 'pre-line',
               textAlign: 'start',
-              maxWidth: mdDown ? '90%' : '80%',
+              maxWidth: lgDown ? '90%' : '80%',
               fontSize: smDown
                 ? theme.spacing(1.5)
-                : mdDown
+                : lgDown
                 ? theme.spacing(1.6)
                 : theme.spacing(2.5),
               fontWeight: 400,
@@ -122,9 +121,9 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
             <CtaButton
               action={ctaButton}
               title={ctaButtonTitle}
-              fontSize={mdDown ? 14 : 24}
-              width={mdDown ? 24 : 40}
-              padding={mdDown ? 0 : 1}
+              fontSize={lgDown ? 14 : 24}
+              width={lgDown ? 24 : 40}
+              padding={lgDown ? 0 : 1}
             />
           </Box>
         </Box>
