@@ -7,92 +7,61 @@ import {
 } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, FC, useRef } from 'react';
 import { PostCard } from '../item';
-
-interface Post {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-}
+import { PostResponseDto } from '@pure-workspace/domain';
+import { useListPostsData } from '../../../hooks';
+import { useAppIdContext } from '../../../contexts';
 
 interface ListPostsProps {
   imageContent?: number;
   manualButton?: boolean;
   title?: string;
   emptyTitle?: string;
+  showAlert: (message: string, success: boolean) => void;
 }
 
 export const ListPosts: FC<ListPostsProps> = ({
+  showAlert,
   imageContent = 6,
   manualButton = true,
   title = 'Últimas Postagens',
   emptyTitle = 'Nenhuma postagem disponível.',
 }) => {
-  const [posts, setPosts] = useState<Post[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [animating, setAnimating] = useState(false); // Controla a animação
+  const [animating, setAnimating] = useState(false);
+
+  const { appId } = useAppIdContext();
+  const hasLoadedUserData = useRef(false);
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
-  // Quantidade de posts visíveis ao mesmo tempo
+  const { listPosts, getListPostsData, totalPage } = useListPostsData({
+    showAlert,
+    appId,
+  });
+
   const visiblePostsCount = smDown ? 1 : lgDown ? 2 : Math.min(imageContent, 3);
 
   useEffect(() => {
-    // Simulação de dados
-    setPosts([
-      {
-        id: '1',
-        title: 'Post 1',
-        description: 'Descrição do post 1',
-        image: '/assets/images/Apol_Logo.svg',
-      },
-      {
-        id: '2',
-        title: 'Post 2',
-        description: 'Descrição do post 2',
-        image: '/assets/images/Apol_Logo.svg',
-      },
-      {
-        id: '3',
-        title: 'Post 3',
-        description: 'Descrição do post 3',
-        image: '/assets/images/Apol_Logo.svg',
-      },
-      {
-        id: '4',
-        title: 'Post 4',
-        description: 'Descrição do post 4',
-        image: '/assets/images/Apol_Logo.svg',
-      },
-      {
-        id: '5',
-        title: 'Post 5',
-        description: 'Descrição do post 5',
-        image: '/assets/images/Apol_Logo.svg',
-      },
-      {
-        id: '6',
-        title: 'Post 6',
-        description: 'Descrição do post 6',
-        image: '/assets/images/Apol_Logo.svg',
-      },
-    ]);
-  }, []);
+    if (!hasLoadedUserData.current) {
+      getListPostsData();
+      hasLoadedUserData.current = true;
+    }
+  }, [getListPostsData]);
 
   const handleNext = () => {
-    if (animating) return; // Impede a navegação enquanto a animação estiver em andamento
+    if (animating) return;
 
     setAnimating(true);
     setCurrentIndex(
-      (prevIndex) => (prevIndex + visiblePostsCount) % posts.length
+      (prevIndex) => (prevIndex + visiblePostsCount) % listPosts.length
     );
 
-    setTimeout(() => setAnimating(false), 500); // Tempo para permitir o próximo movimento após a animação
+    setTimeout(() => setAnimating(false), 500);
   };
 
   const handlePrevious = () => {
@@ -101,20 +70,20 @@ export const ListPosts: FC<ListPostsProps> = ({
     setAnimating(true);
     setCurrentIndex(
       (prevIndex) =>
-        (prevIndex - visiblePostsCount + posts.length) % posts.length
+        (prevIndex - visiblePostsCount + listPosts.length) % listPosts.length
     );
 
-    setTimeout(() => setAnimating(false), 500); // Tempo para permitir o próximo movimento após a animação
+    setTimeout(() => setAnimating(false), 500);
   };
 
   const getVisiblePosts = () => {
     return Array.from({ length: visiblePostsCount }).map((_, index) => {
-      const postIndex = (currentIndex + index) % posts.length;
-      return posts[postIndex];
+      const postIndex = (currentIndex + index) % listPosts.length;
+      return listPosts[postIndex];
     });
   };
 
-  if (posts.length === 0) {
+  if (listPosts.length === 0) {
     return (
       <Typography
         variant="h6"
@@ -182,7 +151,7 @@ export const ListPosts: FC<ListPostsProps> = ({
           display: 'flex',
           justifyContent: mdDown ? 'center' : 'space-between',
           overflow: 'hidden',
-          transition: 'transform 0.5s ease', // A transição que cria o efeito de deslizamento
+          transition: 'transform 0.5s ease',
         }}
       >
         {getVisiblePosts().map((post, index) => (
@@ -197,7 +166,7 @@ export const ListPosts: FC<ListPostsProps> = ({
             <PostCard
               title={post.title}
               description={post.description}
-              image={post.image}
+              image={''}
             />
           </Box>
         ))}

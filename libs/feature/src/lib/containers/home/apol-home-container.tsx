@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import {
   SimpleHeader,
   SimpleHeroSection,
@@ -8,7 +8,8 @@ import {
   SimpleFooter,
   ListPosts,
 } from '../../components';
-import { ButtonNavigation, IconNavigation, LinkText } from '../../shared';
+import { ButtonNavigation, IconNavigation } from '../../shared';
+import { useSnackbarAlert } from '../../hooks';
 
 interface ApolHomeContainerProps {
   header: {
@@ -74,6 +75,16 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
     footerDefaultColor,
   },
 }) => {
+  const { showSnackbarAlert, SnackbarAlert } = useSnackbarAlert();
+  const showAlert = useCallback(
+    (message: string, success: boolean) => {
+      showSnackbarAlert({
+        message: message,
+        severity: success ? 'success' : 'error',
+      });
+    },
+    [showSnackbarAlert]
+  );
   return (
     <Box>
       <SimpleHeader
@@ -100,7 +111,7 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         aboutImage={aboutImage}
         aboutImageAltTitle={aboutImageAltTitle}
       />
-      <ListPosts />
+      <ListPosts showAlert={showAlert} />
       <SimpleFooter
         icons={footerIcons}
         colorDefault={footerDefaultColor}
@@ -112,6 +123,7 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         colorMobile={footerMobileColor}
         colorTablet={footerTabletColor}
       />
+      {SnackbarAlert}
     </Box>
   );
 };

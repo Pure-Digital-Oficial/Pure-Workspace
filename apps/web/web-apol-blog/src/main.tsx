@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
 import { AppIdProvider } from '@pure-workspace/feature';
 
-const appId = process.env['NX_PUBLIC_FRONT_APOL_BLOG'] || '';
+const appId = process.env['NX_PUBLIC_APOL_BLOG_ID'] || '';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
