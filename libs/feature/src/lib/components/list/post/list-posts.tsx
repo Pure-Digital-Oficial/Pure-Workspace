@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useState, useEffect, FC, useCallback } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { PostCard } from '../item';
 
 interface Post {
@@ -32,27 +32,15 @@ export const ListPosts: FC<ListPostsProps> = ({
 }) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [animating, setAnimating] = useState(false); // Controla a animação
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const visiblePostsCount = Math.max(
-    smDown ? 1 : lgDown ? 2 : Math.min(imageContent, posts.length),
-    1
-  );
-
-  const getVisiblePost = (index: number) =>
-    posts.length > 0 ? posts[index % posts.length] : undefined;
-
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prevIndex) => prevIndex + 1);
-  }, [posts.length]);
-
-  const handlePrevious = useCallback(() => {
-    setCurrentIndex((prevIndex) => prevIndex - 1);
-  }, [posts.length]);
+  // Quantidade de posts visíveis ao mesmo tempo
+  const visiblePostsCount = smDown ? 1 : lgDown ? 2 : Math.min(imageContent, 3);
 
   useEffect(() => {
     // Simulação de dados
@@ -96,6 +84,36 @@ export const ListPosts: FC<ListPostsProps> = ({
     ]);
   }, []);
 
+  const handleNext = () => {
+    if (animating) return; // Impede a navegação enquanto a animação estiver em andamento
+
+    setAnimating(true);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex + visiblePostsCount) % posts.length
+    );
+
+    setTimeout(() => setAnimating(false), 500); // Tempo para permitir o próximo movimento após a animação
+  };
+
+  const handlePrevious = () => {
+    if (animating) return;
+
+    setAnimating(true);
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - visiblePostsCount + posts.length) % posts.length
+    );
+
+    setTimeout(() => setAnimating(false), 500); // Tempo para permitir o próximo movimento após a animação
+  };
+
+  const getVisiblePosts = () => {
+    return Array.from({ length: visiblePostsCount }).map((_, index) => {
+      const postIndex = (currentIndex + index) % posts.length;
+      return posts[postIndex];
+    });
+  };
+
   if (posts.length === 0) {
     return (
       <Typography
@@ -115,11 +133,10 @@ export const ListPosts: FC<ListPostsProps> = ({
       sx={{
         position: 'relative',
         width: smDown ? '100%' : '90%',
-        maxWidth: lgDown ? '98%' : 1300,
+        maxWidth: lgDown ? '100%' : 1300,
         margin: 'auto',
         overflow: 'hidden',
         padding: 0,
-        height: 'auto',
       }}
     >
       <Box
@@ -163,34 +180,27 @@ export const ListPosts: FC<ListPostsProps> = ({
       <Box
         sx={{
           display: 'flex',
-          transition: 'transform 0.5s ease',
-          transform: `translateX(-${
-            (currentIndex % posts.length) * (100 / visiblePostsCount)
-          }%)`,
+          justifyContent: mdDown ? 'center' : 'space-between',
+          overflow: 'hidden',
+          transition: 'transform 0.5s ease', // A transição que cria o efeito de deslizamento
         }}
       >
-        {Array.from({ length: visiblePostsCount }).map((_, index) => {
-          const postIndex = (currentIndex + index) % posts.length;
-          const post = getVisiblePost(postIndex);
-
-          return (
-            <Box
-              key={`${post?.id}-${index}`}
-              sx={{
-                flex: `0 0 calc(100% / ${visiblePostsCount})`,
-                boxSizing: 'border-box',
-              }}
-            >
-              {post && (
-                <PostCard
-                  title={post.title}
-                  description={post.description}
-                  image={post.image}
-                />
-              )}
-            </Box>
-          );
-        })}
+        {getVisiblePosts().map((post, index) => (
+          <Box
+            key={`${post.id}-${index}`}
+            sx={{
+              flex: `0 0 calc(100% / ${visiblePostsCount})`,
+              boxSizing: 'border-box',
+              padding: mdDown ? 0 : theme.spacing(1),
+            }}
+          >
+            <PostCard
+              title={post.title}
+              description={post.description}
+              image={post.image}
+            />
+          </Box>
+        ))}
       </Box>
     </Box>
   );
