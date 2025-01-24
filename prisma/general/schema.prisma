@@ -621,6 +621,7 @@ model Post {
   sub_title String
   description String
   content String
+  cover_image String
   created_by String
   updated_by String
   created_at DateTime @default(now())
