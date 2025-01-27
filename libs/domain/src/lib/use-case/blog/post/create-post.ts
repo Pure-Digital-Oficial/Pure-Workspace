@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { UseCase } from '../../../base/use-case';
 import { CreatePostDto } from '../../../dto';
 import {
+  EntityNotComplete,
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
@@ -10,6 +11,7 @@ import {
   CreatePostRepository,
   FindAppByIdRepository,
   FindUserByIdRepository,
+  UploadContentFileRepository,
 } from '../../../repository';
 import { Either, left, right } from '../../../shared/either';
 import { ValidationUserId } from '../../../utils';
@@ -22,6 +24,8 @@ export class CreatePost
     private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindAppByIdRepository')
     private findAppByIdRepository: FindAppByIdRepository,
+    @Inject('UploadContentFileRepository')
+    private uploadContentFileRepository: UploadContentFileRepository,
     @Inject('CreatePostRepository')
     private createPostRepository: CreatePostRepository
   ) {}
@@ -77,7 +81,25 @@ export class CreatePost
       return left(new EntityNotExists('app ID'));
     }
 
-    const createdPost = await this.createPostRepository.create(input);
+    const key = `${Date.now()}-${coverImage.originalname}`;
+
+    const resultUpload = await this.uploadContentFileRepository.upload({
+      file: coverImage,
+      bucket: process.env['NX_PUBLIC_STORAGE_BUCKET'] ?? '',
+      key,
+    });
+
+    if (Object.keys(resultUpload).length < 1) {
+      return left(new EntityNotComplete('Upload from Cover Image'));
+    }
+
+    const createdPost = await this.createPostRepository.create({
+      ...input,
+      body: {
+        ...input.body,
+        coverImage: resultUpload,
+      },
+    });
 
     if (Object.keys(createdPost).length < 1) {
       return left(new EntityNotCreated('Post'));

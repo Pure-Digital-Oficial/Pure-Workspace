@@ -1,10 +1,13 @@
-import { CreatePostDto, CreatePostRepository } from '@pure-workspace/domain';
+import {
+  CreatePostInDatabaseDto,
+  CreatePostRepository,
+} from '@pure-workspace/domain';
 import { PrismaService } from 'nestjs-prisma';
 import { Inject } from '@nestjs/common';
 
 export class CreatePostRepositoryImpl implements CreatePostRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async create(input: CreatePostDto): Promise<string> {
+  async create(input: CreatePostInDatabaseDto): Promise<string> {
     const {
       appId,
       loggedUserId,
