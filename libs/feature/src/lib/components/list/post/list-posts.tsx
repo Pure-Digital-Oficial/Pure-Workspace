@@ -9,9 +9,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState, useEffect, FC, useRef } from 'react';
 import { PostCard } from '../item';
-import { PostResponseDto } from '@pure-workspace/domain';
 import { useListPostsData } from '../../../hooks';
 import { useAppIdContext } from '../../../contexts';
+import { CarouselButton } from '../../buttom';
 
 interface ListPostsProps {
   imageContent?: number;
@@ -77,7 +77,9 @@ export const ListPosts: FC<ListPostsProps> = ({
   };
 
   const getVisiblePosts = () => {
-    return Array.from({ length: visiblePostsCount }).map((_, index) => {
+    const visibleCount = Math.min(visiblePostsCount, listPosts.length);
+
+    return Array.from({ length: visibleCount }).map((_, index) => {
       const postIndex = (currentIndex + index) % listPosts.length;
       return listPosts[postIndex];
     });
@@ -112,7 +114,7 @@ export const ListPosts: FC<ListPostsProps> = ({
         component="header"
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center',
           paddingBottom: theme.spacing(2),
           marginBottom: smDown ? 'auto' : theme.spacing(6),
@@ -121,28 +123,26 @@ export const ListPosts: FC<ListPostsProps> = ({
         <Typography
           variant={smDown ? 'h6' : 'h5'}
           sx={{
-            fontWeight: smDown ? 700 : 900,
+            fontWeight: 700,
             maxWidth: theme.spacing(50),
-            fontSize: smDown ? theme.spacing(2.2) : 'auto',
+            fontSize: theme.spacing(5),
           }}
         >
           {title}
         </Typography>
-
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'end',
+        }}
+      >
         {manualButton && (
-          <Box component="nav" aria-label="carousel navigation">
-            <IconButton onClick={handlePrevious} aria-label="Anterior">
-              <ArrowBackIosNewIcon
-                sx={{ height: theme.spacing(3), width: theme.spacing(3) }}
-              />
-            </IconButton>
-
-            <IconButton onClick={handleNext} aria-label="Próximo">
-              <ArrowForwardIosIcon
-                sx={{ height: theme.spacing(3), width: theme.spacing(3) }}
-              />
-            </IconButton>
-          </Box>
+          <CarouselButton
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            itemsListCount={listPosts.length}
+          />
         )}
       </Box>
 
@@ -166,7 +166,7 @@ export const ListPosts: FC<ListPostsProps> = ({
             <PostCard
               title={post.title}
               description={post.description}
-              image={''}
+              image={post.coverImage}
             />
           </Box>
         ))}
