@@ -6,6 +6,7 @@ import {
   CreateCategoryRepositoryImpl,
   FindUserByIdRepositoryImpl,
   PrismaGeneralService,
+  UploadContentFileInGoogleRepositoryImpl,
 } from '@pure-workspace/data-access';
 
 @Module({
@@ -20,6 +21,10 @@ import {
     {
       provide: 'PrismaService',
       useClass: PrismaGeneralService,
+    },
+    {
+      provide: 'UploadContentFileRepository',
+      useClass: UploadContentFileInGoogleRepositoryImpl,
     },
     {
       provide: 'CreateCategoryRepository',
