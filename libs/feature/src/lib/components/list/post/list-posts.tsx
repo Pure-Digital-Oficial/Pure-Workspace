@@ -1,12 +1,4 @@
-import {
-  Box,
-  IconButton,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useState, useEffect, FC, useRef } from 'react';
 import { PostCard } from '../item';
 import { useListPostsData } from '../../../hooks';
@@ -125,7 +117,7 @@ export const ListPosts: FC<ListPostsProps> = ({
           sx={{
             fontWeight: 700,
             maxWidth: theme.spacing(50),
-            fontSize: theme.spacing(5),
+            fontSize: smDown ? theme.spacing(3) : theme.spacing(5),
           }}
         >
           {title}
@@ -158,7 +150,6 @@ export const ListPosts: FC<ListPostsProps> = ({
           <Box
             key={`${post.id}-${index}`}
             sx={{
-              flex: `0 0 calc(100% / ${visiblePostsCount})`,
               boxSizing: 'border-box',
               padding: mdDown ? 0 : theme.spacing(1),
             }}
