@@ -10,6 +10,7 @@ import {
   ErrorResponse,
 } from '@pure-workspace/domain';
 import { CreateContactUsRequest } from '../../../services';
+import { useAppIdContext } from '../../../contexts';
 
 interface FormContactUsProps {
   showAlert: (message: string, success: boolean) => void;
@@ -19,6 +20,8 @@ interface FormContactUsProps {
   descriptionLabel?: string;
   buttonTitle?: string;
   successMessage?: string;
+  bgColor?: string;
+  color?: string;
 }
 
 export const FormContactUs: FC<FormContactUsProps> = ({
@@ -29,9 +32,12 @@ export const FormContactUs: FC<FormContactUsProps> = ({
   descriptionLabel = 'Descrição',
   buttonTitle = 'Enviar',
   successMessage = 'Dados enviados com Sucesso!',
+  bgColor = '#1B7A43',
+  color = 'white',
 }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const { appId } = useAppIdContext();
 
   const {
     handleSubmit,
@@ -75,7 +81,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
     setSuccess(false);
     const result = await createContactUs({
       body: data,
-      appId: '',
+      appId: appId,
     });
     if (result) {
       setLoading(false);
@@ -100,6 +106,15 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         error={!!errors.name}
         helperText={errors.name ? errors.name.message : ''}
         id="name"
+        variant="outlined"
+        sx={{
+          '& .MuiInputBase-root': {
+            backgroundColor: bgColor,
+            color: color,
+          },
+          '& label': { color: color },
+          '& label.Mui-focused': { color: color },
+        }}
         disabled={loading}
         label={nameLabel}
         autoComplete="name"
@@ -113,6 +128,14 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         error={!!errors.number}
         helperText={errors.number ? errors.number.message : ''}
         id="number"
+        sx={{
+          '& .MuiInputBase-root': {
+            backgroundColor: bgColor,
+            color: color,
+          },
+          '& label': { color: color },
+          '& label.Mui-focused': { color: color },
+        }}
         disabled={loading}
         label={numberLabel}
         autoComplete="number"
@@ -126,6 +149,14 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         error={!!errors.email}
         helperText={errors.email ? errors.email.message : ''}
         id="email"
+        sx={{
+          '& .MuiInputBase-root': {
+            backgroundColor: bgColor,
+            color: color,
+          },
+          '& label': { color: color },
+          '& label.Mui-focused': { color: color },
+        }}
         disabled={loading}
         label={emailLabel}
         autoComplete="email"
@@ -139,11 +170,20 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         error={!!errors.description}
         helperText={errors.description ? errors.description.message : ''}
         id="description"
+        sx={{
+          '& .MuiInputBase-root': {
+            backgroundColor: bgColor,
+            color: color,
+          },
+          '& label': { color: color },
+          '& label.Mui-focused': { color: color },
+        }}
         disabled={loading}
         label={descriptionLabel}
         autoComplete="description"
         {...register('description')}
       />
+
       <Box
         sx={{
           display: 'flex',
@@ -156,6 +196,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
             buttonTitle={buttonTitle}
             loading={loading}
             success={success}
+            variant="outlined"
           />
         </Box>
       </Box>
