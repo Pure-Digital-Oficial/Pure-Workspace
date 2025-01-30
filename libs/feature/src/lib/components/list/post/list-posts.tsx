@@ -93,10 +93,11 @@ export const ListPosts: FC<ListPostsProps> = ({
 
   return (
     <Box
+      id="posts-section"
       sx={{
         position: 'relative',
         width: smDown ? '100%' : '90%',
-        maxWidth: lgDown ? '100%' : 1300,
+        maxWidth: lgDown ? '100%' : 1600,
         margin: 'auto',
         overflow: 'hidden',
         padding: 0,
@@ -108,16 +109,15 @@ export const ListPosts: FC<ListPostsProps> = ({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          paddingBottom: theme.spacing(2),
-          marginBottom: smDown ? 'auto' : theme.spacing(6),
+          marginTop: theme.spacing(2),
         }}
       >
         <Typography
-          variant={smDown ? 'h6' : 'h5'}
+          variant="h4"
           sx={{
-            fontWeight: 700,
+            fontWeight: 600,
             maxWidth: theme.spacing(50),
-            fontSize: smDown ? theme.spacing(3) : theme.spacing(5),
+            fontSize: smDown ? theme.spacing(4) : theme.spacing(5),
           }}
         >
           {title}
@@ -127,6 +127,7 @@ export const ListPosts: FC<ListPostsProps> = ({
         sx={{
           display: 'flex',
           justifyContent: 'end',
+          mt: 0,
         }}
       >
         {manualButton && (

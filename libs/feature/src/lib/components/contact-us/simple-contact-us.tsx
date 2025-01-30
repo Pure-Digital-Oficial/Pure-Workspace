@@ -48,8 +48,8 @@ export const SimpleContactUs: FC<SimpleContactUsProps> = ({
           display: 'flex',
           justifyContent: 'space-between',
           backgroundColor: bgColor,
-          width: mdDown ? '90%' : '85%',
-          maxWidth: '90%',
+          width: mdDown ? '90%' : '90%',
+          maxWidth: 1600,
           marginBottom: theme.spacing(3),
           marginTop: theme.spacing(3),
         }}

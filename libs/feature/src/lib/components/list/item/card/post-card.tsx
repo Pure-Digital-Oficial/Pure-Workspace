@@ -36,7 +36,7 @@ export const PostCard: FC<PostCardProps> = ({
           : lgDown
           ? theme.spacing(45)
           : theme.spacing(50),
-        height: theme.spacing(80),
+        height: theme.spacing(75),
         margin: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',

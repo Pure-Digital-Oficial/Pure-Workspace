@@ -40,7 +40,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: smDown ? 'column' : 'row',
+        flexDirection: 'column',
         fontSize: theme.spacing(1.5),
         background:
           smDown && colorMobile
@@ -51,21 +51,42 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
       }}
     >
       <Box
-        component="img"
-        src={company.companyLogo}
-        alt={company.companyName}
-        height={theme.spacing(10)}
         sx={{
-          maxWidth: smDown ? '80%' : '100%',
-          objectFit: 'contain',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '90%',
         }}
-      />
+      >
+        <Box
+          component="img"
+          src={company.companyLogo}
+          alt={company.companyName}
+          height={theme.spacing(15)}
+          sx={{
+            maxWidth: smDown ? '80%' : '100%',
+            objectFit: 'contain',
+          }}
+        />
+
+        <Box sx={{ display: 'flex' }}>
+          {icons.map((icon) => (
+            <IconButton
+              sx={{ height: theme.spacing(5) }}
+              key={icon.to}
+              href={icon.to}
+            >
+              {icon.icon}
+            </IconButton>
+          ))}
+        </Box>
+      </Box>
       <Box
         sx={{
-          flexGrow: 1,
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
+          width: '100%',
         }}
       >
         <Typography
@@ -74,13 +95,6 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
         >
           © {new Date().getFullYear()} {copyrightText} {company.companyName}
         </Typography>
-      </Box>
-      <Box sx={{ display: 'flex' }}>
-        {icons.map((icon) => (
-          <IconButton key={icon.to} href={icon.to}>
-            {icon.icon}
-          </IconButton>
-        ))}
       </Box>
     </Box>
   );

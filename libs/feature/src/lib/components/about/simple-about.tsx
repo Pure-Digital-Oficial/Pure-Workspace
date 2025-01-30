@@ -1,5 +1,4 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { SectionContainer } from '../section';
 import { FC } from 'react';
 import { CtaButton } from '../buttom';
 
@@ -27,64 +26,71 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
-    <SectionContainer
-      fullHeigth={false}
+    <Box
       id="about-section"
-      backgroundColor={backgroundColor}
-      heigth={lgDown ? undefined : 70}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: smDown ? '100vh' : theme.spacing(70),
+        backgroundColor,
+        padding: theme.spacing(4),
+      }}
     >
-      {!smDown && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-            width: '100%',
-            zIndex: 0,
-            ml: lgDown ? theme.spacing(3) : '',
-          }}
-        >
-          <Box
-            component="img"
-            src={aboutImage}
-            alt={aboutImageAltTitle}
-            height={smDown ? theme.spacing(60) : theme.spacing(47.5)}
-            sx={{
-              maxWidth: smDown ? '80%' : '100%',
-              objectFit: 'contain',
-            }}
-          />
-        </Box>
-      )}
       <Box
         sx={{
           display: 'flex',
-          justifyContent: smDown ? 'start' : 'center',
+          flexDirection: smDown ? 'column' : 'row',
           alignItems: 'center',
-          flexDirection: 'column',
-          maxWidth: smDown ? '100%' : lgDown ? '75%' : '60%',
-          ml: !smDown && lgDown ? theme.spacing(3) : '',
+          justifyContent: 'space-between',
+          maxWidth: 1600,
+          width: lgDown ? '100%' : '90%',
         }}
       >
+        {!smDown && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center',
+              flex: '1 1 50%',
+            }}
+          >
+            <Box
+              component="img"
+              src={aboutImage}
+              alt={aboutImageAltTitle}
+              sx={{
+                maxWidth: '100%',
+                height: 'auto',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        )}
+
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'flex-start',
+            textAlign: 'left',
+            flex: '1 1 50%',
+            padding: smDown ? '' : theme.spacing(4),
+            maxWidth: smDown ? '100%' : lgDown ? '75%' : '60%',
           }}
         >
           <Typography
             variant="h3"
             sx={{
-              whiteSpace: 'pre-line',
-              textAlign: smDown ? 'center' : 'start',
-              maxWidth: smDown ? '100%' : lgDown ? '90%' : '80%',
               fontSize: smDown
                 ? theme.spacing(4)
                 : lgDown
                 ? theme.spacing(4.5)
                 : theme.spacing(5),
               fontWeight: 600,
+              whiteSpace: 'pre-line',
             }}
           >
             {title}
@@ -93,31 +99,19 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
           <Typography
             variant="body2"
             sx={{
-              whiteSpace: 'pre-line',
-              textAlign: 'start',
-              maxWidth: lgDown ? '90%' : '80%',
               fontSize: smDown
                 ? theme.spacing(1.5)
                 : lgDown
                 ? theme.spacing(1.6)
                 : theme.spacing(2.5),
               fontWeight: 400,
-              mt: theme.spacing(3),
-              ml: smDown ? theme.spacing(3) : '',
+              marginTop: theme.spacing(3),
             }}
           >
             {description}
           </Typography>
 
-          <Box
-            sx={{
-              display: 'flex',
-              width: '80%',
-              justifyContent: 'start',
-              mt: theme.spacing(4),
-              ml: smDown ? theme.spacing(3) : '',
-            }}
-          >
+          <Box sx={{ marginTop: theme.spacing(4) }}>
             <CtaButton
               action={ctaButton}
               title={ctaButtonTitle}
@@ -127,31 +121,29 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
             />
           </Box>
         </Box>
+
         {smDown && (
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '100%',
-              width: '100%',
-              zIndex: 0,
-              mt: theme.spacing(3),
+              marginTop: theme.spacing(3),
             }}
           >
             <Box
               component="img"
               src={aboutImage}
               alt={aboutImageAltTitle}
-              height={smDown ? theme.spacing(30) : theme.spacing(47.5)}
               sx={{
-                maxWidth: smDown ? '80%' : '100%',
+                maxWidth: '80%',
+                height: 'auto',
                 objectFit: 'contain',
               }}
             />
           </Box>
         )}
       </Box>
-    </SectionContainer>
+    </Box>
   );
 };
