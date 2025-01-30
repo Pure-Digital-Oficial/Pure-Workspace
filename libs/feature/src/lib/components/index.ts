@@ -2,6 +2,7 @@ export * from './about';
 export * from './alert';
 export * from './buttom';
 export * from './card';
+export * from './contact-us';
 export * from './drawer';
 export * from './file';
 export * from './footer';

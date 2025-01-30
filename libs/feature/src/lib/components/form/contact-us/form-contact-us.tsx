@@ -1,8 +1,7 @@
 import { Box, TextField } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import axios, { AxiosError } from 'axios';
-import { ValidationsError } from '../../../shared';
+import { FC, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { formatValueMask, ValidationsError } from '../../../shared'; // A função de formatação da máscara
 import { FormButton } from '../form-button.component';
 import {
   contactUsBodyDto,
@@ -10,6 +9,7 @@ import {
   ErrorResponse,
 } from '@pure-workspace/domain';
 import { CreateContactUsRequest } from '../../../services';
+import axios, { AxiosError } from 'axios';
 import { useAppIdContext } from '../../../contexts';
 
 interface FormContactUsProps {
@@ -24,6 +24,27 @@ interface FormContactUsProps {
   color?: string;
 }
 
+const textFieldStyles = (bgColor: string, color: string) => ({
+  '& .MuiInputBase-root': {
+    backgroundColor: bgColor,
+    color: color,
+  },
+  '& label': {
+    color: color,
+    transition: 'all 0.3s ease',
+  },
+  '& label.Mui-focused': {
+    color: color,
+    backgroundColor: bgColor,
+    paddingLeft: '0.5rem',
+    paddingRight: '1rem',
+    borderColor: color,
+  },
+  '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+    borderColor: color,
+  },
+});
+
 export const FormContactUs: FC<FormContactUsProps> = ({
   showAlert,
   nameLabel = 'Nome',
@@ -37,6 +58,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
   const { appId } = useAppIdContext();
 
   const {
@@ -44,12 +66,11 @@ export const FormContactUs: FC<FormContactUsProps> = ({
     register,
     reset,
     control,
-    setValue,
     formState: { errors },
+    setValue,
   } = useForm<contactUsBodyDto>({
     mode: 'all',
     criteriaMode: 'all',
-    //resolver: zodResolver(CreateCompanyDataFormSchema),
     defaultValues: {
       name: '',
       number: '',
@@ -96,7 +117,6 @@ export const FormContactUs: FC<FormContactUsProps> = ({
       showAlert(successMessage, true);
     }
   };
-
   return (
     <Box component="form" onSubmit={handleSubmit(handleContactUs)}>
       <TextField
@@ -107,39 +127,40 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         helperText={errors.name ? errors.name.message : ''}
         id="name"
         variant="outlined"
-        sx={{
-          '& .MuiInputBase-root': {
-            backgroundColor: bgColor,
-            color: color,
-          },
-          '& label': { color: color },
-          '& label.Mui-focused': { color: color },
-        }}
+        sx={textFieldStyles(bgColor, color)}
         disabled={loading}
         label={nameLabel}
         autoComplete="name"
-        autoFocus
         {...register('name')}
       />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        error={!!errors.number}
-        helperText={errors.number ? errors.number.message : ''}
-        id="number"
-        sx={{
-          '& .MuiInputBase-root': {
-            backgroundColor: bgColor,
-            color: color,
-          },
-          '& label': { color: color },
-          '& label.Mui-focused': { color: color },
-        }}
-        disabled={loading}
-        label={numberLabel}
-        autoComplete="number"
-        {...register('number')}
+
+      <Controller
+        name="number"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            id="number"
+            {...field}
+            label={numberLabel}
+            fullWidth
+            margin="normal"
+            value={field.value || ''}
+            disabled={loading}
+            sx={textFieldStyles(bgColor, color)}
+            error={!!errors.number}
+            helperText={errors.number ? errors.number.message : ''}
+            onChange={(e) => {
+              const rawValue = e.target.value;
+              setValue('number', rawValue);
+            }}
+            onBlur={(e) => {
+              const maskedValue = formatValueMask(e.target.value, 'phone');
+              setValue('number', maskedValue);
+            }}
+            inputProps={{ maxLength: 18 }}
+          />
+        )}
       />
 
       <TextField
@@ -149,14 +170,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         error={!!errors.email}
         helperText={errors.email ? errors.email.message : ''}
         id="email"
-        sx={{
-          '& .MuiInputBase-root': {
-            backgroundColor: bgColor,
-            color: color,
-          },
-          '& label': { color: color },
-          '& label.Mui-focused': { color: color },
-        }}
+        sx={textFieldStyles(bgColor, color)}
         disabled={loading}
         label={emailLabel}
         autoComplete="email"
@@ -167,17 +181,12 @@ export const FormContactUs: FC<FormContactUsProps> = ({
         margin="normal"
         required
         fullWidth
+        multiline
+        rows={4}
         error={!!errors.description}
         helperText={errors.description ? errors.description.message : ''}
         id="description"
-        sx={{
-          '& .MuiInputBase-root': {
-            backgroundColor: bgColor,
-            color: color,
-          },
-          '& label': { color: color },
-          '& label.Mui-focused': { color: color },
-        }}
+        sx={textFieldStyles(bgColor, color)}
         disabled={loading}
         label={descriptionLabel}
         autoComplete="description"
@@ -187,11 +196,12 @@ export const FormContactUs: FC<FormContactUsProps> = ({
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'start',
           mt: 2,
+          ml: 0,
         }}
       >
-        <Box width="80%">
+        <Box width="49.5%">
           <FormButton
             buttonTitle={buttonTitle}
             loading={loading}

@@ -69,7 +69,7 @@ export const FormButton: FC<FormButtonProps> = ({
           success
             ? buttonSx
             : {
-                margin: theme.spacing(1),
+                marginBottom: theme.spacing(1),
                 height: smDown ? theme.spacing(6) : theme.spacing(7),
                 fontSize: '1rem',
                 bgcolor: loading ? grey[500] : bgColor,

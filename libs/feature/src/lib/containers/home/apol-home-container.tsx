@@ -8,6 +8,7 @@ import {
   SimpleFooter,
   ListPosts,
   FormContactUs,
+  SimpleContactUs,
 } from '../../components';
 import { ButtonNavigation, IconNavigation } from '../../shared';
 import { useSnackbarAlert } from '../../hooks';
@@ -112,7 +113,13 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         aboutImage={aboutImage}
         aboutImageAltTitle={aboutImageAltTitle}
       />
-      <FormContactUs showAlert={showAlert} />
+      <SimpleContactUs
+        email="apo@apol"
+        phones={['44998494865']}
+        showAlert={showAlert}
+        title="Entre em Contato Agora"
+        address="Rua triste"
+      />
       <ListPosts showAlert={showAlert} />
       <SimpleFooter
         icons={footerIcons}
