@@ -22,6 +22,8 @@ export class FindCategoryByIdRepositoryImpl
         description: true,
         created_at: true,
         updated_at: true,
+        url_image: true,
+        image_name: true,
         user_created: {
           select: {
             name: true,
@@ -39,6 +41,8 @@ export class FindCategoryByIdRepositoryImpl
       id: findedCategory?.category_id ?? '',
       name: findedCategory?.name ?? '',
       description: findedCategory?.description ?? '',
+      url_image: findedCategory?.url_image ?? '',
+      image_name: findedCategory?.image_name ?? '',
       createdAt: findedCategory?.created_at ?? new Date(),
       createdBy: findedCategory?.user_created.name ?? '',
       updatedAt: findedCategory?.updated_at ?? new Date(),
