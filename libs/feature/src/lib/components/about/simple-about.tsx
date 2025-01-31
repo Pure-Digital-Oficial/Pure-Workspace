@@ -1,6 +1,7 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { CtaButton } from '../buttom';
+import { SectionContainer } from '../section';
 
 interface SimpleAboutProps {
   backgroundColor?: string;
@@ -10,6 +11,7 @@ interface SimpleAboutProps {
   ctaButtonTitle?: string;
   aboutImage: string;
   aboutImageAltTitle?: string;
+  heigth?: number;
 }
 
 export const SimpleAbout: FC<SimpleAboutProps> = ({
@@ -20,32 +22,22 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
   ctaButtonTitle,
   aboutImage,
   aboutImageAltTitle = 'Foto da seção sobre',
+  heigth = 70,
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
-    <Box
-      id="about-section"
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: smDown ? '100vh' : theme.spacing(70),
-        backgroundColor,
-        padding: theme.spacing(4),
-      }}
-    >
+    <SectionContainer id="about-section" fullHeigth={false} heigth={heigth}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: smDown ? 'column' : 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          maxWidth: 1600,
-          width: lgDown ? '100%' : '90%',
+          width: '100%',
         }}
       >
         {!smDown && (
@@ -54,7 +46,7 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
               display: 'flex',
               justifyContent: 'start',
               alignItems: 'center',
-              flex: '1 1 50%',
+              flex: '1 1 40%',
             }}
           >
             <Box
@@ -76,9 +68,9 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
             flexDirection: 'column',
             alignItems: 'flex-start',
             textAlign: 'left',
-            flex: '1 1 50%',
+            flex: '1 1 60%',
             padding: smDown ? '' : theme.spacing(4),
-            maxWidth: smDown ? '100%' : lgDown ? '75%' : '60%',
+            maxWidth: mdDown ? '100%' : lgDown ? '75%' : '100%',
           }}
         >
           <Typography
@@ -144,6 +136,6 @@ export const SimpleAbout: FC<SimpleAboutProps> = ({
           </Box>
         )}
       </Box>
-    </Box>
+    </SectionContainer>
   );
 };
