@@ -48,7 +48,8 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            width: '90%',
+            width: '100%',
+            maxWidth: 1400,
           }}
         >
           <Box>

@@ -9,6 +9,7 @@ interface SimpleSectionContainerPros {
   fullHeigth: boolean;
   aligmentContent?: boolean;
   heigth?: number;
+  maxWidth?: number;
 }
 
 export const SectionContainer: FC<SimpleSectionContainerPros> = ({
@@ -19,9 +20,12 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
   fullHeigth,
   aligmentContent = false,
   heigth = 78.1,
+  maxWidth = 1400,
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const xlDown = useMediaQuery(theme.breakpoints.down('xl'));
+
   return (
     <Box
       id={id}
@@ -38,7 +42,7 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
       <Box
         sx={{
           display: 'flex',
-          flexDirection: smDown ? 'column' : 'row',
+
           background: backgroundColor,
           alignItems: aligmentContent ? 'center' : '',
           justifyContent: 'center',
@@ -50,7 +54,17 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
           zIndex: 1,
         }}
       >
-        {children}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: smDown ? 'column' : 'row',
+            width: xlDown ? '90%' : '100%',
+            maxWidth: maxWidth,
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   );

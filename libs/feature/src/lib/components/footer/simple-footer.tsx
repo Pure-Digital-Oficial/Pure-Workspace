@@ -55,7 +55,8 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '90%',
+          width: '100%',
+          maxWidth: 1400,
         }}
       >
         <Box

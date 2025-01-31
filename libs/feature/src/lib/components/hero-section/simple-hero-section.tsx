@@ -43,7 +43,7 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
         sx={{
           alignContent: 'center',
           position: 'relative',
-          width: smDown ? '100%' : '60%',
+          width: mdDown ? '100%' : xlDown ? '60%' : '100%',
         }}
       >
         <Box
@@ -65,7 +65,7 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
               maxWidth: '95%',
               fontSize: smDown
                 ? theme.spacing(2.5)
-                : mdDown
+                : lgDown
                 ? theme.spacing(3.75)
                 : theme.spacing(5),
               fontWeight: fontTitleWeight,
@@ -80,7 +80,7 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
               fontSize={
                 smDown
                   ? theme.spacing(1.5)
-                  : mdDown
+                  : lgDown
                   ? theme.spacing(1.75)
                   : theme.spacing(2.5)
               }
@@ -97,22 +97,14 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: mdDown ? 'center' : '',
+          justifyContent: lgDown ? 'center' : '',
           position: 'relative',
           height: '100%',
         }}
       >
         <Box
           component="img"
-          height={
-            smDown
-              ? theme.spacing(24)
-              : mdDown
-              ? theme.spacing(30)
-              : lgDown
-              ? theme.spacing(35)
-              : theme.spacing(48)
-          }
+          height={smDown ? theme.spacing(24) : xlDown ? '80%' : '100%'}
           src={image}
           alt={imageAltTitle}
           sx={{
