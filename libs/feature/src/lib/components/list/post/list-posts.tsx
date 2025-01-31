@@ -4,6 +4,7 @@ import { PostCard } from '../item';
 import { useListPostsData } from '../../../hooks';
 import { useAppIdContext } from '../../../contexts';
 import { CarouselButton } from '../../buttom';
+import { SectionContainer } from '../../section';
 
 interface ListPostsProps {
   imageContent?: number;
@@ -92,77 +93,78 @@ export const ListPosts: FC<ListPostsProps> = ({
   }
 
   return (
-    <Box
+    <SectionContainer
       id="posts-section"
-      sx={{
-        position: 'relative',
-        width: smDown ? '100%' : '90%',
-        maxWidth: lgDown ? '100%' : 1600,
-        margin: 'auto',
-        overflow: 'hidden',
-        padding: 0,
-      }}
+      fullHeigth={false}
+      heigth={mdDown ? 100 : 120}
     >
       <Box
-        component="header"
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: theme.spacing(2),
+          position: 'relative',
+          margin: 'auto',
+          overflow: 'hidden',
+          padding: 0,
         }}
       >
-        <Typography
-          variant="h4"
+        <Box
+          component="header"
           sx={{
-            fontWeight: 600,
-            maxWidth: theme.spacing(50),
-            fontSize: smDown ? theme.spacing(4) : theme.spacing(5),
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          {title}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'end',
-          mt: 0,
-        }}
-      >
-        {manualButton && (
-          <CarouselButton
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            itemsListCount={listPosts.length}
-          />
-        )}
-      </Box>
-
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: mdDown ? 'center' : 'space-between',
-          overflow: 'hidden',
-          transition: 'transform 0.5s ease',
-        }}
-      >
-        {getVisiblePosts().map((post, index) => (
-          <Box
-            key={`${post.id}-${index}`}
+          <Typography
+            variant="h4"
             sx={{
-              boxSizing: 'border-box',
-              padding: mdDown ? 0 : theme.spacing(1),
+              fontWeight: 600,
+              fontSize: smDown ? theme.spacing(4) : theme.spacing(5),
             }}
           >
-            <PostCard
-              title={post.title}
-              description={post.description}
-              image={post.coverImage}
+            {title}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'end',
+            mt: 0,
+          }}
+        >
+          {manualButton && (
+            <CarouselButton
+              handleNext={handleNext}
+              handlePrevious={handlePrevious}
+              itemsListCount={listPosts.length}
             />
-          </Box>
-        ))}
+          )}
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: mdDown ? 'center' : 'space-between',
+            overflow: 'hidden',
+            transition: 'transform 0.5s ease',
+          }}
+        >
+          {getVisiblePosts().map((post, index) => (
+            <Box
+              key={`${post.id}-${index}`}
+              sx={{
+                boxSizing: 'border-box',
+                padding: mdDown ? 0 : theme.spacing(1),
+              }}
+            >
+              <PostCard
+                title={post.title}
+                description={post.description}
+                image={post.coverImage}
+              />
+            </Box>
+          ))}
+        </Box>
       </Box>
-    </Box>
+    </SectionContainer>
   );
 };

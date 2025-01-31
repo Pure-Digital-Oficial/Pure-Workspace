@@ -25,6 +25,7 @@ export const PostCard: FC<PostCardProps> = ({
   buttonTitle = 'Saiba Mais',
 }) => {
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -35,9 +36,9 @@ export const PostCard: FC<PostCardProps> = ({
           ? theme.spacing(42)
           : lgDown
           ? theme.spacing(45)
-          : theme.spacing(50),
+          : theme.spacing(48),
         height: theme.spacing(75),
-        margin: theme.spacing(2),
+        margin: smDown ? 0 : theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
       }}

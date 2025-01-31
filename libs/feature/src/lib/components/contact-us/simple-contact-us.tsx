@@ -2,6 +2,7 @@ import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { FormContactUs } from '../form';
 import { CompanyContact } from './company-contact';
+import { SectionContainer } from '../section';
 
 interface SimpleContactUsProps {
   title: string;
@@ -15,6 +16,7 @@ interface SimpleContactUsProps {
   email: string;
   addressLabel?: string;
   address: string;
+  backgroundColor?: string;
 }
 
 export const SimpleContactUs: FC<SimpleContactUsProps> = ({
@@ -29,33 +31,27 @@ export const SimpleContactUs: FC<SimpleContactUsProps> = ({
   emailLabel,
   addressLabel,
   address,
+  backgroundColor = '#D2EACF',
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        backgroundColor: '#D2EACF',
-        justifyContent: 'center',
-        height: '100%',
-      }}
+    <SectionContainer
+      fullHeigth={false}
+      id="contact-us-section"
+      backgroundColor={backgroundColor}
     >
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           backgroundColor: bgColor,
-          width: mdDown ? '90%' : '90%',
-          maxWidth: 1600,
-          marginBottom: theme.spacing(3),
-          marginTop: theme.spacing(3),
+          width: '100%',
         }}
       >
         {!smDown && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
+          <Box sx={{ display: 'flex', width: '50%' }}>
             <CompanyContact
               address={address}
               email={email}
@@ -85,6 +81,6 @@ export const SimpleContactUs: FC<SimpleContactUsProps> = ({
           />
         </Box>
       </Box>
-    </Box>
+    </SectionContainer>
   );
 };

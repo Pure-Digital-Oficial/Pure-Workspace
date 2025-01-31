@@ -42,7 +42,6 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
       <Box
         sx={{
           display: 'flex',
-
           background: backgroundColor,
           alignItems: aligmentContent ? 'center' : '',
           justifyContent: 'center',
@@ -58,6 +57,7 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
           sx={{
             display: 'flex',
             justifyContent: 'center',
+            alignItems: 'center',
             flexDirection: smDown ? 'column' : 'row',
             width: xlDown ? '90%' : '100%',
             maxWidth: maxWidth,
