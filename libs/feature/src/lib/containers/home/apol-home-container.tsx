@@ -40,6 +40,15 @@ interface ApolHomeContainerProps {
     aboutCtaButton: () => void;
     aboutCtaButtonTitle?: string;
   };
+  contactUs: {
+    contactUsTitle: string;
+    contactUsEmail: string;
+    contactUsPhone: string[];
+    contactUsAddress: string;
+  };
+  posts: {
+    postsTitle: string;
+  };
   footer: {
     footerCopyrightText?: string;
     footerIcons: IconNavigation[];
@@ -69,6 +78,13 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
     aboutCtaButton,
     aboutCtaButtonTitle,
   },
+  contactUs: {
+    contactUsTitle,
+    contactUsEmail,
+    contactUsPhone,
+    contactUsAddress,
+  },
+  posts: { postsTitle },
   footer: {
     footerIcons,
     footerCopyrightText,
@@ -114,13 +130,13 @@ export const ApolHomeContainer: FC<ApolHomeContainerProps> = ({
         aboutImageAltTitle={aboutImageAltTitle}
       />
       <SimpleContactUs
-        email="apo@apol"
-        phones={['44998494865']}
+        email={contactUsEmail}
+        phones={contactUsPhone}
         showAlert={showAlert}
-        title="Entre em Contato Agora"
-        address="Rua triste"
+        title={contactUsTitle}
+        address={contactUsAddress}
       />
-      <ListPosts showAlert={showAlert} />
+      <ListPosts showAlert={showAlert} title={postsTitle} />
       <SimpleFooter
         icons={footerIcons}
         colorDefault={footerDefaultColor}

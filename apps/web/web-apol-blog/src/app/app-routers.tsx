@@ -40,20 +40,12 @@ export const AppRouters = () => {
                   to: () => scrollTo('about-section'),
                 },
                 {
-                  title: 'Notícias',
-                  to: () => {
-                    console.log(
-                      'Voce clicou no Nossos trabalho, estou cansado chefe'
-                    );
-                  },
+                  title: 'Postagens',
+                  to: () => scrollTo('posts-section'),
                 },
                 {
                   title: 'Contato',
-                  to: () => {
-                    console.log(
-                      'Voce clicou no Nossos trabalho, estou cansado chefe'
-                    );
-                  },
+                  to: () => scrollTo('contact-us-section'),
                 },
               ],
             }}
@@ -75,6 +67,15 @@ export const AppRouters = () => {
                 'A Associação dos Produtores de Londrina é uma iniciativa que une esforços para fortalecer o agronegócio da região. Trabalhamos para oferecer suporte aos produtores, compartilhar conhecimento e promover iniciativas que transformam o campo em um lugar de oportunidades.',
               aboutImage: '/assets/images/About_Image.svg',
               aboutCtaButtonTitle: 'Entre em Contato',
+            }}
+            contactUs={{
+              contactUsTitle: 'Entre em Contato Agora',
+              contactUsAddress: 'Viela da casa do Chico',
+              contactUsEmail: 'soDesuSabe@puredigital.com.br',
+              contactUsPhone: ['44998494865', '44984575871'],
+            }}
+            posts={{
+              postsTitle: 'Últimas Postagens',
             }}
             footer={{
               footerIcons: [

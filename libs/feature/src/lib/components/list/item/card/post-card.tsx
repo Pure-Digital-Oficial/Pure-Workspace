@@ -28,17 +28,24 @@ export const PostCard: FC<PostCardProps> = ({
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const xlDown = useMediaQuery(theme.breakpoints.down('xl'));
 
   return (
     <Card
       sx={{
         width: mdDown
-          ? theme.spacing(42)
-          : lgDown
+          ? theme.spacing(40)
+          : xlDown
           ? theme.spacing(45)
           : theme.spacing(48),
         height: theme.spacing(75),
-        margin: smDown ? 0 : theme.spacing(2),
+        margin: smDown
+          ? 0
+          : lgDown
+          ? theme.spacing(1)
+          : xlDown
+          ? theme.spacing(0.5)
+          : theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
       }}

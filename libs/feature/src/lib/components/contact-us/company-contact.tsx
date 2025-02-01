@@ -1,5 +1,9 @@
 import { Box, Typography, useTheme } from '@mui/material';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import EmailIcon from '@mui/icons-material/Email';
+import BusinessIcon from '@mui/icons-material/Business';
 import { FC } from 'react';
+import { formatValueMask } from '../../shared';
 
 interface CompanyContactProps {
   phoneLabel?: string;
@@ -34,14 +38,24 @@ export const CompanyContact: FC<CompanyContactProps> = ({
 
       {phones && (
         <Box mt={theme.spacing(4)}>
-          <Typography
-            sx={{ textTransform: 'uppercase' }}
-            variant="body1"
-            fontWeight={400}
-            fontSize={theme.spacing(1.75)}
+          <Box
+            sx={{
+              display: 'flex',
+              mb: theme.spacing(1),
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
           >
-            {phoneLabel}
-          </Typography>
+            <PhoneInTalkIcon sx={{ mr: theme.spacing(1) }} />
+            <Typography
+              sx={{ textTransform: 'uppercase' }}
+              variant="body1"
+              fontWeight={400}
+              fontSize={theme.spacing(1.75)}
+            >
+              {phoneLabel}
+            </Typography>
+          </Box>
           {phones.map((phone, index) => (
             <Typography
               key={index}
@@ -49,20 +63,31 @@ export const CompanyContact: FC<CompanyContactProps> = ({
               fontWeight={500}
               fontSize={theme.spacing(2.5)}
             >
-              {phone}
+              {formatValueMask(phone, 'phone')}
             </Typography>
           ))}
         </Box>
       )}
-      <Typography
-        mt={theme.spacing(2)}
-        sx={{ textTransform: 'uppercase' }}
-        variant="body1"
-        fontWeight={400}
-        fontSize={theme.spacing(1.75)}
+      <Box
+        sx={{
+          display: 'flex',
+          mb: theme.spacing(1),
+          flexDirection: 'row',
+          mt: theme.spacing(2),
+          alignItems: 'center',
+        }}
       >
-        {emailLabel}
-      </Typography>
+        <EmailIcon sx={{ mr: theme.spacing(1) }} />
+        <Typography
+          sx={{ textTransform: 'uppercase' }}
+          variant="body1"
+          fontWeight={400}
+          fontSize={theme.spacing(1.75)}
+        >
+          {emailLabel}
+        </Typography>
+      </Box>
+
       <Typography
         variant="body1"
         fontWeight={500}
@@ -70,16 +95,26 @@ export const CompanyContact: FC<CompanyContactProps> = ({
       >
         {email}
       </Typography>
-
-      <Typography
-        mt={theme.spacing(2)}
-        sx={{ textTransform: 'uppercase' }}
-        variant="body1"
-        fontWeight={400}
-        fontSize={theme.spacing(1.75)}
+      <Box
+        sx={{
+          display: 'flex',
+          mb: theme.spacing(1),
+          flexDirection: 'row',
+          mt: theme.spacing(2),
+          alignItems: 'center',
+        }}
       >
-        {addressLabel}
-      </Typography>
+        <BusinessIcon sx={{ mr: theme.spacing(1) }} />
+        <Typography
+          sx={{ textTransform: 'uppercase' }}
+          variant="body1"
+          fontWeight={400}
+          fontSize={theme.spacing(1.75)}
+        >
+          {addressLabel}
+        </Typography>
+      </Box>
+
       <Typography
         variant="body1"
         fontWeight={500}

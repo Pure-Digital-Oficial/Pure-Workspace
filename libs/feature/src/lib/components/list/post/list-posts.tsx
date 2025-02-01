@@ -9,7 +9,7 @@ import { SectionContainer } from '../../section';
 interface ListPostsProps {
   imageContent?: number;
   manualButton?: boolean;
-  title?: string;
+  title: string;
   emptyTitle?: string;
   showAlert: (message: string, success: boolean) => void;
 }
@@ -18,7 +18,7 @@ export const ListPosts: FC<ListPostsProps> = ({
   showAlert,
   imageContent = 6,
   manualButton = true,
-  title = 'Últimas Postagens',
+  title,
   emptyTitle = 'Nenhuma postagem disponível.',
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -32,7 +32,7 @@ export const ListPosts: FC<ListPostsProps> = ({
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const { listPosts, getListPostsData, totalPage } = useListPostsData({
+  const { listPosts, getListPostsData } = useListPostsData({
     showAlert,
     appId,
   });
@@ -96,7 +96,7 @@ export const ListPosts: FC<ListPostsProps> = ({
     <SectionContainer
       id="posts-section"
       fullHeigth={false}
-      heigth={mdDown ? 100 : 120}
+      heigth={mdDown ? 100 : 110}
     >
       <Box
         sx={{
