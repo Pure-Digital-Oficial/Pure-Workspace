@@ -25,6 +25,7 @@ export class CreatePostRepositoryImpl implements CreatePostRepository {
         status: 'ACTIVE',
         app_id: appId,
         cover_image: coverImage,
+        posted_at: new Date(),
       },
     });
 
