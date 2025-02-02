@@ -6,10 +6,12 @@ interface ToolbarButtomProps {
   icon: ReactElement;
   title: string;
   badgeContent?: number;
+  fill?: string;
 }
 
 export const ToolbarButtom: FC<ToolbarButtomProps> = ({
   handleOpen,
+  fill = 'white',
   icon,
   title,
   badgeContent = 0,
@@ -25,10 +27,10 @@ export const ToolbarButtom: FC<ToolbarButtomProps> = ({
         <IconButton
           sx={{
             display: 'flex',
-            background: 'white',
+            background: fill,
             justifyContent: 'center',
             ':hover': {
-              background: 'white',
+              background: fill,
               opacity: 0.5,
             },
           }}

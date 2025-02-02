@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import {
   FindAppByIdRepositoryImpl,
-  FindUserByIdRepositoryImpl,
   ListPostsRepositoryImpl,
   PrismaGeneralService,
 } from '@pure-workspace/data-access';
@@ -14,10 +13,6 @@ import { ListPostsService } from './list-posts.service';
   providers: [
     ListPosts,
     ListPostsService,
-    {
-      provide: 'FindUserByIdRepository',
-      useClass: FindUserByIdRepositoryImpl,
-    },
     {
       provide: 'FindAppByIdRepository',
       useClass: FindAppByIdRepositoryImpl,

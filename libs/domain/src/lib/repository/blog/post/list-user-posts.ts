@@ -1,5 +1,5 @@
-import { ListPostsDto, ListPostsResponseDto } from '../../../dto';
+import { ListPostsResponseDto, ListUserPostsDto } from '../../../dto';
 
 export interface ListUserPostsRepository {
-  list(input: ListPostsDto): Promise<ListPostsResponseDto>;
+  list(input: ListUserPostsDto): Promise<ListPostsResponseDto>;
 }

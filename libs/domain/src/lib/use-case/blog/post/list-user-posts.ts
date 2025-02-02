@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { UseCase } from '../../../base/use-case';
-import { ListPostsDto, ListPostsResponseDto } from '../../../dto';
+import { ListUserPostsDto, ListPostsResponseDto } from '../../../dto';
 import { EntityNotEmpty, EntityNotExists } from '../../../error';
 import { Either, left, right } from '../../../shared/either';
 import {
@@ -12,7 +12,7 @@ import { ValidationUserId } from '../../../utils';
 
 export class ListUserPosts
   implements
-    UseCase<ListPostsDto, Either<EntityNotEmpty, ListPostsResponseDto>>
+    UseCase<ListUserPostsDto, Either<EntityNotEmpty, ListPostsResponseDto>>
 {
   constructor(
     @Inject('FindUserByIdRepository')
@@ -23,7 +23,7 @@ export class ListUserPosts
     private listUserPostsRepository: ListUserPostsRepository
   ) {}
   async execute(
-    input: ListPostsDto
+    input: ListUserPostsDto
   ): Promise<Either<EntityNotEmpty, ListPostsResponseDto>> {
     const { appId, loggedUserId } = input;
 

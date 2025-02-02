@@ -22,6 +22,7 @@ export class FindPostByIdRepositoryImpl implements FindPostByIdRepository {
           created_at: true,
           updated_at: true,
           status: true,
+          cover_image: true,
           user_created: {
             select: {
               name: true,
@@ -47,6 +48,7 @@ export class FindPostByIdRepositoryImpl implements FindPostByIdRepository {
       updatedAt: findedPost?.updated_at ?? new Date(),
       updatedBy: findedPost?.user_updated.name ?? '',
       status: findedPost?.status ?? '',
+      coverImage: findedPost?.cover_image ?? '',
     };
   }
 }

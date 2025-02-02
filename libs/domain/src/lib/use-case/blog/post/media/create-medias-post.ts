@@ -100,7 +100,7 @@ export class CreateMediasPost
             buffer: thumbnailBuffer,
             mimetype: 'image/png',
           },
-          bucket: process.env['AWS_S3_BUCKET_NAME'] ?? '',
+          bucket: process.env['NX_PUBLIC_STORAGE_BUCKET'] ?? '',
           key: thumbNailKey,
         });
 

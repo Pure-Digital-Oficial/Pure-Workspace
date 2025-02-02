@@ -621,8 +621,10 @@ model Post {
   sub_title String
   description String
   content String
+  cover_image String
   created_by String
   updated_by String
+  posted_at DateTime?
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
