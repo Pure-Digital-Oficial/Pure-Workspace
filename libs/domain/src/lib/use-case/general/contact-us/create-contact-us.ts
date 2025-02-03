@@ -33,6 +33,10 @@ export class CreateContactUs
       return left(new EntityNotEmpty('App ID'));
     }
 
+    if (Object.keys(input.body).length < 1) {
+      return left(new EntityNotEmpty('Body'));
+    }
+
     if (Object.keys(description).length < 1) {
       return left(new EntityNotEmpty('Description'));
     }
