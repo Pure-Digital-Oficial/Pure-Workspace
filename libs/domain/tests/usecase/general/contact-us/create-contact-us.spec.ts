@@ -1,6 +1,6 @@
 import {
   App,
-  contactUsBodyDto,
+  ContactUsBodyDto,
   CreateContactUs,
   CreateContactUsDto,
   CreateContactUsRepository,
@@ -70,7 +70,7 @@ describe('CreateContactUs', () => {
 
   it('should return EntityNotEmpty when pass empty body in createContactUsDto', async () => {
     const { createContactUsDto, sut } = makeSut();
-    createContactUsDto.body = {} as contactUsBodyDto;
+    createContactUsDto.body = {} as ContactUsBodyDto;
     const result = await sut.execute(createContactUsDto);
 
     expect(result.isLeft()).toBeTruthy();
