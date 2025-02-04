@@ -2,26 +2,29 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+RUN apk add --no-cache openssl
+
 COPY package*.json ./
 RUN npm install
 
 COPY . .
 ARG DATABASE_GENERAL_URL
-ARG DATABASE_MARKETING_URL
 RUN npm run prisma:generate-prod
-RUN npm run build:back-pure-marketing
+RUN npm run build:back-pure-blog
 
 FROM node:20-alpine
 
 WORKDIR /app
 
-COPY --from=builder /app/dist/apps/api/api-pure-marketing ./dist
+RUN apk add --no-cache openssl
+
+COPY --from=builder /app/dist/apps/api/api-pure-blog ./dist
 COPY --from=builder /app/dist/libs ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/configs/scripts/update-files ./configs/scripts/update-files
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 
-EXPOSE ${NX_PUBLIC_BACK_MARKETING}
+EXPOSE ${NX_PUBLIC_BACK_PURE_BLOG}
 
 CMD ["sh", "-c", "node /app/dist/main.js"]

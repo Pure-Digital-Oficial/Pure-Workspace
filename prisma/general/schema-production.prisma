@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_GENERAL_URL")
-  schemas  = ["summons", "general", "pure_tv", "pure_finance"]
+  schemas  = ["summons", "general", "pure_tv", "pure_finance", "pure_blog"]
 }
 
 model Auth {
@@ -26,20 +26,6 @@ model Auth {
   @@schema("general")
 }
 
-enum AuthStatus {
-  GOOGLE
-  DEFAULT
-
-  @@schema("general")
-}
-
-enum UserType {
-  DEFAULT
-  DEFAULT_ADMIN
-  ADMIN
-  @@schema("general")
-}
-
 model Confirm_Delete_User {
   id String @id @default(uuid())
   responsibly_user String
@@ -53,8 +39,8 @@ model Confirm_Delete_User {
 
 model User {
   user_id String @id @default(uuid())
-  name String
-  nick_name String
+  name String  
+  nick_name String 
   status Status @default(ACTIVE)
   type UserType @default(DEFAULT)
   picture String?
@@ -83,6 +69,16 @@ model User {
   products_updated Product[] @relation("ProductUpdatedBy")
   salles_created Sale[] @relation("SaleUpdatedBy")
   salles_updated Sale[] @relation("SaleCreatedBy")
+  posts_created Post[] @relation("PostCreatedBy")
+  posts_updated Post[] @relation("PostUpdatedBy")
+  medias_created Media[] @relation("MediaCreatedBy")
+  medias_updated Media[] @relation("MediaUpdatedBy")
+  comments_created Comment[] @relation("CommentCreatedBy")
+  comments_updated Comment[] @relation("CommentUpdatedBy")
+  sub_categories_created Sub_Category[] @relation("SubCategoryCreatedBy")
+  sub_categories_updated Sub_Category[] @relation("SubCategoryUpdatedBy")
+  categories_created Category[] @relation("CategoryCreatedBy")
+  categories_updated Category[] @relation("CategoryUpdatedBy")
   sellers Seller[]
   paymentModel PaymentModel[]
 
@@ -96,6 +92,7 @@ model Application {
   updated_at DateTime @default(now())
   deleted_at DateTime?
   user_x_application User_X_Application[]
+  post Post[]
 
   @@schema("general")
 }
@@ -133,7 +130,7 @@ model User_X_Departament {
 model Departament {
   departament_id String @id @default(uuid())
   user_id String
-  name String
+  name String 
   description String
   status Status @default(ACTIVE)
   created_at DateTime @default(now())
@@ -164,8 +161,8 @@ model Departament_X_Company {
 
 model Company {
   company_id String @id @default(uuid())
-  fantasy_name String
-  social_reason String
+  fantasy_name String 
+  social_reason String 
   cnpj String
   user_id String
   status Status @default(ACTIVE)
@@ -334,12 +331,72 @@ model Country {
   @@schema("general")
 }
 
-enum Status {
-  ACTIVE
-  INACTIVE
-  BLOCKED
+model Product {
+  product_id String @id @default(uuid())
+  name String
+  description String
+  standard_price String
+  maximum_discount String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  created_by String
+  updated_at DateTime @default(now())
+  updated_by String
+  deleted_at DateTime?
+  user_created User @relation("ProductCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("ProductUpdatedBy",fields: [updated_by], references: [user_id])
+  salles Sale[]
+  @@schema("pure_finance")
+}
 
-  @@schema("general")
+model Seller {
+  seller_id String @id @default(uuid())
+  name String
+  phone String
+  email String
+  status Status @default(ACTIVE)
+  models SellerModel @default(DEFAULT)
+  created_at DateTime @default(now())
+  created_by String
+  updated_at DateTime @default(now())
+  user User @relation(fields: [created_by], references: [user_id])
+  salle Sale[]
+  @@schema("pure_finance")
+}
+
+model PaymentModel {
+  payment_model_id String @id @default(uuid())
+  name String
+  description String
+  status Status @default(ACTIVE)
+  created_at DateTime @default(now())
+  created_by String
+  updated_at DateTime @default(now())
+  user User @relation(fields: [created_by], references: [user_id])
+  salles Sale[]
+  @@schema("pure_finance")
+}
+
+model Sale {
+  salle_id String @id @default(uuid())
+  seller_id String
+  product_id String
+  payment_model_id String
+  company_id String
+  amount String
+  value String
+  status SaleStatus @default(STARTED)
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  product Product @relation(fields: [product_id], references: [product_id])
+  seller Seller @relation(fields: [seller_id], references: [seller_id])
+  payment_model PaymentModel @relation(fields: [payment_model_id], references: [payment_model_id])
+  company Company @relation(fields: [company_id], references: [company_id])
+  user_created User @relation("SaleCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("SaleUpdatedBy",fields: [updated_by], references: [user_id])
+  @@schema("pure_finance")
 }
 
 model Directory {
@@ -556,80 +613,133 @@ model Summons_Status {
   @@schema("summons")
 }
 
-enum SummonsStatus {
-  STARTED
-  PENDING
-  PAUSED
-  FINISHED
-
-  @@schema("summons")
-}
-
-model Product {
-  product_id String @id @default(uuid())
-  name String
-  standard_price String
-  maximum_discount String
+model Post {
+  post_id String @id @default(uuid())
+  app_id String
   status Status @default(ACTIVE)
-  created_at DateTime @default(now())
+  title String
+  sub_title String
+  description String
+  content String
+  cover_image String
   created_by String
-  updated_at DateTime @default(now())
   updated_by String
-  deleted_at DateTime?
-  user_created User @relation("ProductCreatedBy",fields: [created_by], references: [user_id])
-  user_updated User @relation("ProductUpdatedBy",fields: [updated_by], references: [user_id])
-  salles Sale[]
-  @@schema("pure_finance")
-}
-
-model Seller {
-  seller_id String @id @default(uuid())
-  name String
-  phone String
-  email String
-  status Status @default(ACTIVE)
-  models SellerModel @default(DEFAULT)
+  posted_at DateTime?
   created_at DateTime @default(now())
-  created_by String
   updated_at DateTime @default(now())
-  user User @relation(fields: [created_by], references: [user_id])
-  salle Sale[]
-  @@schema("pure_finance")
+
+  post_x_sub_categories Post_X_Sub_Category[]
+  comment Comment[]
+  media Media[]
+  app Application @relation(fields: [app_id], references: [app_id])
+  user_created User @relation("PostCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("PostUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
 }
 
-model PaymentModel {
-  payment_model_id String @id @default(uuid())
+model Media {
+  media_id String @id @default(uuid())
+  post_id String
+  name String
+  url String
+  content String
+  thumbnail String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [post_id])
+  user_created User @relation("MediaCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("MediaUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Comment {
+  comment_id String @id @default(uuid())
+  post_id String
+  name String
+  content String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [post_id])
+  user_created User @relation("CommentCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("CommentUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Sub_Category {
+  sub_category_id String @id @default(uuid())
+  category_id String
   name String
   description String
-  status Status @default(ACTIVE)
-  created_at DateTime @default(now())
-  created_by String
-  updated_at DateTime @default(now())
-  user User @relation(fields: [created_by], references: [user_id])
-  salles Sale[]
-  @@schema("pure_finance")
-}
-
-model Sale {
-  salle_id String @id @default(uuid())
-  seller_id String
-  product_id String
-  payment_model_id String
-  company_id String
-  amount String
-  value String
-  status SaleStatus @default(STARTED)
   created_by String
   updated_by String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  product Product @relation(fields: [product_id], references: [product_id])
-  seller Seller @relation(fields: [seller_id], references: [seller_id])
-  payment_model PaymentModel @relation(fields: [payment_model_id], references: [payment_model_id])
-  company Company @relation(fields: [company_id], references: [company_id])
-  user_created User @relation("SaleCreatedBy",fields: [created_by], references: [user_id])
-  user_updated User @relation("SaleUpdatedBy",fields: [updated_by], references: [user_id])
-  @@schema("pure_finance")
+
+  post_x_sub_categories Post_X_Sub_Category[]
+  categories Category @relation(fields: [category_id], references: [category_id])
+  user_created User @relation("SubCategoryCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("SubCategoryUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Category {
+  category_id String @id @default(uuid())
+  name String
+  description String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  sub_category Sub_Category[]
+  user_created User @relation("CategoryCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("CategoryUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Post_X_Sub_Category {
+  sub_category_id String
+  post_id String
+  created_at DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [post_id])
+  sub_category Sub_Category @relation(fields: [sub_category_id], references: [sub_category_id])
+
+  @@id([sub_category_id, post_id])
+  @@schema("pure_blog")
+}
+
+enum AuthStatus {
+  GOOGLE
+  DEFAULT
+
+  @@schema("general")
+}
+
+enum UserType {
+  DEFAULT
+  DEFAULT_ADMIN
+  ADMIN
+  @@schema("general")
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+
+  @@schema("general")
 }
 
 enum SellerModel {
@@ -644,4 +754,13 @@ enum SaleStatus {
   STARTED
   FINISHED
   @@schema("pure_finance")
+}
+
+enum SummonsStatus {
+  STARTED
+  PENDING
+  PAUSED
+  FINISHED
+
+  @@schema("summons")
 }

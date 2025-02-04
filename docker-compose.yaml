@@ -1,34 +1,20 @@
 version: '3.8'
 services:
-  api-pure-marketing:
+  api-pure-blog:
     build:
       context: .
-      dockerfile: ./configs/docker/Dockerfile.api-pure-marketing
+      dockerfile: ./configs/docker/Dockerfile.api-pure-blog
       args:
-        DATABASE_GENERAL_URL: ${DATABASE_MARKETING_URL}
-        DATABASE_MARKETING_URL: ${DATABASE_MARKETING_URL}
+        DATABASE_GENERAL_URL: ${DATABASE_GENERAL_URL}
+        DATABASE_MARKETING_URL: ${DATABASE_GENERAL_URL}
     ports:
-      - '${NX_PUBLIC_BACK_MARKETING}:${NX_PUBLIC_BACK_MARKETING}'
+      - '${NX_PUBLIC_BACK_PURE_BLOG}:${NX_PUBLIC_BACK_PURE_BLOG}'
     environment:
       - NODE_ENV=production
     networks:
       - shared_network
     env_file:
       - .env
-
-  web-pure-marketing:
-    build:
-      context: .
-      dockerfile: ./configs/docker/Dockerfile.web-pure-marketing
-      args:
-        NX_PUBLIC_BACK_PURE_MARKETING_URL: ${NX_PUBLIC_BACK_PURE_MARKETING_URL}
-        NX_PUBLIC_FRONT_PURE_MARKETING: ${NX_PUBLIC_FRONT_PURE_MARKETING}
-    ports:
-      - '${NX_PUBLIC_FRONT_PURE_MARKETING}:80'
-    environment:
-      - NODE_ENV=production
-    networks:
-      - shared_network
 
 networks:
   shared_network:
