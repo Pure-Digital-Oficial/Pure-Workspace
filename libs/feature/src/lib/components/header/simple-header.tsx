@@ -52,6 +52,7 @@ export const SimpleHeader: FC<SimpleHeaderProps> = ({
             maxWidth: 1400,
           }}
         >
+          {smDown && toolBar && <Box>{toolBar}</Box>}
           <Box>
             <img
               onClick={() => scrollTo('home')}
