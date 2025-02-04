@@ -1,0 +1,25 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+ARG NX_PUBLIC_BACK_PURE_BLOG_URL
+ARG NX_PUBLIC_FRONT_APOL_BLOG
+ARG NX_PUBLIC_BACK_GENERAL_URL
+ENV NX_PUBLIC_BACK_PURE_BLOG_URL=$NX_PUBLIC_BACK_PURE_BLOG_URL
+ENV NX_PUBLIC_FRONT_APOL_BLOG=$NX_PUBLIC_FRONT_APOL_BLOG
+ENV NX_PUBLIC_BACK_GENERAL_URL=$NX_PUBLIC_BACK_GENERAL_URL
+
+RUN npm run build:front-apol-blog
+
+FROM nginx:alpine
+
+COPY --from=builder /app/dist/apps/web/web-apol-blog /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,21 @@
 version: '3.8'
 services:
+  api-general:
+    build:
+      context: .
+      dockerfile: ./configs/docker/Dockerfile.api-general
+      args:
+        DATABASE_GENERAL_URL: ${DATABASE_GENERAL_URL}
+        DATABASE_MARKETING_URL: ${DATABASE_GENERAL_URL}
+    ports:
+      - '${NX_PUBLIC_BACK_GENERAL}:${NX_PUBLIC_BACK_GENERAL}'
+    environment:
+      - NODE_ENV=production
+    networks:
+      - shared_network
+    env_file:
+      - .env
+
   api-pure-blog:
     build:
       context: .
@@ -15,6 +31,23 @@ services:
       - shared_network
     env_file:
       - .env
+
+  web-apol-blog:
+    build:
+      context: .
+      dockerfile: ./configs/docker/Dockerfile.web-apol-blog
+      args:
+        NX_PUBLIC_BACK_GENERAL_URL: ${NX_PUBLIC_BACK_GENERAL_URL}
+        NX_PUBLIC_BACK_PURE_BLOG_URL: ${NX_PUBLIC_BACK_PURE_BLOG_URL}
+        NX_PUBLIC_FRONT_APOL_BLOG: ${NX_PUBLIC_FRONT_APOL_BLOG}
+    ports:
+      - '${NX_PUBLIC_FRONT_APOL_BLOG}:80'
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    networks:
+      - shared_network
 
 networks:
   shared_network:

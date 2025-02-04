@@ -25,6 +25,7 @@
     "build:back-pure-marketing": "nx build api-pure-marketing",
     "build:front-pure-marketing": "nx build web-pure-marketing",
     "build:front-pure-tv": "nx build web-pure-tv",
+    "build:front-apol-blog": "nx build web-apol-blog",
     "lint": "nx format:check --all",
     "lint:write": "nx format:write --all",
     "test": "nx run-many -t test",
