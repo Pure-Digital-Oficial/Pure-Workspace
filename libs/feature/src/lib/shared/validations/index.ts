@@ -3,6 +3,7 @@ export * from './device';
 export * from './directory';
 export * from './file';
 export * from './finance';
+export * from './general';
 export * from './login';
 export * from './marketing';
 export * from './playlist';

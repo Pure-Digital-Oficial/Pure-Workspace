@@ -1,6 +1,7 @@
 export * from './address';
 export * from './app';
 export * from './auth';
+export * from './blog';
 export * from './company';
 export * from './device';
 export * from './directory';
@@ -13,3 +14,4 @@ export * from './playlist-to-scheduling';
 export * from './schedules-to-device';
 export * from './scheduling';
 export * from './user';
+export * from './general';

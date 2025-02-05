@@ -1,3 +1,4 @@
+export * from './external-auth';
 export * from './adm-request.dto';
 export * from './auth-prisma.dto';
 export * from './create-auth.dto';

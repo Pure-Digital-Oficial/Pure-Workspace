@@ -7,6 +7,7 @@ import {
   AuthModule,
   ValidateTokenModule,
   AdmLoginModule,
+  ExternalAuthModule,
 } from './authentication';
 import {
   ListUserModule,
@@ -49,6 +50,7 @@ import {
   ListSimpleCityModule,
   ConsultZipcodeModule,
 } from './address';
+import { CreateContactUsModule } from './contact-us';
 
 @Module({
   imports: [
@@ -56,6 +58,7 @@ import {
     CreateAuthModule,
     AuthModule,
     AdmLoginModule,
+    ExternalAuthModule,
     ListUserModule,
     EditUserModule,
     FindUserByIdModule,
@@ -91,6 +94,7 @@ import {
     ListCompaniesByUserIdModule,
     ChangeUserTypeModule,
     ValidateTokenModule,
+    CreateContactUsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

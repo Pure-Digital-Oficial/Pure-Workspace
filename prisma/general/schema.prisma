@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_GENERAL_URL")
-  schemas  = ["summons", "general", "pure_tv", "pure_finance"]
+  schemas  = ["summons", "general", "pure_tv", "pure_finance", "pure_blog"]
 }
 
 model Auth {
@@ -26,8 +26,6 @@ model Auth {
   @@schema("general")
 }
 
-
-
 model Confirm_Delete_User {
   id String @id @default(uuid())
   responsibly_user String
@@ -45,6 +43,7 @@ model User {
   nick_name String @db.VarChar(100)
   status Status @default(ACTIVE)
   type UserType @default(DEFAULT)
+  picture String?
   birth_date DateTime?
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -70,6 +69,16 @@ model User {
   products_updated Product[] @relation("ProductUpdatedBy")
   salles_created Sale[] @relation("SaleUpdatedBy")
   salles_updated Sale[] @relation("SaleCreatedBy")
+  posts_created Post[] @relation("PostCreatedBy")
+  posts_updated Post[] @relation("PostUpdatedBy")
+  medias_created Media[] @relation("MediaCreatedBy")
+  medias_updated Media[] @relation("MediaUpdatedBy")
+  comments_created Comment[] @relation("CommentCreatedBy")
+  comments_updated Comment[] @relation("CommentUpdatedBy")
+  sub_categories_created Sub_Category[] @relation("SubCategoryCreatedBy")
+  sub_categories_updated Sub_Category[] @relation("SubCategoryUpdatedBy")
+  categories_created Category[] @relation("CategoryCreatedBy")
+  categories_updated Category[] @relation("CategoryUpdatedBy")
   sellers Seller[]
   paymentModel PaymentModel[]
 
@@ -83,6 +92,8 @@ model Application {
   updated_at DateTime @default(now())
   deleted_at DateTime?
   user_x_application User_X_Application[]
+  post Post[]
+  contacts Contact[]
 
   @@schema("general")
 }
@@ -317,6 +328,24 @@ model Country {
   uf String @db.VarChar(2)
 
   state State[]
+
+  @@schema("general")
+}
+
+model Contact {
+  contact_id String @id @default(uuid())
+  name String
+  email String
+  number String
+  description String
+  app_id String
+  status ContactStatus @default(SENDING)
+  sending Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  sending_at DateTime?
+
+  Apps Application @relation(fields: [app_id], references: [app_id])
 
   @@schema("general")
 }
@@ -603,6 +632,113 @@ model Summons_Status {
   @@schema("summons")
 }
 
+model Post {
+  post_id String @id @default(uuid())
+  app_id String
+  status Status @default(ACTIVE)
+  title String
+  sub_title String
+  description String
+  content String
+  cover_image String
+  created_by String
+  updated_by String
+  posted_at DateTime?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  post_x_sub_categories Post_X_Sub_Category[]
+  comment Comment[]
+  media Media[]
+  app Application @relation(fields: [app_id], references: [app_id])
+  user_created User @relation("PostCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("PostUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Media {
+  media_id String @id @default(uuid())
+  post_id String
+  name String
+  url String
+  content String
+  thumbnail String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [post_id])
+  user_created User @relation("MediaCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("MediaUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Comment {
+  comment_id String @id @default(uuid())
+  post_id String
+  name String
+  content String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [post_id])
+  user_created User @relation("CommentCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("CommentUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Sub_Category {
+  sub_category_id String @id @default(uuid())
+  category_id String
+  name String
+  description String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  post_x_sub_categories Post_X_Sub_Category[]
+  categories Category @relation(fields: [category_id], references: [category_id])
+  user_created User @relation("SubCategoryCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("SubCategoryUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Category {
+  category_id String @id @default(uuid())
+  name String
+  description String
+  created_by String
+  updated_by String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  sub_category Sub_Category[]
+  user_created User @relation("CategoryCreatedBy",fields: [created_by], references: [user_id])
+  user_updated User @relation("CategoryUpdatedBy",fields: [updated_by], references: [user_id])
+
+  @@schema("pure_blog")
+}
+
+model Post_X_Sub_Category {
+  sub_category_id String
+  post_id String
+  created_at DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [post_id])
+  sub_category Sub_Category @relation(fields: [sub_category_id], references: [sub_category_id])
+
+  @@id([sub_category_id, post_id])
+  @@schema("pure_blog")
+}
+
 enum AuthStatus {
   GOOGLE
   DEFAULT
@@ -646,4 +782,12 @@ enum SummonsStatus {
   FINISHED
 
   @@schema("summons")
+}
+
+enum ContactStatus {
+  SENDING
+  IN_PROGRESS
+  ERROR
+  COMPLETED
+  @@schema("general")
 }

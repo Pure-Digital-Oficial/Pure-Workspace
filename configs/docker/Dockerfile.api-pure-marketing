@@ -24,4 +24,4 @@ COPY --from=builder /app/package*.json ./
 
 EXPOSE ${NX_PUBLIC_BACK_MARKETING}
 
-CMD ["sh", "-c", "npm run prisma:migrate-prod:marketing && node /app/dist/main.js"]
+CMD ["sh", "-c", "node /app/dist/main.js"]
