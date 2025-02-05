@@ -50,15 +50,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
             : colorDefault,
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: 1400,
-        }}
-      >
+      {smDown && (
         <Box
           component="img"
           src={company.companyLogo}
@@ -69,6 +61,28 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({
             objectFit: 'contain',
           }}
         />
+      )}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: smDown ? 'center' : 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: 1400,
+        }}
+      >
+        {!smDown && (
+          <Box
+            component="img"
+            src={company.companyLogo}
+            alt={company.companyName}
+            height={theme.spacing(15)}
+            sx={{
+              maxWidth: smDown ? '80%' : '100%',
+              objectFit: 'contain',
+            }}
+          />
+        )}
 
         <Box sx={{ display: 'flex' }}>
           {icons.map((icon) => (

@@ -18,6 +18,20 @@ export const AppRouters = () => {
       setDrawerOptions({
         Inicio: [{ label: 'Inicio', icon: 'home', path: 'home' }],
         About: [{ label: 'Sobre nós', icon: 'badge', path: 'about-section' }],
+        Posts: [
+          {
+            label: 'Postagens',
+            icon: 'markunread_mailbox',
+            path: 'posts-section',
+          },
+        ],
+        Contact: [
+          {
+            label: 'Contato',
+            icon: 'phone_callback',
+            path: 'contact-us-section',
+          },
+        ],
       });
       hasLoadedUserData.current = true;
     }

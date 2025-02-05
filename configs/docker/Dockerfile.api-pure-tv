@@ -23,4 +23,4 @@ COPY --from=builder /app/package*.json ./
 
 EXPOSE ${NX_PUBLIC_BACK_PURE_TV}
 
-CMD ["sh", "-c", "npm run prisma:migrate-prod:pure-tv && node /app/dist/main.js"]
+CMD ["sh", "-c", "node /app/dist/main.js"]
