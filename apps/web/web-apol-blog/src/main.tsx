@@ -4,8 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './app/app';
 import { AppIdProvider } from '@pure-workspace/feature';
+import { env } from './app/env';
 
-const appId = process.env['NX_PUBLIC_APOL_BLOG_ID'] ?? '';
+const appId = env.NX_PUBLIC_APOL_BLOG_ID;
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
