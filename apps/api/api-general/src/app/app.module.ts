@@ -50,6 +50,7 @@ import {
   ListSimpleCityModule,
   ConsultZipcodeModule,
 } from './address';
+import { CreateContactUsModule } from './contact-us';
 
 @Module({
   imports: [
@@ -93,6 +94,7 @@ import {
     ListCompaniesByUserIdModule,
     ChangeUserTypeModule,
     ValidateTokenModule,
+    CreateContactUsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

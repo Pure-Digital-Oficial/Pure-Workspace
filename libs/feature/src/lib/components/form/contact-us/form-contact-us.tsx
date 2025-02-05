@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { formatValueMask, ValidationsError } from '../../../shared'; // A função de formatação da máscara
 import { FormButton } from '../form-button.component';
 import {
-  contactUsBodyDto,
+  ContactUsBodyDto,
   CreateContactUsDto,
   ErrorResponse,
 } from '@pure-workspace/domain';
@@ -52,7 +52,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
   emailLabel = 'Email',
   descriptionLabel = 'Sua Mensagem',
   buttonTitle = 'Enviar',
-  successMessage = 'Dados enviados com Sucesso!',
+  successMessage = 'Contato feito com Sucesso!',
   bgColor = '#1B7A43',
   color = 'white',
 }) => {
@@ -68,7 +68,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
     control,
     formState: { errors },
     setValue,
-  } = useForm<contactUsBodyDto>({
+  } = useForm<ContactUsBodyDto>({
     mode: 'all',
     criteriaMode: 'all',
     defaultValues: {
@@ -97,7 +97,7 @@ export const FormContactUs: FC<FormContactUsProps> = ({
     }
   };
 
-  const handleContactUs = async (data: contactUsBodyDto) => {
+  const handleContactUs = async (data: ContactUsBodyDto) => {
     setLoading(true);
     setSuccess(false);
     const result = await createContactUs({
