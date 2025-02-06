@@ -27,7 +27,13 @@ export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
         logo={companyLogo}
         logoAltTitle={companyLogoAltTitle}
         listButtons={headerListButtons}
-        toolBar={<ToolbarPureDigital />}
+        toolBar={
+          <ToolbarPureDigital
+            ctaButton={() => {
+              console.log('aaa');
+            }}
+          />
+        }
       />
     </Box>
   );

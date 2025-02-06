@@ -1,30 +1,45 @@
-import { Stack } from '@mui/material';
+import { Stack, useMediaQuery, useTheme } from '@mui/material';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ToolbarButtom } from '../buttom';
+import { CtaButton, ToolbarButtom } from '../buttom';
 import { useLoggedUser } from '../../contexts';
 
 interface ToolbarPureDigitalProps {
   loginTitle?: string;
   notifyTitle?: string;
   fill?: string;
+  ctaButton?: () => void;
+  ctaButtonTitle?: string;
 }
 
 export const ToolbarPureDigital: FC<ToolbarPureDigitalProps> = ({
   loginTitle = 'Fazer Login',
   notifyTitle = 'Notificações',
   fill = '#D2EACF',
+  ctaButton,
+  ctaButtonTitle,
 }) => {
   const navigate = useNavigate();
   const { loggedUser } = useLoggedUser();
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   const navigateTo = () => {
     navigate('/login');
   };
 
   return (
     <Stack spacing={1} direction="row" sx={{ color: 'action.active' }}>
+      {ctaButton && !smDown && (
+        <CtaButton
+          action={ctaButton}
+          title={ctaButtonTitle}
+          color="secondary"
+          borderRadius={90}
+        />
+      )}
       <ToolbarButtom
         handleOpen={navigateTo}
         icon={<Person2OutlinedIcon fontSize="medium" sx={{ color: 'black' }} />}

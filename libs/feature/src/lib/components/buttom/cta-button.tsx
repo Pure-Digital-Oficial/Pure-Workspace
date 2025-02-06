@@ -11,6 +11,7 @@ interface CtaButtonProps {
   color?: string;
   titleColor?: string;
   padding?: number;
+  borderRadius?: number;
 }
 
 export const CtaButton: FC<CtaButtonProps> = ({
@@ -20,9 +21,10 @@ export const CtaButton: FC<CtaButtonProps> = ({
   fontSize = 12,
   width,
   title = 'Contrate Agora',
-  color = 'secondary',
+  color,
   titleColor,
   padding,
+  borderRadius,
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -32,13 +34,26 @@ export const CtaButton: FC<CtaButtonProps> = ({
     <Button
       variant="outlined"
       sx={{
-        //borderRadius: '90px',
+        borderRadius: borderRadius ? `${borderRadius}px` : '',
         whiteSpace: 'nowrap',
         textTransform: 'none',
         fontSize: fontSize,
         marginRight: smDown ? '' : lgDown ? theme.spacing(-1) : 'auto',
         width: width ? theme.spacing(width) : 'auto',
-        background: color === 'primary' ? theme.palette.secondary.main : color,
+        background:
+          color === 'secondary'
+            ? theme.palette.secondary.main
+            : color === 'primary'
+            ? theme.palette.primary.main
+            : color,
+        ':hover': {
+          background:
+            color === 'secondary'
+              ? theme.palette.secondary.light
+              : color === 'primary'
+              ? theme.palette.primary.light
+              : color,
+        },
         color: titleColor,
         padding: padding ? theme.spacing(padding) : 'auto',
       }}
