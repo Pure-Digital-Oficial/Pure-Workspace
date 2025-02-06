@@ -3,6 +3,7 @@ import {
   PureDigitalHomeContainer,
   useDrawerContext,
   scrollTo,
+  navigateToUrl,
 } from '@pure-workspace/feature';
 import { useEffect, useRef } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -63,6 +64,12 @@ export const AppRouters = () => {
             }}
             company={{
               companyLogo: '/assets/images/logos/PdLogo.svg',
+            }}
+            cta={{
+              ctaButton: () =>
+                navigateToUrl(
+                  'https://wa.me/44998494865?text=Olá estou interessado em saber mais sobre os planos da Pure Digital, Poderia me ajudar?'
+                ),
             }}
           />
         }

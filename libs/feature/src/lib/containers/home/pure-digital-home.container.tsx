@@ -11,13 +11,17 @@ interface PureDigitalHomeContainerProps {
   company: {
     companyLogo: string;
     companyLogoAltTitle?: string;
-    companyName?: string;
+  };
+  cta: {
+    ctaButton: () => void;
+    ctaButtonTitle?: string;
   };
 }
 
 export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
   header: { headerListButtons, headerTitle },
-  company: { companyLogo, companyLogoAltTitle, companyName },
+  company: { companyLogo, companyLogoAltTitle },
+  cta: { ctaButtonTitle, ctaButton },
 }) => {
   return (
     <Box>
@@ -29,9 +33,8 @@ export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
         listButtons={headerListButtons}
         toolBar={
           <ToolbarPureDigital
-            ctaButton={() => {
-              console.log('aaa');
-            }}
+            ctaButton={ctaButton}
+            ctaButtonTitle={ctaButtonTitle}
           />
         }
       />

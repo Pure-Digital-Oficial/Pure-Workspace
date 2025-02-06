@@ -10,7 +10,7 @@ interface ToolbarPureDigitalProps {
   loginTitle?: string;
   notifyTitle?: string;
   fill?: string;
-  ctaButton?: () => void;
+  ctaButton: () => void;
   ctaButtonTitle?: string;
 }
 
@@ -26,13 +26,13 @@ export const ToolbarPureDigital: FC<ToolbarPureDigitalProps> = ({
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const navigateTo = () => {
-    navigate('/login');
+  const navigateTo = (input: string) => {
+    navigate(input);
   };
 
   return (
     <Stack spacing={1} direction="row" sx={{ color: 'action.active' }}>
-      {ctaButton && !smDown && (
+      {!smDown && (
         <CtaButton
           action={ctaButton}
           title={ctaButtonTitle}
@@ -41,13 +41,13 @@ export const ToolbarPureDigital: FC<ToolbarPureDigitalProps> = ({
         />
       )}
       <ToolbarButtom
-        handleOpen={navigateTo}
+        handleOpen={() => navigateTo('/login')}
         icon={<Person2OutlinedIcon fontSize="medium" sx={{ color: 'black' }} />}
         title={loginTitle}
       />
       {loggedUser?.id && (
         <ToolbarButtom
-          handleOpen={navigateTo}
+          handleOpen={() => navigateTo('/')}
           icon={
             <NotificationsNoneOutlinedIcon
               fontSize="medium"
