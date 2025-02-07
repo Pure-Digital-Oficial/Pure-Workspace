@@ -12,6 +12,8 @@ interface SimpleHeroSectionProps {
   fontTitleWeight?: number;
   fontSubTitleWeight?: number;
   heigth?: number;
+  photoAlignItems?: string;
+  textWidth?: string;
 }
 
 export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
@@ -19,11 +21,13 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
   subTitle,
   image,
   backgroundImage,
+  photoAlignItems,
   imageAltTitle = 'Foto do Título',
   backgroundColor = '#1B7A43E3',
   fontTitleWeight = 600,
   fontSubTitleWeight = 400,
   heigth = 56.7,
+  textWidth,
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -43,7 +47,13 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
         sx={{
           alignContent: 'center',
           position: 'relative',
-          width: mdDown ? '100%' : xlDown ? '60%' : '100%',
+          width: textWidth
+            ? textWidth
+            : mdDown
+            ? '100%'
+            : xlDown
+            ? '60%'
+            : '100%',
         }}
       >
         <Box
@@ -96,7 +106,7 @@ export const SimpleHeroSection: FC<SimpleHeroSectionProps> = ({
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: photoAlignItems ? photoAlignItems : 'center',
           justifyContent: lgDown ? 'center' : '',
           position: 'relative',
           height: '100%',

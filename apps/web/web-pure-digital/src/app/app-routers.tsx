@@ -71,6 +71,15 @@ export const AppRouters = () => {
                   'https://wa.me/44998494865?text=Olá estou interessado em saber mais sobre os planos da Pure Digital, Poderia me ajudar?'
                 ),
             }}
+            hero={{
+              image: '/assets/images/MenHeroSection.svg',
+              title:
+                'Impulsione suas vendas com landing pages que convertem! Criamos páginas otimizadas para capturar leads e aumentar suas ofertas.',
+              subTitle:
+                'Landing pages personalizadas e focadas em resultados para fazer seu negócio crescer.',
+              backgroundColor:
+                'linear-gradient(35deg, #040405 21%, #040406, #0c0c0f, #101015, #111116, #050506, #060607, #060608)',
+            }}
           />
         }
       />
