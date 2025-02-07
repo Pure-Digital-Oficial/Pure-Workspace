@@ -3,6 +3,7 @@ export * from './alert';
 export * from './buttom';
 export * from './card';
 export * from './contact-us';
+export * from './details-feature';
 export * from './drawer';
 export * from './file';
 export * from './footer';

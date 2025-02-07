@@ -1,3 +1,4 @@
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import {
   ProtectedRoute,
   PureDigitalHomeContainer,
@@ -79,6 +80,27 @@ export const AppRouters = () => {
                 'Landing pages personalizadas e focadas em resultados para fazer seu negócio crescer.',
               backgroundColor:
                 'linear-gradient(35deg, #040405 21%, #040406, #0c0c0f, #101015, #111116, #050506, #060607, #060608)',
+            }}
+            detailsFeature={{
+              detailsFeatureImage: '/assets/images/Product.svg',
+              detailsFeatureTitle:
+                'Landing Pages que geram resultados concretos e impulsionam suas vendas!',
+              listFeatures: [
+                {
+                  icon: <TaskAltIcon sx={{ color: '#9c1b1f' }} />,
+                  title:
+                    'Landing Pages otimizadas para transformar visitantes em clientes e aumentar sua taxa de conversão.',
+                },
+                {
+                  icon: <TaskAltIcon sx={{ color: '#9c1b1f' }} />,
+                  title: 'Páginas personalizadas e pensadas para o seu nicho.',
+                },
+                {
+                  icon: <TaskAltIcon sx={{ color: '#9c1b1f' }} />,
+                  title:
+                    'Design focado na experiência do usuário, garantindo mais engajamento e resultados.',
+                },
+              ],
             }}
           />
         }

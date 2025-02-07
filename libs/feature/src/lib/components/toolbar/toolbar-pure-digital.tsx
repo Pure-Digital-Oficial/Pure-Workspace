@@ -38,6 +38,7 @@ export const ToolbarPureDigital: FC<ToolbarPureDigitalProps> = ({
           title={ctaButtonTitle}
           color="secondary"
           borderRadius={90}
+          titleColor="white"
         />
       )}
       <ToolbarButtom

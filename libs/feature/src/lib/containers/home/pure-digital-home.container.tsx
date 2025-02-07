@@ -1,6 +1,7 @@
 import { Box, useMediaQuery, useTheme } from '@mui/material';
-import { ButtonNavigation } from '../../shared';
+import { ButtonNavigation, IconTextProps } from '../../shared';
 import {
+  SimpleDetailsFeature,
   SimpleHeader,
   SimpleHeroSection,
   ToolbarPureDigital,
@@ -28,6 +29,12 @@ interface PureDigitalHomeContainerProps {
     backgroundImage?: string;
     imageAltTitle?: string;
   };
+  detailsFeature: {
+    detailsFeatureAltTitle?: string;
+    detailsFeatureImage: string;
+    detailsFeatureTitle: string;
+    listFeatures: IconTextProps[];
+  };
 }
 
 export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
@@ -41,6 +48,12 @@ export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
     backgroundImage,
     subTitle,
     imageAltTitle,
+  },
+  detailsFeature: {
+    detailsFeatureImage,
+    detailsFeatureAltTitle,
+    detailsFeatureTitle,
+    listFeatures,
   },
 }) => {
   const theme = useTheme();
@@ -70,6 +83,14 @@ export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
         imageAltTitle={imageAltTitle}
         photoAlignItems="end"
         textWidth={smDown ? '100%' : '60%'}
+      />
+      <SimpleDetailsFeature
+        image={detailsFeatureImage}
+        imageAltTitle={detailsFeatureAltTitle}
+        title={detailsFeatureTitle}
+        ctaButton={ctaButton}
+        ctaButtonTitle={ctaButtonTitle}
+        listFeatures={listFeatures}
       />
     </Box>
   );
