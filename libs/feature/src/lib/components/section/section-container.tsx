@@ -10,6 +10,9 @@ interface SimpleSectionContainerPros {
   aligmentContent?: boolean;
   heigth?: number;
   maxWidth?: number;
+  flexDirection?: string;
+  fullWidth?: string;
+  aligmentItems?: string;
 }
 
 export const SectionContainer: FC<SimpleSectionContainerPros> = ({
@@ -21,6 +24,9 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
   aligmentContent = false,
   heigth = 78.1,
   maxWidth = 1400,
+  flexDirection,
+  fullWidth,
+  aligmentItems,
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -57,9 +63,13 @@ export const SectionContainer: FC<SimpleSectionContainerPros> = ({
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: smDown ? 'column' : 'row',
-            width: xlDown ? '90%' : '100%',
+            alignItems: aligmentItems ? aligmentItems : 'center',
+            flexDirection: flexDirection
+              ? flexDirection
+              : smDown
+              ? 'column'
+              : 'row',
+            width: fullWidth ? fullWidth : xlDown ? '90%' : '100%',
             maxWidth: maxWidth,
           }}
         >

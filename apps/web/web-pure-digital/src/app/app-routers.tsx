@@ -1,4 +1,5 @@
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import { Box } from '@mui/material';
 import {
   ProtectedRoute,
   PureDigitalHomeContainer,
@@ -99,6 +100,32 @@ export const AppRouters = () => {
                   icon: <TaskAltIcon sx={{ color: '#9c1b1f' }} />,
                   title:
                     'Design focado na experiência do usuário, garantindo mais engajamento e resultados.',
+                },
+              ],
+            }}
+            about={{
+              aboutTitle:
+                'Por que sua empresa precisa de uma landing page eficaz?',
+              aboutDescription:
+                'Ter uma landing page não é apenas uma escolha inteligente, é fundamental para quem busca aumentar os custos e captar leads de forma rápida e eficiente. Uma landing page bem estruturada é o caminho ideal para impactar seu público-alvo, funcionando como um ponto de conversão estratégica para suas campanhas de marketing, 24 horas por dia.',
+              aboutImage: '/assets/images/AboutPhone.svg',
+              aboutList: [
+                {
+                  icon: (
+                    <Box component="img" src="/assets/images/Internet.svg" />
+                  ),
+                  title:
+                    'Sua landing page converte visitantes em leads ou clientes 24 horas por dia, 7 dias por semana, maximizando o retorno de suas campanhas de marketing.',
+                },
+                {
+                  icon: <Box component="img" src="/assets/images/Window.svg" />,
+                  title:
+                    'Landing pages otimizadas para campanhas promocionais, gerando leads de forma recorrente e garantindo flexibilidade em cada campanha',
+                },
+                {
+                  icon: <Box component="img" src="/assets/images/User.svg" />,
+                  title:
+                    'Uma landing page bem projetada transmite alternativas e aumenta a confiança do seu público, essencial para opções específicas.',
                 },
               ],
             }}

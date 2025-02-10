@@ -1,6 +1,7 @@
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { ButtonNavigation, IconTextProps } from '../../shared';
 import {
+  PureDigitalAbout,
   SimpleDetailsFeature,
   SimpleHeader,
   SimpleHeroSection,
@@ -35,6 +36,15 @@ interface PureDigitalHomeContainerProps {
     detailsFeatureTitle: string;
     listFeatures: IconTextProps[];
   };
+  about: {
+    aboutTitle: string;
+    aboutDescription: string;
+    aboutBackgroundColor?: string;
+    aboutList: IconTextProps[];
+    aboutImage: string;
+    aboutImageAltTitle?: string;
+    aboutRigthBackground?: string;
+  };
 }
 
 export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
@@ -54,6 +64,15 @@ export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
     detailsFeatureAltTitle,
     detailsFeatureTitle,
     listFeatures,
+  },
+  about: {
+    aboutTitle,
+    aboutBackgroundColor,
+    aboutList,
+    aboutDescription,
+    aboutImageAltTitle,
+    aboutImage,
+    aboutRigthBackground,
   },
 }) => {
   const theme = useTheme();
@@ -91,6 +110,18 @@ export const PureDigitalHomeContainer: FC<PureDigitalHomeContainerProps> = ({
         ctaButton={ctaButton}
         ctaButtonTitle={ctaButtonTitle}
         listFeatures={listFeatures}
+      />
+
+      <PureDigitalAbout
+        aboutList={aboutList}
+        ctaButton={ctaButton}
+        ctaButtonTitle={ctaButtonTitle}
+        title={aboutTitle}
+        description={aboutDescription}
+        backgroundColor={aboutBackgroundColor}
+        aboutImage={aboutImage}
+        aboutImageAltTitle={aboutImageAltTitle}
+        backgroundRight={aboutRigthBackground}
       />
     </Box>
   );
