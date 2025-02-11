@@ -1,3 +1,4 @@
+export * from './about';
 export * from './directory';
 export * from './item';
 export * from './post';

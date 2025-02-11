@@ -1,16 +1,10 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { SectionContainer } from '../section';
 
 import { FC } from 'react';
 import { CtaButton } from '../buttom';
-import { IconText } from '../list';
+import { PureDigitalAbouList } from '../list';
 import { IconTextProps } from '../../shared';
 
 interface PureDigitalAboutProps {
@@ -158,53 +152,18 @@ export const PureDigitalAbout: FC<PureDigitalAboutProps> = ({
                 objectFit: 'contain',
                 transform: 'rotate(4.97deg)',
               }}
+              loading="lazy"
             />
           </Box>
-          <Box
-            sx={{
-              mt: -2,
-              width: '50%',
-              background: backgroundRight,
-              borderTopLeftRadius: theme.spacing(25),
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: '100%',
-                ml: theme.spacing(3.5),
-              }}
-            >
-              <Box>
-                {aboutList.length > 0 &&
-                  aboutList.map((about) => (
-                    <Box
-                      key={about.title}
-                      sx={{
-                        flexDirection: 'column',
-                      }}
-                    >
-                      <IconText
-                        icon={about.icon}
-                        title={about.title}
-                        width={lgDown ? '80%' : '60%'}
-                        color="white"
-                        fontSize={theme.spacing(1.8)}
-                      />
-                      <Divider
-                        sx={{
-                          width: lgDown ? '80%' : '65%',
-                          mt: theme.spacing(3),
-                          borderColor: dividerColor,
-                        }}
-                      />
-                    </Box>
-                  ))}
-              </Box>
-            </Box>
-          </Box>
+          <PureDigitalAbouList
+            aboutList={aboutList}
+            backgroundRight={backgroundRight}
+            marginTop={-2}
+            alignItems="center"
+            width={mdDown ? '60%' : '55%'}
+            borderTopLeftRadius={theme.spacing(25)}
+            dividerColor={dividerColor}
+          />
         </Box>
       )}
 
@@ -218,7 +177,6 @@ export const PureDigitalAbout: FC<PureDigitalAboutProps> = ({
               marginBottom: smDown ? -17 : 0,
               marginTop: smDown ? '' : -20,
               marginRight: smDown ? '' : -13,
-              //marginLeft: smDown ? '' : -33,
               zIndex: 0,
             }}
           >
@@ -231,58 +189,23 @@ export const PureDigitalAbout: FC<PureDigitalAboutProps> = ({
                 maxWidth: smDown ? '100%' : '100%',
                 objectFit: 'contain',
               }}
+              loading="lazy"
             />
           </Box>
-          <Box
-            sx={{
-              width: smDown ? '100%' : '50vw',
-              zIndex: -1,
-              mr: mdDown ? '' : -23,
-              background: backgroundRight,
-              paddingTop: smDown ? theme.spacing(17) : theme.spacing(7),
-              paddingLeft: mdDown ? '' : theme.spacing(13),
-              paddingBottom: mdDown ? theme.spacing(6) : '',
-              borderTopLeftRadius: mdDown
-                ? theme.spacing(23)
-                : theme.spacing(25),
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: mdDown ? 'center' : 'flex-start',
-                //paddingLeft: smDown ? theme.spacing(1) : '',
-              }}
-            >
-              <Box>
-                {aboutList.length > 0 &&
-                  aboutList.map((about) => (
-                    <Box
-                      key={about.title}
-                      sx={{
-                        flexDirection: 'column',
-                      }}
-                    >
-                      <IconText
-                        icon={about.icon}
-                        title={about.title}
-                        width={smDown ? '95%' : theme.spacing(50)}
-                        color="white"
-                        fontSize={theme.spacing(2)}
-                      />
-                      <Divider
-                        sx={{
-                          width: smDown ? '95%' : theme.spacing(52),
-                          mt: theme.spacing(3),
-                          borderColor: dividerColor,
-                        }}
-                      />
-                    </Box>
-                  ))}
-              </Box>
-            </Box>
-          </Box>
+          <PureDigitalAbouList
+            aboutList={aboutList}
+            backgroundRight={backgroundRight}
+            marginTop={-2}
+            alignItems="center"
+            justifyContent="center"
+            width={smDown ? '100%' : '50%'}
+            borderTopLeftRadius={mdDown ? theme.spacing(23) : theme.spacing(25)}
+            marginRight={mdDown ? '' : -23}
+            paddingTop={smDown ? theme.spacing(17) : theme.spacing(7)}
+            paddingLeft={mdDown ? '' : theme.spacing(13)}
+            paddingBottom={mdDown ? theme.spacing(6) : ''}
+            dividerColor={dividerColor}
+          />
         </>
       )}
 
