@@ -32,23 +32,21 @@ export class CreateCategory
     const {
       loggedUserId,
       body: { name, description },
-      // name,
-      // description,
-      file,
+      image,
     } = input;
 
-    if (Object.keys(file).length < 1) {
-      return left(new EntityNotEmpty('File'));
+    if (Object.keys(image).length < 1) {
+      return left(new EntityNotEmpty('image'));
     }
 
-    if (file && !file.mimetype.includes('image/')) {
+    if (image && !image.mimetype.includes('image/')) {
       return left(new FileNotAllowed());
     }
 
-    const key = `${Date.now()}-${file.originalname}`;
+    const key = `${Date.now()}-${image.originalname}`;
 
     const resultUpload = await this.uploadContentFileRepository.upload({
-      file: file,
+      file: image,
       bucket: process.env['NX_PUBLIC_STORAGE_BUCKET'] ?? '',
       key,
     });
@@ -80,10 +78,8 @@ export class CreateCategory
         name,
         description,
       },
-      // name,
-      // description,
-      file: {
-        ...file,
+      image: {
+        ...image,
         path: resultUpload,
         filename: key,
       },

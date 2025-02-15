@@ -38,7 +38,7 @@ const makeSut = (): SutTypes => {
       name: CategoryMock.name,
       description: CategoryMock.description,
     },
-    file: FileMock,
+    image: FileMock,
   };
 
   const sut = new CreateCategory(
@@ -120,7 +120,7 @@ describe('CreateCategory', () => {
   it('should return EntityNotEmpty when pass empty file in createCategoryDto', async () => {
     const { createCategoryDto, sut } = makeSut();
 
-    createCategoryDto.file = {} as UploadedFile;
+    createCategoryDto.image = {} as UploadedFile;
 
     const result = await sut.execute(createCategoryDto);
 
@@ -160,7 +160,7 @@ describe('CreateCategory', () => {
   it('should return FileNotAllowed when pass incorrect file type in createCategoryDto', async () => {
     const { createCategoryDto, sut } = makeSut();
 
-    createCategoryDto.file.mimetype = '';
+    createCategoryDto.image.mimetype = '';
 
     const result = await sut.execute(createCategoryDto);
 

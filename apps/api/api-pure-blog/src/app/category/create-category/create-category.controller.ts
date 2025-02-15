@@ -1,10 +1,9 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Post,
   Query,
-  UploadedFiles,
+  UploadedFile,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -23,9 +22,9 @@ export class CreateCategoryController {
 
   @Post()
   @UsePipes(new ZodValidationPipe(createCategorySchema))
-  @UseInterceptors(FilesInterceptor('file'))
+  @UseInterceptors(FilesInterceptor('image'))
   async create(
-    @UploadedFiles() file: Express.Multer.File[],
+    @UploadedFile() file: Express.Multer.File,
     @Query('loggedUserId') loggedUserId: string,
     @Body('name') name: string,
     @Body('description') description: string
@@ -37,7 +36,7 @@ export class CreateCategoryController {
     const result = await this.createCategoryService.create({
       loggedUserId: loggedUserId ?? '',
       body: body ?? ({} as CategoryBodyDto),
-      file: file[0],
+      image: file,
     });
 
     if (result.isRight()) return { categoryId: result.value };
