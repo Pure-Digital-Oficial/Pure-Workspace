@@ -4,7 +4,7 @@ import {
   EntityNotExists,
   FindAppByIdRepository,
   FindUserByIdRepository,
-  ListPostsDto,
+  ListUserPostsDto,
   ListUserPosts,
   ListUserPostsRepository,
   UserList,
@@ -18,7 +18,7 @@ import {
 
 interface SutTypes {
   sut: ListUserPosts;
-  listPostsDto: ListPostsDto;
+  listPostsDto: ListUserPostsDto;
   findUserByIdRepository: FindUserByIdRepository;
   findAppByIdRepository: FindAppByIdRepository;
   listUserPostsRepository: ListUserPostsRepository;
@@ -29,7 +29,7 @@ const makeSut = (): SutTypes => {
   const findAppByIdRepository = new FindAppByIdRepositoryMock();
   const listUserPostsRepository = new ListUserPostsRepositoryMock();
 
-  const listPostsDto: ListPostsDto = {
+  const listPostsDto: ListUserPostsDto = {
     appId: appMock.id,
     filter: '',
     loggedUserId: userMock.userId,

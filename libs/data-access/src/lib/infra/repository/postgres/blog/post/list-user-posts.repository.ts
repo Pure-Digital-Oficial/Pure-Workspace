@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import {
-  ListPostsDto,
+  ListUserPostsDto,
   ListPostsResponseDto,
   ListUserPostsRepository,
   PostPrismaDto,
@@ -10,7 +10,7 @@ import {
 
 export class ListUserPostsRepositoryImpl implements ListUserPostsRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async list(input: ListPostsDto): Promise<ListPostsResponseDto> {
+  async list(input: ListUserPostsDto): Promise<ListPostsResponseDto> {
     const { filter, appId, loggedUserId } = input;
 
     const skip = input?.skip || 0;
@@ -46,6 +46,7 @@ export class ListUserPostsRepositoryImpl implements ListUserPostsRepository {
           created_at: true,
           updated_at: true,
           status: true,
+          cover_image: true,
           user_created: {
             select: {
               name: true,
@@ -80,6 +81,7 @@ export class ListUserPostsRepositoryImpl implements ListUserPostsRepository {
         updatedAt: post.updated_at,
         updatedBy: post.user_updated.name,
         status: post.status,
+        coverImage: post.cover_image,
       };
     });
 

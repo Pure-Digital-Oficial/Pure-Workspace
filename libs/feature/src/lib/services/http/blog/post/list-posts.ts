@@ -9,7 +9,6 @@ export async function ListPostsRequest(input: ListPostsDto) {
       filter: input.filter,
       skip: skip,
       take: take,
-      loggedUserId: input.loggedUserId,
       appId: input.appId,
     },
   });

@@ -4,6 +4,7 @@ import {
   FindAppByIdRepositoryImpl,
   FindUserByIdRepositoryImpl,
   PrismaGeneralService,
+  UploadContentFileInGoogleRepositoryImpl,
 } from '@pure-workspace/data-access';
 import { CreateDraftPost } from '@pure-workspace/domain';
 import { CreateDraftPostController } from './create-draft-post.controller';
@@ -25,6 +26,10 @@ import { CreateDraftPostService } from './create-draft-post.service';
     {
       provide: 'PrismaService',
       useClass: PrismaGeneralService,
+    },
+    {
+      provide: 'UploadContentFileRepository',
+      useClass: UploadContentFileInGoogleRepositoryImpl,
     },
     {
       provide: 'CreateDraftPostRepository',

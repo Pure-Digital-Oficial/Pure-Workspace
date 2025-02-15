@@ -7,6 +7,7 @@ export interface PostPrismaDto {
   status: string;
   created_at: Date;
   updated_at: Date;
+  cover_image: string;
   user_created: {
     name: string;
   };

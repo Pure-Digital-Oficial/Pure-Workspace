@@ -7,6 +7,7 @@ export * from './directory';
 export * from './file';
 export * from './file-to-playlist';
 export * from './finance';
+export * from './general';
 export * from './playlist';
 export * from './playlist-to-scheduling';
 export * from './scheduling';

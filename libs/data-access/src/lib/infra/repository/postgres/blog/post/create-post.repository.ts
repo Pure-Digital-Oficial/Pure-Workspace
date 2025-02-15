@@ -1,14 +1,17 @@
-import { CreatePostDto, CreatePostRepository } from '@pure-workspace/domain';
+import {
+  CreatePostInDatabaseDto,
+  CreatePostRepository,
+} from '@pure-workspace/domain';
 import { PrismaService } from 'nestjs-prisma';
 import { Inject } from '@nestjs/common';
 
 export class CreatePostRepositoryImpl implements CreatePostRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async create(input: CreatePostDto): Promise<string> {
+  async create(input: CreatePostInDatabaseDto): Promise<string> {
     const {
       appId,
       loggedUserId,
-      body: { content, description, subTitle, title },
+      body: { content, description, subTitle, title, coverImage },
     } = input;
 
     const createdPost = await this.prismaService['generalPrisma'].post.create({
@@ -21,6 +24,8 @@ export class CreatePostRepositoryImpl implements CreatePostRepository {
         updated_by: loggedUserId,
         status: 'ACTIVE',
         app_id: appId,
+        cover_image: coverImage,
+        posted_at: new Date(),
       },
     });
 

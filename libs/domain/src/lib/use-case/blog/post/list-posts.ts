@@ -5,18 +5,14 @@ import { EntityNotEmpty, EntityNotExists } from '../../../error';
 import { Either, left, right } from '../../../shared/either';
 import {
   FindAppByIdRepository,
-  FindUserByIdRepository,
   ListPostsRepository,
 } from '../../../repository';
-import { ValidationUserId } from '../../../utils';
 
 export class ListPosts
   implements
     UseCase<ListPostsDto, Either<EntityNotEmpty, ListPostsResponseDto>>
 {
   constructor(
-    @Inject('FindUserByIdRepository')
-    private findUserByIdRepository: FindUserByIdRepository,
     @Inject('FindAppByIdRepository')
     private findAppByIdRepository: FindAppByIdRepository,
     @Inject('ListPostsRepository')
@@ -25,15 +21,7 @@ export class ListPosts
   async execute(
     input: ListPostsDto
   ): Promise<Either<EntityNotEmpty, ListPostsResponseDto>> {
-    const { appId, loggedUserId } = input;
-    const userValidation = await ValidationUserId(
-      loggedUserId,
-      this.findUserByIdRepository
-    );
-
-    if (userValidation.isLeft()) {
-      return left(userValidation.value);
-    }
+    const { appId } = input;
 
     if (Object.keys(appId).length < 1) {
       return left(new EntityNotEmpty('App ID'));

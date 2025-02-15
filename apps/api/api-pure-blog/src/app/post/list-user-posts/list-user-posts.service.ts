@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { ListPostsDto, ListUserPosts } from '@pure-workspace/domain';
+import { ListUserPosts, ListUserPostsDto } from '@pure-workspace/domain';
 
 @Injectable()
 export class ListUserPostsService {
   constructor(private useCase: ListUserPosts) {}
 
-  async list(listPostsDto: ListPostsDto) {
-    return await this.useCase.execute(listPostsDto);
+  async list(listUserPostsDto: ListUserPostsDto) {
+    return await this.useCase.execute(listUserPostsDto);
   }
 }

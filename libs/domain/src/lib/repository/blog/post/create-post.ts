@@ -1,5 +1,5 @@
-import { CreatePostDto } from '../../../dto';
+import { CreatePostInDatabaseDto } from '../../../dto';
 
 export interface CreatePostRepository {
-  create(input: CreatePostDto): Promise<string>;
+  create(input: CreatePostInDatabaseDto): Promise<string>;
 }

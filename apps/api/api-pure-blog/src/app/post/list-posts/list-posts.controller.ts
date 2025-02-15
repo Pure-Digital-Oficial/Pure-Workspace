@@ -13,11 +13,9 @@ export class ListPostsController {
     @Query('filter') filter: string,
     @Query('skip') skip: number,
     @Query('take') take: number,
-    @Query('loggedUserId') loggedUserId: string,
     @Query('appId') appId: string
   ) {
     const result = await this.listPostsService.list({
-      loggedUserId,
       appId,
       filter: filter,
       skip,
