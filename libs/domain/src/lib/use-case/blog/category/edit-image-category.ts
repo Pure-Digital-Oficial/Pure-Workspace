@@ -81,7 +81,7 @@ export class EditImageCategory
       categoryId
     );
 
-    if (Object.keys(filteredCategory?.image_name ?? '').length > 0) {
+    if (Object.keys(filteredCategory.image_name).length > 0) {
       const imageCategory = filteredCategory?.image_name;
       await this.deleteFileByNameRepository.delete(imageCategory);
     }

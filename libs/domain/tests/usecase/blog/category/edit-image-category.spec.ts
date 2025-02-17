@@ -3,7 +3,10 @@ import {
   EditImageCategory,
   EditImageCategoryDto,
   EditImageCategoryRepository,
+  EntityNotEdit,
   EntityNotEmpty,
+  EntityNotLoaded,
+  FileNotAllowed,
   FindCategoryByIdRepository,
   FindUserByIdRepository,
   UploadContentFileRepository,
@@ -99,5 +102,53 @@ describe('EditImageCategory', () => {
     expect(response.isLeft()).toBeTruthy();
     expect(response.isRight()).toBeFalsy();
     expect(response.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityNotEmpty when pass empty image in editImageCategoryDto', async () => {
+    const { sut, editImageCategoryDto } = makeSut();
+    editImageCategoryDto.image = {} as UploadedFile;
+
+    const response = await sut.execute(editImageCategoryDto);
+
+    expect(response.isLeft()).toBeTruthy();
+    expect(response.isRight()).toBeFalsy();
+    expect(response.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return FileNotAllowed when pass invalid mimetype in editImageCategoryDto', async () => {
+    const { sut, editImageCategoryDto } = makeSut();
+    editImageCategoryDto.image.mimetype = '';
+
+    const response = await sut.execute(editImageCategoryDto);
+
+    expect(response.isLeft()).toBeTruthy();
+    expect(response.isRight()).toBeFalsy();
+    expect(response.value).toBeInstanceOf(FileNotAllowed);
+  });
+
+  it('should return EntityNotLoaded when file upload fails', async () => {
+    const { sut, editImageCategoryDto } = makeSut();
+    jest
+      .spyOn(sut['uploadContentFileRepository'], 'upload')
+      .mockResolvedValueOnce('');
+
+    const response = await sut.execute(editImageCategoryDto);
+
+    expect(response.isLeft()).toBeTruthy();
+    expect(response.isRight()).toBeFalsy();
+    expect(response.value).toBeInstanceOf(EntityNotLoaded);
+  });
+
+  it('should return EntityNotEdit when edit image fails', async () => {
+    const { sut, editImageCategoryDto } = makeSut();
+    jest
+      .spyOn(sut['editImageCategoryRepository'], 'edit')
+      .mockResolvedValueOnce('');
+
+    const response = await sut.execute(editImageCategoryDto);
+
+    expect(response.isLeft()).toBeTruthy();
+    expect(response.isRight()).toBeFalsy();
+    expect(response.value).toBeInstanceOf(EntityNotEdit);
   });
 });
