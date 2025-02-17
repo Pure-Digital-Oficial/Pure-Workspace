@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { UseCase } from '../../../base/use-case';
-import { EditImageCategoryDto } from '../../../dto';
 import {
   EntityNotEdit,
   EntityNotEmpty,
@@ -15,11 +14,8 @@ import {
   FindUserByIdRepository,
   UploadContentFileRepository,
 } from '../../../repository';
-import {
-  removeSpecialCharacters,
-  ValidationCategoryId,
-  ValidationUserId,
-} from '../../../utils';
+import { ValidationCategoryId, ValidationUserId } from '../../../utils';
+import { EditImageCategoryDto } from '../../../dto';
 
 export class EditImageCategory
   implements UseCase<EditImageCategoryDto, Either<EntityNotEmpty, string>>
@@ -85,13 +81,9 @@ export class EditImageCategory
       categoryId
     );
 
-    console.log('filteredCategory', filteredCategory);
-
     if (Object.keys(filteredCategory?.image_name ?? '').length > 0) {
       const imageCategory = filteredCategory?.image_name;
-      console.log('imageCategory', imageCategory);
       await this.deleteFileByNameRepository.delete(imageCategory);
-      console.log('deletando imagem');
     }
 
     const editedCategory = await this.editImageCategoryRepository.edit({
