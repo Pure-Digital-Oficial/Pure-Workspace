@@ -42,6 +42,7 @@ import { CreateSubCategoryModule } from './sub-category';
     CreateDraftPostModule,
     DeleteDraftPostModule,
     AddDraftToPostModule,
+    CreateSubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
