@@ -2,7 +2,12 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CreateCategoryModule, EditCategoryModule } from './category';
+import {
+  CreateCategoryModule,
+  EditCategoryModule,
+  DeleteCategoryModule,
+  ListCategoryModule,
+} from './category';
 import {
   CreatePostModule,
   ListPostsModule,
@@ -13,6 +18,9 @@ import {
   ListMediasPostModule,
   EditMediaPostModule,
   DeleteMediaPostModule,
+  CreateDraftPostModule,
+  DeleteDraftPostModule,
+  AddDraftToPostModule,
 } from './post';
 import { CreateSubCategoryModule } from './sub-category';
 
@@ -24,11 +32,16 @@ import { CreateSubCategoryModule } from './sub-category';
     EditPostModule,
     ListUserPostsModule,
     CreateCategoryModule,
+    DeleteCategoryModule,
     EditCategoryModule,
+    ListCategoryModule,
     CreateMediaPostModule,
     ListMediasPostModule,
     EditMediaPostModule,
     DeleteMediaPostModule,
+    CreateDraftPostModule,
+    DeleteDraftPostModule,
+    AddDraftToPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -93,6 +93,7 @@ model Application {
   deleted_at DateTime?
   user_x_application User_X_Application[]
   post Post[]
+  contacts Contact[]
 
   @@schema("general")
 }
@@ -327,6 +328,24 @@ model Country {
   uf String @db.VarChar(2)
 
   state State[]
+
+  @@schema("general")
+}
+
+model Contact {
+  contact_id String @id @default(uuid())
+  name String
+  email String
+  number String
+  description String
+  app_id String
+  status ContactStatus @default(SENDING)
+  sending Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  sending_at DateTime?
+
+  Apps Application @relation(fields: [app_id], references: [app_id])
 
   @@schema("general")
 }
@@ -621,8 +640,10 @@ model Post {
   sub_title String
   description String
   content String
+  cover_image String
   created_by String
   updated_by String
+  posted_at DateTime?
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -761,4 +782,12 @@ enum SummonsStatus {
   FINISHED
 
   @@schema("summons")
+}
+
+enum ContactStatus {
+  SENDING
+  IN_PROGRESS
+  ERROR
+  COMPLETED
+  @@schema("general")
 }

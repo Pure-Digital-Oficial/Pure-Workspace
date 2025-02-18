@@ -5,65 +5,32 @@ export const formatValueMask = (value: string, maskType: MaskType) => {
 
   switch (maskType) {
     case 'phone':
-      let phoneValue = cleanedValue;
-
-      if (phoneValue.length === 8) {
-        phoneValue = `${phoneValue.slice(0, 2)}9${phoneValue.slice(2)}`;
-      }
-
-      if (phoneValue.length <= 2) return phoneValue;
-
-      if (phoneValue.length <= 7) {
-        return `${phoneValue.slice(0, 2)} ${phoneValue.slice(2)}`;
-      }
-
-      if (phoneValue.length === 10) {
-        phoneValue = `${phoneValue.slice(0, 2)}9${phoneValue.slice(2)}`;
-      }
-
-      if (phoneValue.length === 11) {
-        return `(${phoneValue.slice(0, 2)}) ${phoneValue.slice(
-          2,
-          7
-        )}-${phoneValue.slice(7, 11)}`;
-      }
-      return `${phoneValue.slice(0, 4)}-${phoneValue.slice(4, 8)}`;
+      return cleanedValue
+        .slice(0, 11)
+        .replace(/^(\d{2})(\d{5})?(\d{4})?$/, (_, p1, p2, p3) => {
+          return `(${p1}) ${p2 || ''}${p3 ? `-${p3}` : ''}`;
+        });
 
     case 'cpf':
-      if (cleanedValue.length <= 3) return cleanedValue;
-      if (cleanedValue.length <= 6)
-        return `${cleanedValue.slice(0, 3)}.${cleanedValue.slice(3, 6)}`;
-      if (cleanedValue.length <= 9)
-        return `${cleanedValue.slice(0, 3)}.${cleanedValue.slice(
-          3,
-          6
-        )}.${cleanedValue.slice(6, 9)}`;
-      return `${cleanedValue.slice(0, 3)}.${cleanedValue.slice(
-        3,
-        6
-      )}.${cleanedValue.slice(6, 9)}-${cleanedValue.slice(9, 11)}`;
+      return cleanedValue
+        .slice(0, 11)
+        .replace(/^(\d{3})(\d{3})?(\d{3})?(\d{2})?$/, (_, p1, p2, p3, p4) => {
+          return [p1, p2, p3].filter(Boolean).join('.') + (p4 ? `-${p4}` : '');
+        });
 
     case 'cnpj':
-      if (cleanedValue.length <= 2) return cleanedValue;
-      if (cleanedValue.length <= 5)
-        return `${cleanedValue.slice(0, 2)}.${cleanedValue.slice(2, 5)}`;
-      if (cleanedValue.length <= 8)
-        return `${cleanedValue.slice(0, 2)}.${cleanedValue.slice(
-          2,
-          5
-        )}.${cleanedValue.slice(5, 8)}`;
-      if (cleanedValue.length <= 12)
-        return `${cleanedValue.slice(0, 2)}.${cleanedValue.slice(
-          2,
-          5
-        )}.${cleanedValue.slice(5, 8)}/${cleanedValue.slice(8, 12)}`;
-      return `${cleanedValue.slice(0, 2)}.${cleanedValue.slice(
-        2,
-        5
-      )}.${cleanedValue.slice(5, 8)}/${cleanedValue.slice(
-        8,
-        12
-      )}-${cleanedValue.slice(12, 14)}`;
+      return cleanedValue
+        .slice(0, 14)
+        .replace(
+          /^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?$/,
+          (_, p1, p2, p3, p4, p5) => {
+            return (
+              [p1, p2, p3].filter(Boolean).join('.') +
+              (p4 ? `/${p4}` : '') +
+              (p5 ? `-${p5}` : '')
+            );
+          }
+        );
 
     default:
       return value;

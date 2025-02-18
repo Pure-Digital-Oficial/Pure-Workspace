@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { PrismaService } from 'nestjs-prisma';
 import {
   ListPostsDto,
   ListPostsRepository,
@@ -7,6 +6,7 @@ import {
   PostPrismaDto,
   PostResponseDto,
 } from '@pure-workspace/domain';
+import { PrismaService } from 'nestjs-prisma';
 
 export class ListPostsRepositoryImpl implements ListPostsRepository {
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
@@ -47,6 +47,7 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
           created_at: true,
           updated_at: true,
           status: true,
+          cover_image: true,
           user_created: {
             select: {
               name: true,
@@ -60,6 +61,9 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
         },
         skip: parseInt(skip.toString()),
         take: parseInt(take.toString()),
+        orderBy: {
+          posted_at: 'desc',
+        },
       }),
       this.prismaService['generalPrisma'].post.count({
         where: {
@@ -84,6 +88,7 @@ export class ListPostsRepositoryImpl implements ListPostsRepository {
         updatedAt: post.updated_at,
         updatedBy: post.user_updated.name,
         status: post.status,
+        coverImage: post.cover_image,
       };
     });
 

@@ -1,3 +1,4 @@
+export * from './draft';
 export * from './media';
 export * from './create-post.repository';
 export * from './delete-post.repository';

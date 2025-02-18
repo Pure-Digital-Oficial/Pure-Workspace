@@ -17,6 +17,8 @@ interface FormButtonProps {
   success: boolean;
   buttonRight?: () => void;
   buttonLeft?: () => void;
+  bgColor?: string;
+  variant?: 'contained' | 'outlined';
 }
 
 export const FormButton: FC<FormButtonProps> = ({
@@ -25,6 +27,8 @@ export const FormButton: FC<FormButtonProps> = ({
   success = false,
   buttonRight,
   buttonLeft,
+  bgColor = 'primary',
+  variant = 'contained',
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -60,17 +64,17 @@ export const FormButton: FC<FormButtonProps> = ({
       <Button
         type="submit"
         fullWidth
-        variant="contained"
+        variant={variant}
         sx={
           success
             ? buttonSx
             : {
-                margin: theme.spacing(1),
+                marginBottom: theme.spacing(1),
                 height: smDown ? theme.spacing(6) : theme.spacing(7),
                 fontSize: '1rem',
-                bgcolor: loading ? grey[500] : 'primay',
+                bgcolor: loading ? grey[500] : bgColor,
                 '&:hover': {
-                  bgcolor: loading ? grey[700] : 'primary',
+                  bgcolor: loading ? grey[700] : bgColor,
                 },
               }
         }

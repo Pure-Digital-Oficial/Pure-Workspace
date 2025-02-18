@@ -14,3 +14,4 @@ export * from './playlist-to-scheduling';
 export * from './schedules-to-device';
 export * from './scheduling';
 export * from './user';
+export * from './general';

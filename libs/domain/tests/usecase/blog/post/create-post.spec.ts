@@ -3,19 +3,23 @@ import {
   CreatePost,
   CreatePostDto,
   CreatePostRepository,
+  EntityNotComplete,
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
   FindAppByIdRepository,
   FindUserByIdRepository,
   PostBodyDto,
+  UploadContentFileRepository,
+  UploadedFile,
   UserList,
 } from '../../../../src';
-import { appMock, PostMock, userMock } from '../../../entity';
+import { appMock, FileMock, PostMock, userMock } from '../../../entity';
 import {
   CreatePostRepositoryMock,
   FindAppByIdRepositoryMock,
   FindUserByIdRepositoryMock,
+  UploadContentFileRepositoryMock,
 } from '../../../repository';
 
 interface SutTypes {
@@ -23,6 +27,7 @@ interface SutTypes {
   createPostDto: CreatePostDto;
   findUserByIdRepository: FindUserByIdRepository;
   findAppByIdRepository: FindAppByIdRepository;
+  uploadContentFileRepository: UploadContentFileRepository;
   createPostRepository: CreatePostRepository;
 }
 
@@ -30,6 +35,7 @@ const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const findAppByIdRepository = new FindAppByIdRepositoryMock();
   const createPostRepository = new CreatePostRepositoryMock();
+  const uploadContentFileRepository = new UploadContentFileRepositoryMock();
 
   const createPostDto: CreatePostDto = {
     appId: appMock.id,
@@ -39,12 +45,14 @@ const makeSut = (): SutTypes => {
       description: PostMock.description,
       subTitle: PostMock.subTitle,
       title: PostMock.title,
+      coverImage: FileMock,
     },
   };
 
   const sut = new CreatePost(
     findUserByIdRepository,
     findAppByIdRepository,
+    uploadContentFileRepository,
     createPostRepository
   );
 
@@ -53,6 +61,7 @@ const makeSut = (): SutTypes => {
     createPostDto,
     findUserByIdRepository,
     findAppByIdRepository,
+    uploadContentFileRepository,
     createPostRepository,
   };
 };
@@ -78,7 +87,7 @@ describe('CreatePost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty appId in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty appId in createPostDto', async () => {
     const { createPostDto, sut } = makeSut();
     createPostDto.appId = '';
     const result = await sut.execute(createPostDto);
@@ -88,7 +97,7 @@ describe('CreatePost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty user ID in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty user ID in createPostDto', async () => {
     const { createPostDto, sut } = makeSut();
     createPostDto.loggedUserId = '';
     const result = await sut.execute(createPostDto);
@@ -98,7 +107,7 @@ describe('CreatePost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty content in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty content in createPostDto', async () => {
     const { createPostDto, sut } = makeSut();
     createPostDto.body.content = '';
     const result = await sut.execute(createPostDto);
@@ -108,7 +117,17 @@ describe('CreatePost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty description in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty cover image in createPostDto', async () => {
+    const { createPostDto, sut } = makeSut();
+    createPostDto.body.coverImage = {} as UploadedFile;
+    const result = await sut.execute(createPostDto);
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.isRight()).toBeFalsy();
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityNotEmpty when pass empty description in createPostDto', async () => {
     const { createPostDto, sut } = makeSut();
     createPostDto.body.description = '';
     const result = await sut.execute(createPostDto);
@@ -118,7 +137,7 @@ describe('CreatePost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty subTitle in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty subTitle in createPostDto', async () => {
     const { createPostDto, sut } = makeSut();
     createPostDto.body.subTitle = '';
     const result = await sut.execute(createPostDto);
@@ -128,7 +147,7 @@ describe('CreatePost', () => {
     expect(result.value).toBeInstanceOf(EntityNotEmpty);
   });
 
-  it('should return EntityNotEmpty when pass empty title in externalAuthDto', async () => {
+  it('should return EntityNotEmpty when pass empty title in createPostDto', async () => {
     const { createPostDto, sut } = makeSut();
     createPostDto.body.title = '';
     const result = await sut.execute(createPostDto);
@@ -160,6 +179,18 @@ describe('CreatePost', () => {
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toBeInstanceOf(EntityNotExists);
+  });
+
+  it('should return EntityNotComplete when a not uploaded cover image in system', async () => {
+    const { createPostDto, sut } = makeSut();
+    jest
+      .spyOn(sut['uploadContentFileRepository'], 'upload')
+      .mockResolvedValueOnce('');
+    const result = await sut.execute(createPostDto);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toBeInstanceOf(EntityNotComplete);
   });
 
   it('should return EntityNotCreated when a not created post in system', async () => {

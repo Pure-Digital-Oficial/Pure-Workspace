@@ -21,6 +21,7 @@ export class EditPostRepositoryImpl implements EditPostRepository {
         sub_title: subTitle,
         title,
         updated_by: loggedUserId,
+        updated_at: new Date(),
       },
     });
 

@@ -18,6 +18,7 @@ export class EditMediaPostRepositoryImpl implements EditMediaPostRepository {
       data: {
         name,
         updated_by: loggedUserId,
+        updated_at: new Date(),
       },
     });
 
