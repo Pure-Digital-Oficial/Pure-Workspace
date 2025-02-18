@@ -17,7 +17,7 @@ export class CreateSubCategoryRepositoryImpl
 
     const createdSubCategory = await this.prismaService[
       'generalPrisma'
-    ].subCategory.create({
+    ].sub_Category.create({
       data: {
         name,
         description,

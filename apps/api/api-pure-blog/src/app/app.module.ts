@@ -14,6 +14,7 @@ import {
   EditMediaPostModule,
   DeleteMediaPostModule,
 } from './post';
+import { CreateSubCategoryModule } from './sub-category';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import {
     ListMediasPostModule,
     EditMediaPostModule,
     DeleteMediaPostModule,
+    CreateSubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

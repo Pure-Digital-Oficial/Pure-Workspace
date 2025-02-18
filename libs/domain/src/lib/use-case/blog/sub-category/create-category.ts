@@ -16,7 +16,7 @@ export class CreateSubCategory
   constructor(
     @Inject('FindUserByIdRepository')
     private findUserByIdRepository: FindUserByIdRepository,
-    @Inject('FindCategoryBiIdRepository')
+    @Inject('FindCategoryByIdRepository')
     private findCategoryByIdRepository: FindCategoryByIdRepository,
     @Inject('CreateSubCategoryRepository')
     private createSubCategoryRepository: CreateSubCategoryRepository
