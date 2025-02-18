@@ -29,7 +29,6 @@ import { CreateSubCategoryModule } from './sub-category';
     ListMediasPostModule,
     EditMediaPostModule,
     DeleteMediaPostModule,
-    CreateSubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
