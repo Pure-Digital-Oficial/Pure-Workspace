@@ -22,7 +22,7 @@ import {
   DeleteDraftPostModule,
   AddDraftToPostModule,
 } from './post';
-import { CreateSubCategoryModule } from './sub-category';
+import { CreateSubCategoryModule, EditSubCategoryModule } from './sub-category';
 
 @Module({
   imports: [
@@ -43,6 +43,7 @@ import { CreateSubCategoryModule } from './sub-category';
     DeleteDraftPostModule,
     AddDraftToPostModule,
     CreateSubCategoryModule,
+    EditSubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
