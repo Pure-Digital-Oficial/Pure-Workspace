@@ -13,7 +13,7 @@ export class FindSubCategoryByIdRepositoryImpl
   async find(id: string): Promise<SubCategoryResponseDto> {
     const findedSubCategory = await this.prismaService[
       'generalPrisma'
-    ].subCategory.findFirst({
+    ].sub_Category.findFirst({
       where: {
         sub_category_id: id,
       },
@@ -34,18 +34,12 @@ export class FindSubCategoryByIdRepositoryImpl
             name: true,
           },
         },
-        category: {
-          select: {
-            name: true,
-          },
-        },
       },
     });
 
     return {
       id: findedSubCategory?.sub_category_id ?? '',
       name: findedSubCategory?.name ?? '',
-      category: findedSubCategory?.category.name ?? '',
       description: findedSubCategory?.description ?? '',
       categoryId: findedSubCategory?.category_id ?? '',
       createdAt: findedSubCategory?.created_at ?? new Date(),

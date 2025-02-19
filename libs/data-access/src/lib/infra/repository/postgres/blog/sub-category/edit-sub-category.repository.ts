@@ -18,7 +18,7 @@ export class EditSubCategoryRepositoryImpl
 
     const editedSubCategory = await this.prismaService[
       'generalPrisma'
-    ].subCategory.update({
+    ].sub_Category.update({
       where: {
         sub_category_id: id,
       },
