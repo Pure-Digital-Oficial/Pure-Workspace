@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { UseCase } from '../../../base/use-case';
 import { EditSubCategoryDto } from '../../../dto';
-import { EntityNotEmpty } from '../../../error';
+import { EntityNotEdit, EntityNotEmpty } from '../../../error';
 import { Either, left, right } from '../../../shared/either';
 import {
   EditSubCategoryRepository,
@@ -47,6 +47,10 @@ export class EditSubCategory
       return left(userValidation.value);
     }
 
+    if (Object.keys(input.body).length < 1) {
+      return left(new EntityNotEmpty('Body'));
+    }
+
     const subCategoryValidation = await ValidationSubCategoryId(
       id,
       this.findSubCategoryByIdRepository
@@ -65,10 +69,6 @@ export class EditSubCategory
       return left(categoryValidation.value);
     }
 
-    if (Object.keys(input.body).length < 1) {
-      return left(new EntityNotEmpty('Body'));
-    }
-
     if (Object.keys(name).length < 1) {
       return left(new EntityNotEmpty('Name'));
     }
@@ -78,6 +78,10 @@ export class EditSubCategory
     }
 
     const editedCategory = await this.editSubCategoryRepository.edit(input);
+
+    if (Object.keys(editedCategory).length < 1) {
+      return left(new EntityNotEdit('SubCategory'));
+    }
 
     return right(editedCategory);
   }
