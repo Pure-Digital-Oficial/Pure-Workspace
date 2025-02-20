@@ -37,6 +37,8 @@ export class ListCategoryRepositoryImpl implements ListCategoryRepository {
           category_id: true,
           name: true,
           description: true,
+          url_image: true,
+          image_name: true,
           created_at: true,
           updated_at: true,
         },
@@ -59,6 +61,8 @@ export class ListCategoryRepositoryImpl implements ListCategoryRepository {
           categoryId: category.id,
           name: category.name,
           description: category.description,
+          url_image: category.url_image,
+          image_name: category.image_name,
           createdAt: category.createdAt,
           updatedAt: category.updatedAt,
         };

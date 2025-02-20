@@ -1,30 +1,27 @@
 import { Inject } from '@nestjs/common';
 import {
-  EditCategoryDto,
-  EditCategoryRepository,
+  EditImageCategoryDto,
+  EditImageCategoryRepository,
 } from '@pure-workspace/domain';
 import { PrismaService } from 'nestjs-prisma';
 
-export class EditCategoryRepositoryImpl implements EditCategoryRepository {
+export class EditImageCategoryRepositoryImpl
+  implements EditImageCategoryRepository
+{
   constructor(@Inject('PrismaService') private prismaService: PrismaService) {}
-  async edit(input: EditCategoryDto): Promise<string> {
-    const {
-      id,
-      loggedUserId,
-      body: { name, description },
-    } = input;
+  async edit(input: EditImageCategoryDto): Promise<string> {
+    const { loggedUserId, categoryId, image } = input;
 
     const editedCategory = await this.prismaService[
       'generalPrisma'
     ].category.update({
       where: {
-        category_id: id,
+        category_id: categoryId,
       },
       data: {
-        name,
-        description,
+        url_image: image.path,
+        image_name: image.filename,
         updated_by: loggedUserId,
-        updated_at: new Date(),
       },
     });
 

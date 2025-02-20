@@ -7,6 +7,7 @@ import {
   EditCategoryModule,
   DeleteCategoryModule,
   ListCategoryModule,
+  EditImageCategoryModule,
 } from './category';
 import {
   CreatePostModule,
@@ -34,6 +35,7 @@ import { CreateSubCategoryModule } from './sub-category';
     CreateCategoryModule,
     DeleteCategoryModule,
     EditCategoryModule,
+    EditImageCategoryModule,
     ListCategoryModule,
     CreateMediaPostModule,
     ListMediasPostModule,

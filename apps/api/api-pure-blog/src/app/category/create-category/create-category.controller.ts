@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Query, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Query,
+  UploadedFile,
+  UseInterceptors,
+  UsePipes,
+} from '@nestjs/common';
 import { CreateCategoryService } from './create-category.service';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import {
@@ -6,6 +14,7 @@ import {
   createCategorySchema,
   ErrorMessageResult,
 } from '@pure-workspace/domain';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('create-category')
 export class CreateCategoryController {
@@ -13,13 +22,21 @@ export class CreateCategoryController {
 
   @Post()
   @UsePipes(new ZodValidationPipe(createCategorySchema))
+  @UseInterceptors(FilesInterceptor('image'))
   async create(
+    @UploadedFile() file: Express.Multer.File,
     @Query('loggedUserId') loggedUserId: string,
-    @Body() body: CategoryBodyDto
+    @Body('name') name: string,
+    @Body('description') description: string
   ) {
+    const body: CategoryBodyDto = {
+      name,
+      description,
+    };
     const result = await this.createCategoryService.create({
       loggedUserId: loggedUserId ?? '',
       body: body ?? ({} as CategoryBodyDto),
+      image: file,
     });
 
     if (result.isRight()) return { categoryId: result.value };

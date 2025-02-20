@@ -715,6 +715,8 @@ model Category {
   category_id String @id @default(uuid())
   name String
   description String
+  url_image String
+  image_name String
   created_by String
   updated_by String
   created_at DateTime @default(now())

@@ -5,13 +5,18 @@ import {
   EntityNotCreated,
   EntityNotEmpty,
   EntityNotExists,
+  EntityNotLoaded,
+  FileNotAllowed,
   FindUserByIdRepository,
+  UploadContentFileRepository,
+  UploadedFile,
   UserList,
 } from '../../../../src';
-import { CategoryMock, userMock } from '../../../entity';
+import { CategoryMock, FileMock, userMock } from '../../../entity';
 import {
   CreateCategoryRepositoryMock,
   FindUserByIdRepositoryMock,
+  UploadContentFileRepositoryMock,
 } from '../../../repository';
 
 interface SutTypes {
@@ -19,11 +24,13 @@ interface SutTypes {
   createCategoryDto: CreateCategoryDto;
   findUserByIdRepository: FindUserByIdRepository;
   createCategoryRepository: CreateCategoryRepository;
+  uploadContentFileRepository: UploadContentFileRepository;
 }
 
 const makeSut = (): SutTypes => {
   const findUserByIdRepository = new FindUserByIdRepositoryMock();
   const createCategoryRepository = new CreateCategoryRepositoryMock();
+  const uploadContentFileRepository = new UploadContentFileRepositoryMock();
 
   const createCategoryDto: CreateCategoryDto = {
     loggedUserId: userMock.userId,
@@ -31,11 +38,13 @@ const makeSut = (): SutTypes => {
       name: CategoryMock.name,
       description: CategoryMock.description,
     },
+    image: FileMock,
   };
 
   const sut = new CreateCategory(
     findUserByIdRepository,
-    createCategoryRepository
+    createCategoryRepository,
+    uploadContentFileRepository
   );
 
   return {
@@ -43,6 +52,7 @@ const makeSut = (): SutTypes => {
     createCategoryDto,
     findUserByIdRepository,
     createCategoryRepository,
+    uploadContentFileRepository,
   };
 };
 
@@ -107,6 +117,32 @@ describe('CreateCategory', () => {
     expect(result.value).toBeInstanceOf(EntityNotExists);
   });
 
+  it('should return EntityNotEmpty when pass empty file in createCategoryDto', async () => {
+    const { createCategoryDto, sut } = makeSut();
+
+    createCategoryDto.image = {} as UploadedFile;
+
+    const result = await sut.execute(createCategoryDto);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toBeInstanceOf(EntityNotEmpty);
+  });
+
+  it('should return EntityNotLoaded when not loaded content file in cloud', async () => {
+    const { createCategoryDto, sut } = makeSut();
+
+    jest
+      .spyOn(sut['uploadContentFileRepository'], 'upload')
+      .mockResolvedValueOnce('');
+
+    const result = await sut.execute(createCategoryDto);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toBeInstanceOf(EntityNotLoaded);
+  });
+
   it('should return EntityNotCreated when a not created category in system', async () => {
     const { createCategoryDto, sut } = makeSut();
 
@@ -119,5 +155,17 @@ describe('CreateCategory', () => {
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toBeInstanceOf(EntityNotCreated);
+  });
+
+  it('should return FileNotAllowed when pass incorrect file type in createCategoryDto', async () => {
+    const { createCategoryDto, sut } = makeSut();
+
+    createCategoryDto.image.mimetype = '';
+
+    const result = await sut.execute(createCategoryDto);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toBeInstanceOf(FileNotAllowed);
   });
 });

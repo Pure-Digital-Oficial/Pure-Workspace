@@ -11,6 +11,7 @@ export class CreateCategoryRepositoryImpl implements CreateCategoryRepository {
     const {
       loggedUserId,
       body: { name, description },
+      image,
     } = input;
 
     const createdCategory = await this.prismaService[
@@ -19,6 +20,8 @@ export class CreateCategoryRepositoryImpl implements CreateCategoryRepository {
       data: {
         name,
         description,
+        url_image: image.path,
+        image_name: image.filename,
         created_by: loggedUserId,
         updated_by: loggedUserId,
       },
